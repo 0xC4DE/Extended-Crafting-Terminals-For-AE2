@@ -1,8 +1,6 @@
 package com.xc4de.ae2exttable.part;
 
-import appeng.api.parts.IPart;
 import appeng.api.parts.IPartModel;
-import appeng.api.storage.ITerminalHost;
 import appeng.core.AppEng;
 import appeng.core.sync.GuiBridge;
 import appeng.helpers.Reflected;
@@ -18,7 +16,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 
-public class PartExtendedCraftingTerminal extends AbstractPartTerminal {
+public class PartBasicCraftingTerminal extends AbstractPartTerminal {
 
     @PartModels
     public static final ResourceLocation MODEL_OFF = new ResourceLocation(AppEng.MOD_ID, "part/crafting_terminal_off");
@@ -32,7 +30,7 @@ public class PartExtendedCraftingTerminal extends AbstractPartTerminal {
     private final AppEngInternalInventory craftingGrid = new AppEngInternalInventory(this, 9);
 
     @Reflected
-    public PartExtendedCraftingTerminal(final ItemStack is) {
+    public PartBasicCraftingTerminal(final ItemStack is) {
         super(is);
     }
 

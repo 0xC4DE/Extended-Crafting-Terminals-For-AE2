@@ -5,7 +5,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
-public class ContainerHelper extends Container {
+public class ContainerBase extends Container {
 
     int playerSlotWidth = 18; // always 18 probably
     int xOffsetPlayerInventory = 8;

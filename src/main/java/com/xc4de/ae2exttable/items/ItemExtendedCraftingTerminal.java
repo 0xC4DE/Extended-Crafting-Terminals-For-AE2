@@ -5,7 +5,7 @@ import appeng.api.parts.IPart;
 import appeng.api.parts.IPartItem;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.Tags;
-import com.xc4de.ae2exttable.part.PartExtendedCraftingTerminal;
+import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,7 +27,7 @@ public class ItemExtendedCraftingTerminal extends Item implements IPartItem {
 
     @Override
     public @Nullable IPart createPartFromItemStack(ItemStack stack) {
-        return new PartExtendedCraftingTerminal(stack);
+        return new PartBasicCraftingTerminal(stack);
     }
 
     @Override

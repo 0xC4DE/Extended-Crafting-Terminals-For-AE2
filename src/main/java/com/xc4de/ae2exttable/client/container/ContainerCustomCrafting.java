@@ -12,7 +12,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
-public class ContainerCustomCrafting extends ContainerHelper {
+public class ContainerCustomCrafting extends ContainerBase {
 
     public InventoryCrafting matrix;
     public IInventory result;
