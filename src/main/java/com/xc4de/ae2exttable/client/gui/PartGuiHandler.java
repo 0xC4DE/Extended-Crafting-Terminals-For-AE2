@@ -2,6 +2,7 @@ package com.xc4de.ae2exttable.client.gui;
 
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartHost;
+import appeng.api.storage.ITerminalHost;
 import appeng.api.util.AEPartLocation;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
@@ -72,7 +73,8 @@ public class PartGuiHandler implements IGuiHandler {
 
         switch(guiID) {
             case BASIC_CRAFTING_TERMINAL:
-                return new GuiBasicCraftingTerminal(new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part));
+                // FIXME: Cast probably wont work.
+                return new GuiBasicCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part));
             default:
                 return null;
         }

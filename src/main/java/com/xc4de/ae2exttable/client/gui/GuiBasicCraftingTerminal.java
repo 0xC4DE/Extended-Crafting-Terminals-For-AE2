@@ -10,6 +10,7 @@ import appeng.core.localization.GuiText;
 import appeng.core.sync.network.NetworkHandler;
 import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
+import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -19,8 +20,8 @@ public class GuiBasicCraftingTerminal extends GuiAbstractTerminal {
 
     private GuiImgButton clearBtn;
 
-    public GuiBasicCraftingTerminal(final InventoryPlayer inventoryPlayer, final ITerminalHost te) {
-        super(inventoryPlayer, te, new ContainerCraftingTerm(inventoryPlayer, te));
+    public GuiBasicCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {
+        super(inventoryPlayer, te, container);
         this.setReservedSpace(73);
     }
 
