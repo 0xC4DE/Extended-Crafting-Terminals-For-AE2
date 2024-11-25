@@ -70,6 +70,7 @@ public class PartExtendedCraftingTerminal extends AbstractPartTerminal {
             z = this.getTile().getPos().getZ();
         }
 
+        // FIXME: Use my own GUI
         if (GuiBridge.GUI_CRAFTING_TERMINAL.hasPermissions(this.getHost().getTile(), x, y, z, this.getSide(), p)) {
             return GuiBridge.GUI_CRAFTING_TERMINAL;
         }

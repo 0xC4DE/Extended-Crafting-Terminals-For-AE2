@@ -1,6 +1,5 @@
 package com.xc4de.ae2exttable.crafting;
 
-import com.blakebr0.extendedcrafting.lib.IExtendedTable;
 import com.xc4de.ae2exttable.interfaces.IAE2ExtendedTable;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
