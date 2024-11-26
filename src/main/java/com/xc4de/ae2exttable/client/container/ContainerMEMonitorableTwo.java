@@ -2,7 +2,6 @@ package com.xc4de.ae2exttable.client.container;
 
 import appeng.api.storage.ITerminalHost;
 import appeng.api.storage.data.IAEItemStack;
-import appeng.client.gui.implementations.GuiMEMonitorable;
 import appeng.container.implementations.ContainerMEMonitorable;
 import com.xc4de.ae2exttable.client.gui.GuiMEMonitorableTwo;
 import net.minecraft.entity.player.InventoryPlayer;
