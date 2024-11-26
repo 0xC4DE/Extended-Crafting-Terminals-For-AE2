@@ -243,7 +243,7 @@ public abstract class GuiAbstractTerminal extends AEBaseMEGui implements ISortSo
             }
         }
 
-        if (this.viewCell || this instanceof GuiWirelessTerm) {
+        if (this.viewCell) {
             this.buttonList
                     .add(this.ViewBox = new GuiImgButton(this.guiLeft - 18, offset, Settings.VIEW_MODE, this.configSrc.getSetting(Settings.VIEW_MODE)));
             offset += 20;
@@ -261,11 +261,9 @@ public abstract class GuiAbstractTerminal extends AEBaseMEGui implements ISortSo
 
         offset += 20;
 
-        if (!(this instanceof GuiMEPortableCell) || this instanceof GuiWirelessTerm) {
-            this.buttonList.add(this.terminalStyleBox = new GuiImgButton(this.guiLeft - 18, offset, Settings.TERMINAL_STYLE, AEConfig.instance()
-                    .getConfigManager()
-                    .getSetting(Settings.TERMINAL_STYLE)));
-        }
+        this.buttonList.add(this.terminalStyleBox = new GuiImgButton(this.guiLeft - 18, offset, Settings.TERMINAL_STYLE, AEConfig.instance()
+                .getConfigManager()
+                .getSetting(Settings.TERMINAL_STYLE)));
 
         this.searchField = new MEGuiTextField(this.fontRenderer, this.guiLeft + Math.max(80, this.offsetX), this.guiTop + 4, 90, 12);
         this.searchField.setEnableBackgroundDrawing(false);
@@ -274,7 +272,7 @@ public abstract class GuiAbstractTerminal extends AEBaseMEGui implements ISortSo
         this.searchField.setSelectionColor(0xFF008000);
         this.searchField.setVisible(true);
 
-        if (this.viewCell || this instanceof GuiWirelessTerm) {
+        if (this.viewCell) {
             this.buttonList.add(this.craftingStatusBtn = new GuiTabButton(this.guiLeft + 170, this.guiTop - 4, 2 + 11 * 16, GuiText.CraftingStatus
                     .getLocal(), this.itemRender));
             this.craftingStatusBtn.setHideEdge(13);
@@ -377,7 +375,7 @@ public abstract class GuiAbstractTerminal extends AEBaseMEGui implements ISortSo
         final int x_width = 197;
         this.drawTexturedModalRect(offsetX, offsetY, 0, 0, x_width, 18);
 
-        if (this.viewCell || (this instanceof GuiSecurityStation)) {
+        if (this.viewCell) {
             this.drawTexturedModalRect(offsetX + x_width, offsetY + jeiOffset, x_width, 0, 46, 128);
         }
 

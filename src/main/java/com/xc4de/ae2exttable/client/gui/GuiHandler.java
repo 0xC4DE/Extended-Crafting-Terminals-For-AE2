@@ -8,17 +8,13 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import org.jetbrains.annotations.Nullable;
 
-public enum GuiHandler implements IGuiHandler {
+public class GuiHandler implements IGuiHandler {
     public static final int CUSTOM_EXTENDED_TABLE = 1;
-    public static final int EXTENDED_CRAFTING_TERMINAL = 2;
 
     @Override
     public @Nullable Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == CUSTOM_EXTENDED_TABLE) {
             return new ContainerCustomCrafting(player.inventory, (TileCustomExtendedTable) world.getTileEntity(new BlockPos(x, y, z)));
-        }
-        if (ID == EXTENDED_CRAFTING_TERMINAL) {
-            //return new ContainerExtendedCraftingTerminal(player.inventory, (TileExtendedCraftingTerminal) world.getTileEntity(new BlockPos(x, y, z)));
         }
         return null;
     }

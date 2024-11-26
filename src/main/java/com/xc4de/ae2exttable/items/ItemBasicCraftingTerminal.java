@@ -17,9 +17,9 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class ItemExtendedCraftingTerminal extends Item implements IPartItem {
+public class ItemBasicCraftingTerminal extends Item implements IPartItem {
 
-    public ItemExtendedCraftingTerminal(String name) {
+    public ItemBasicCraftingTerminal(String name) {
         this.setRegistryName(name);
         this.setTranslationKey(Tags.MODID+"."+name);
         this.setCreativeTab(AE2ExtendedCraftingTable.EXTENDED_TABLE_TAB);
@@ -27,7 +27,7 @@ public class ItemExtendedCraftingTerminal extends Item implements IPartItem {
 
     @Override
     public @Nullable IPart createPartFromItemStack(ItemStack stack) {
-        return new PartBasicCraftingTerminal(stack);
+        return new PartBasicCraftingTerminal(stack.getItem());
     }
 
     @Override

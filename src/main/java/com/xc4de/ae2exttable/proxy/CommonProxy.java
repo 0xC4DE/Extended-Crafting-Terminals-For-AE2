@@ -4,6 +4,7 @@ import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.AE2ExtendedTableTab;
 import com.xc4de.ae2exttable.blocks.BlockRegistry;
 import com.xc4de.ae2exttable.client.gui.GuiHandler;
+import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
 import com.xc4de.ae2exttable.crafting.RecipeRegister;
 import com.xc4de.ae2exttable.items.ItemRegistry;
 import com.xc4de.ae2exttable.tile.TileRegistry;
@@ -26,7 +27,8 @@ public class CommonProxy {
 
     public void init(FMLInitializationEvent event) {
         //RecipeRegister.post();
-        NetworkRegistry.INSTANCE.registerGuiHandler(AE2ExtendedCraftingTable.instance, new GuiHandler());
+        //NetworkRegistry.INSTANCE.registerGuiHandler(AE2ExtendedCraftingTable.instance, new GuiHandler());
+        NetworkRegistry.INSTANCE.registerGuiHandler(AE2ExtendedCraftingTable.instance, new PartGuiHandler());
 
     }
 

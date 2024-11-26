@@ -14,6 +14,8 @@ import appeng.util.IConfigManagerHost;
 import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
 import appeng.util.inv.WrapperInvItemHandler;
+import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
@@ -26,7 +28,7 @@ import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
 public class ContainerBasicCraftingTerminal extends ContainerMEMonitorable implements IAEAppEngInventory, IContainerCraftingPacket {
 
-    private final PartCraftingTerminal ct;
+    private final PartBasicCraftingTerminal ct;
     private final AppEngInternalInventory output = new AppEngInternalInventory(this, 1);
     private final SlotCraftingMatrix[] craftingSlots = new SlotCraftingMatrix[9];
     private final SlotCraftingTerm outputSlot;
@@ -34,9 +36,9 @@ public class ContainerBasicCraftingTerminal extends ContainerMEMonitorable imple
 
     public ContainerBasicCraftingTerminal(final InventoryPlayer playerInventory, final ITerminalHost monitorable) {
         super(playerInventory, monitorable, false);
-        this.ct = (PartCraftingTerminal) monitorable;
+        this.ct = (PartBasicCraftingTerminal) monitorable;
 
-        final IItemHandler crafting = this.ct.getInventoryByName("crafting");
+        final IItemHandler crafting = this.ct.getInventoryByName("craftingGrid");
 
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 3; x++) {
@@ -52,16 +54,14 @@ public class ContainerBasicCraftingTerminal extends ContainerMEMonitorable imple
         this.onCraftMatrixChanged(new WrapperInvItemHandler(crafting));
     }
 
-    /**
-     * Callback for when the crafting matrix is changed.
-     */
-
     @Override
     public void onCraftMatrixChanged(IInventory inventory) {
         final ContainerNull cn = new ContainerNull();
         final InventoryCrafting ic = new InventoryCrafting(cn, 3, 3);
 
         for (int x = 0; x < 9; x++) {
+            AE2ExtendedCraftingTable.LOGGER.error(this.craftingSlots[x].getSlotIndex());
+            AE2ExtendedCraftingTable.LOGGER.error(this.craftingSlots[x].getItemHandler().getSlots());
             ic.setInventorySlotContents(x, this.craftingSlots[x].getStack());
         }
 

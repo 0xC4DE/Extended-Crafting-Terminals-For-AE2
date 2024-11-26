@@ -24,6 +24,8 @@ public class PartGuiHandler implements IGuiHandler {
         }
 
         if (pos != null) {
+            AE2ExtendedCraftingTable.LOGGER.error("ORDINAL: " + PartGuiHandler.calculateOrdinal(gui, side));
+            AE2ExtendedCraftingTable.LOGGER.error("player.getEntityWorld: " + player.getEntityWorld());
             player.openGui(AE2ExtendedCraftingTable.instance, PartGuiHandler.calculateOrdinal(gui, side), player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ());
         }
     }
@@ -59,6 +61,7 @@ public class PartGuiHandler implements IGuiHandler {
         IPart part = PartGuiHandler.getPartFromWorld(world, new BlockPos(x,y,z), side);
         switch(guiID) {
             case BASIC_CRAFTING_TERMINAL:
+                PartBasicCraftingTerminal p = (PartBasicCraftingTerminal) part;
                 return new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part);
             default:
                 return null;
