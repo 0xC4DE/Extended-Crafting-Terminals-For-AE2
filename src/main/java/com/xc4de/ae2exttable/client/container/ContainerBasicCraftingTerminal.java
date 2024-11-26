@@ -1,20 +1,21 @@
 package com.xc4de.ae2exttable.client.container;
 
-
+import appeng.api.networking.security.IActionSource;
+import appeng.api.networking.storage.IBaseMonitor;
+import appeng.api.storage.IMEMonitorHandlerReceiver;
 import appeng.api.storage.ITerminalHost;
+import appeng.api.storage.data.IAEItemStack;
+import appeng.api.util.IConfigManager;
+import appeng.api.util.IConfigurableObject;
 import appeng.container.ContainerNull;
-import appeng.container.implementations.ContainerMEMonitorable;
 import appeng.container.slot.SlotCraftingMatrix;
 import appeng.container.slot.SlotCraftingTerm;
 import appeng.helpers.IContainerCraftingPacket;
-import appeng.parts.reporting.AbstractPartTerminal;
 import appeng.parts.reporting.PartCraftingTerminal;
 import appeng.tile.inventory.AppEngInternalInventory;
-import appeng.util.IConfigManagerHost;
 import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
 import appeng.util.inv.WrapperInvItemHandler;
-import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -26,7 +27,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
 
-public class ContainerBasicCraftingTerminal extends ContainerMEMonitorable implements IAEAppEngInventory, IContainerCraftingPacket {
+public class ContainerBasicCraftingTerminal extends ContainerMEMonitorableTwo implements IAEAppEngInventory, IContainerCraftingPacket {
 
     private final PartBasicCraftingTerminal ct;
     private final AppEngInternalInventory output = new AppEngInternalInventory(this, 1);
@@ -34,8 +35,8 @@ public class ContainerBasicCraftingTerminal extends ContainerMEMonitorable imple
     private final SlotCraftingTerm outputSlot;
     private IRecipe currentRecipe;
 
-    public ContainerBasicCraftingTerminal(final InventoryPlayer playerInventory, final ITerminalHost monitorable) {
-        super(playerInventory, monitorable, false);
+    public ContainerBasicCraftingTerminal(final InventoryPlayer ip, final ITerminalHost monitorable) {
+        super(ip, monitorable, false);
         this.ct = (PartBasicCraftingTerminal) monitorable;
 
         final IItemHandler crafting = this.ct.getInventoryByName("craftingGrid");
@@ -49,10 +50,14 @@ public class ContainerBasicCraftingTerminal extends ContainerMEMonitorable imple
         this.addSlotToContainer(this.outputSlot = new SlotCraftingTerm(this.getPlayerInv().player, this.getActionSource(), this
                 .getPowerSource(), monitorable, crafting, crafting, this.output, 131, -72 + 18, this));
 
-        this.bindPlayerInventory(playerInventory, 0, 0);
+        this.bindPlayerInventory(ip, 0, 0);
 
         this.onCraftMatrixChanged(new WrapperInvItemHandler(crafting));
     }
+
+    /**
+     * Callback for when the crafting matrix is changed.
+     */
 
     @Override
     public void onCraftMatrixChanged(IInventory inventory) {
@@ -60,8 +65,6 @@ public class ContainerBasicCraftingTerminal extends ContainerMEMonitorable imple
         final InventoryCrafting ic = new InventoryCrafting(cn, 3, 3);
 
         for (int x = 0; x < 9; x++) {
-            AE2ExtendedCraftingTable.LOGGER.error(this.craftingSlots[x].getSlotIndex());
-            AE2ExtendedCraftingTable.LOGGER.error(this.craftingSlots[x].getItemHandler().getSlots());
             ic.setInventorySlotContents(x, this.craftingSlots[x].getStack());
         }
 

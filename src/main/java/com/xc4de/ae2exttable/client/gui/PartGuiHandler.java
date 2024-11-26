@@ -24,8 +24,6 @@ public class PartGuiHandler implements IGuiHandler {
         }
 
         if (pos != null) {
-            AE2ExtendedCraftingTable.LOGGER.error("ORDINAL: " + PartGuiHandler.calculateOrdinal(gui, side));
-            AE2ExtendedCraftingTable.LOGGER.error("player.getEntityWorld: " + player.getEntityWorld());
             player.openGui(AE2ExtendedCraftingTable.instance, PartGuiHandler.calculateOrdinal(gui, side), player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ());
         }
     }

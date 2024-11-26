@@ -1,7 +1,10 @@
 package com.xc4de.ae2exttable.part;
 
+import appeng.api.implementations.tiles.IViewCellStorage;
 import appeng.api.networking.IGrid;
 import appeng.api.networking.storage.IStorageGrid;
+import appeng.tile.inventory.AppEngInternalInventory;
+import appeng.util.inv.IAEAppEngInventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,9 +17,11 @@ import appeng.api.storage.data.IAEStack;
 import appeng.api.util.IConfigManager;
 import appeng.me.GridAccessException;
 
-public abstract class PartSharedTerminal extends PartBase implements ITerminalHost {
+public abstract class PartSharedTerminal extends PartBase implements ITerminalHost, IAEAppEngInventory, IViewCellStorage {
 
     //private IConfigManager cm = new ThEConfigManager();
+    private final AppEngInternalInventory viewCell = new AppEngInternalInventory(this, 5);
+
 
     public PartSharedTerminal(Item item) {
         super(item);
@@ -25,12 +30,14 @@ public abstract class PartSharedTerminal extends PartBase implements ITerminalHo
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
+        this.viewCell.readFromNBT(nbt, "viewCell");
         //this.getConfigManager().readFromNBT(nbt);
     }
 
     @Override
     public void writeToNBT(NBTTagCompound nbt) {
         super.writeToNBT(nbt);
+        this.viewCell.writeToNBT(nbt, "viewCell");
         //this.getConfigManager().writeToNBT(nbt);
     }
 

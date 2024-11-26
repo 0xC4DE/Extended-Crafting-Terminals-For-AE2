@@ -25,7 +25,7 @@ import net.minecraftforge.items.IItemHandler;
 
 import java.util.List;
 
-public class PartBasicCraftingTerminal extends PartSharedTerminal {
+public class PartBasicCraftingTerminal extends AbstractPartTerminal {
 
     @PartModels
     protected static final ResourceLocation MODEL_BASE = new ResourceLocation("appliedenergistics2", "part/display_base");
@@ -47,7 +47,7 @@ public class PartBasicCraftingTerminal extends PartSharedTerminal {
     private final ExtInternalInventory craftingGrid = new ExtInternalInventory("craftingGrid", 9, 64);
 
     @Reflected
-    public PartBasicCraftingTerminal(final Item is) {
+    public PartBasicCraftingTerminal(final ItemStack is) {
         super(is);
     }
 
@@ -96,9 +96,9 @@ public class PartBasicCraftingTerminal extends PartSharedTerminal {
     }
 
     @Override
-    public boolean onActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
+    public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
         if (Platform.isServer()) {
-            PartGuiHandler.openGUI(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL, player, this.hostTile.getPos(), this.side);
+            PartGuiHandler.openGUI(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL, player, this.getHost().getTile().getPos(), this.getSide());
         }
 
         return true;

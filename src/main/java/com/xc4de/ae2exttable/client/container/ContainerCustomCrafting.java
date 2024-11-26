@@ -23,6 +23,7 @@ public class ContainerCustomCrafting extends ContainerBase {
     int yOffsetFirstSlot = 27;
 
     public ContainerCustomCrafting(InventoryPlayer player, TileCustomExtendedTable tile) {
+        super(player.player);
         this.tile = tile;
         this.matrix = new TableCraftingTwo(this, tile);
         this.result = new TableCraftResultTwo(tile);

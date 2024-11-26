@@ -27,7 +27,7 @@ public class ItemBasicCraftingTerminal extends Item implements IPartItem {
 
     @Override
     public @Nullable IPart createPartFromItemStack(ItemStack stack) {
-        return new PartBasicCraftingTerminal(stack.getItem());
+        return new PartBasicCraftingTerminal(stack);
     }
 
     @Override

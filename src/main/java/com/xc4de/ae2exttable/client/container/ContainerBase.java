@@ -4,14 +4,26 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.nbt.NBTTagCompound;
 
 public class ContainerBase extends Container {
+
+    public EntityPlayer player;
 
     int playerSlotWidth = 18; // always 18 probably
     int xOffsetPlayerInventory = 8;
     int yOffsetPlayerInventory = 88;
     int xOffsetPlayerHotbar = 8;
     int yOffsetPlayerHotbar = 146; // Doesn't change, solid line
+
+    public ContainerBase(EntityPlayer player) {
+        this.player = player;
+    }
+
+    @Override
+    public void detectAndSendChanges() {
+        super.detectAndSendChanges();
+    }
 
     public void addPlayerInventorySlots(InventoryPlayer player) {
         int wy, ex;
@@ -32,5 +44,9 @@ public class ContainerBase extends Container {
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
         return false;
+    }
+
+    public void handleJEITransfer(EntityPlayer player, NBTTagCompound tag) {
+
     }
 }
