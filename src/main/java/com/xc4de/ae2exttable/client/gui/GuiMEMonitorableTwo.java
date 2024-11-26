@@ -34,10 +34,16 @@ import appeng.parts.reporting.AbstractPartTerminal;
 import appeng.tile.misc.TileSecurityStation;
 import appeng.util.IConfigManagerHost;
 import appeng.util.Platform;
+import com.blakebr0.cucumber.helper.RenderHelper;
+import com.blakebr0.cucumber.util.Utils;
+import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.Tags;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.translation.I18n;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -61,12 +67,10 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
     private final ContainerMEMonitorable monitorableContainer;
     private GuiTabButton craftingStatusBtn;
     private MEGuiTextField searchField;
-    private GuiText myName;
     private int perRow = 9;
     private int reservedSpace = 0;
     private boolean customSortOrder = true;
     private int rows = 0;
-    private int maxRows = Integer.MAX_VALUE;
     private int standardSize;
     private GuiImgButton ViewBox;
     private GuiImgButton SortByBox;
@@ -77,45 +81,42 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
     private int currentMouseX = 0;
     private int currentMouseY = 0;
     private boolean delayedUpdate;
+    private AE2ExtendedGUIs guiType;
+    private ExtendedCraftingGUIConstants guiConst;
 
     protected int jeiOffset = Platform.isModLoaded("jei") ? 24 : 0;
 
     public GuiMEMonitorableTwo(final InventoryPlayer inventoryPlayer, final ITerminalHost te) {
-        this(inventoryPlayer, te, new ContainerMEMonitorable(inventoryPlayer, te));
+        this(inventoryPlayer, te, new ContainerMEMonitorable(inventoryPlayer, te), ExtendedCraftingGUIConstants.BASIC_CRAFTING_TERMINAL);
     }
 
-    public GuiMEMonitorableTwo(final InventoryPlayer inventoryPlayer, final ITerminalHost te, final ContainerMEMonitorable c) {
+    public GuiMEMonitorableTwo(final InventoryPlayer inventoryPlayer, final ITerminalHost te, final ContainerMEMonitorable c, ExtendedCraftingGUIConstants guiConst) {
         super(c);
         final GuiScrollbar scrollbar = new GuiScrollbar();
         this.setScrollBar(scrollbar);
         this.repo = new ItemRepo(scrollbar, this);
-
-        this.xSize = 185;
-        this.ySize = 204;
-
-        if (te instanceof IViewCellStorage) {
-            this.xSize += 33;
-        }
-
-        this.standardSize = this.xSize;
-
         this.configSrc = ((IConfigurableObject) this.inventorySlots).getConfigManager();
         (this.monitorableContainer = (ContainerMEMonitorable) this.inventorySlots).setGui(this);
 
         this.viewCell = te instanceof IViewCellStorage;
 
-        if (te instanceof TileSecurityStation) {
-            this.myName = GuiText.Security;
-        } else if (te instanceof WirelessTerminalGuiObject) {
-            this.myName = GuiText.WirelessTerminal;
-        } else if (te instanceof IPortableCell) {
-            this.myName = GuiText.PortableCell;
-        } else if (te instanceof IMEChest) {
-            this.myName = GuiText.Chest;
-        } else if (te instanceof AbstractPartTerminal) {
-            this.myName = GuiText.Terminal;
-        }
+        this.guiConst = guiConst;
+        this.xSize = guiConst.textureActualSize.x;
+        this.ySize = guiConst.textureActualSize.y;
+
+        // TODO: figure out what this actually means
+        this.standardSize = this.xSize;
+
+        craftingGridOffsetX = guiConst.craftingGridOffset.x;
+        craftingGridOffsetY = guiConst.craftingGridOffset.y;
+        this.setReservedSpace(guiConst.reservedSpace);
     }
+
+    public void setGuiType(AE2ExtendedGUIs gui) {
+        this.guiType = gui;
+    }
+
+    public AE2ExtendedGUIs getGuiType() { return this.guiType; };
 
     public void postUpdate(final List<IAEItemStack> list) {
         for (final IAEItemStack is : list) {
@@ -187,24 +188,18 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
     public void initGui() {
         Keyboard.enableRepeatEvents(true);
 
-        this.maxRows = this.getMaxRows();
-        this.perRow = AEConfig.instance()
-                .getConfigManager()
-                .getSetting(
-                        Settings.TERMINAL_STYLE) != TerminalStyle.FULL ? 9 : 9 + ((this.width - this.standardSize) / 18);
-
-        final int magicNumber = 114 + 1;
+        final int magicNumber = 114 + 1; // ???
         final int extraSpace = this.height - magicNumber - this.reservedSpace;
+        this.rows = (int) Math.floor(extraSpace/18); // Calculates rows of items
 
-        this.rows = (int) Math.floor(extraSpace / 18);
-        if (this.rows > this.maxRows) {
-            this.rows = this.maxRows;
+        if (this.rows < this.getMinRows()) { // Clamps the rows, cannot use Math.clamp because this isn't java 21 :(
+            this.rows = 3; // Minimum defined by the GUI element itself
+        } else if (this.rows > this.getMaxRows()) {
+            this.rows = this.getMaxRows();
         }
+        this.perRow = 9; // 9 items per row because I said so
 
-        if (this.rows < 3) {
-            this.rows = 3;
-        }
-
+        // Render internal ME Items
         this.getMeSlots().clear();
         for (int y = 0; y < this.rows; y++) {
             for (int x = 0; x < this.perRow; x++) {
@@ -223,6 +218,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
         // extra slots : 72
         // slot 18
 
+        // draws the slots, I think?
         this.ySize = magicNumber + this.rows * 18 + this.reservedSpace;
         // this.guiTop = top;
         final int unusedSpace = this.height - this.ySize;
@@ -336,7 +332,8 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
 
     @Override
     public void drawFG(final int offsetX, final int offsetY, final int mouseX, final int mouseY) {
-        this.fontRenderer.drawString(this.getGuiDisplayName(this.myName.getLocal()), 8, 6, 4210752);
+        String displayName = Utils.localize(Tags.MODID + "." + this.getGuiType().toString().toLowerCase());
+        this.fontRenderer.drawString(displayName, 8, 6, 4210752);
         this.fontRenderer.drawString(GuiText.inventory.getLocal(), 8, this.ySize - 96 + 3, 4210752);
 
         this.currentMouseX = mouseX;
@@ -365,21 +362,33 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
 
     @Override
     public void drawBG(final int offsetX, final int offsetY, final int mouseX, final int mouseY) {
+        int textureFullWidth, textureFullHeight;
+        textureFullWidth = guiConst.textureSize.x;
+        textureFullHeight = guiConst.textureSize.y;
 
-        this.bindTexture(this.getBackground());
-        final int x_width = 197;
-        this.drawTexturedModalRect(offsetX, offsetY, 0, 0, x_width, 18);
+        ResourceLocation loc = new ResourceLocation(Tags.MODID, this.getBackground());
+        this.mc.getTextureManager().bindTexture(loc);
+
+        // Thank you blake
+        //RenderHelper.drawTexturedModelRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize, textureFullWidth, textureFullHeight);
+        final int x_width = 197; // x_width for inventory rendering to cut out the cells
+
+        // Render area for search bar
+        RenderHelper.drawTexturedModelRect(offsetX, offsetY, 0, 0, x_width, 18, textureFullWidth, textureFullHeight);
 
         if (this.viewCell) {
-            this.drawTexturedModalRect(offsetX + x_width, offsetY + jeiOffset, x_width, 0, 46, 128);
+            // Renders the view cell bar away from the top right of the actual render window, away from JEI
+            RenderHelper.drawTexturedModelRect(offsetX + x_width, offsetY + jeiOffset, x_width, 0, 46, 128, textureFullWidth, textureFullHeight);
         }
 
+        // Renders the actual rows of items in the system
         for (int x = 0; x < this.rows; x++) {
-            this.drawTexturedModalRect(offsetX, offsetY + 18 + x * 18, 0, 18, x_width, 18);
+            RenderHelper.drawTexturedModelRect(offsetX, offsetY + 18 + x * 18, 0, 18, x_width, 18, textureFullWidth, textureFullHeight);
         }
 
-        this.drawTexturedModalRect(offsetX, offsetY + 16 + this.rows * 18 + this.lowerTextureOffset, 0, 106 - 18 - 18, x_width,
-                99 + this.reservedSpace - this.lowerTextureOffset);
+        // Draws grid and inventory
+        RenderHelper.drawTexturedModelRect(offsetX, offsetY + 16 + this.rows * 18 + this.lowerTextureOffset, 0, 106 - 18 - 18, x_width,
+                99 + this.reservedSpace - this.lowerTextureOffset, textureFullWidth, textureFullHeight);
 
         if (this.viewCell) {
             boolean update = false;
@@ -411,8 +420,16 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
     }
 
     protected int getMaxRows() {
-        return AEConfig.instance().getConfigManager().getSetting(Settings.TERMINAL_STYLE) == TerminalStyle.SMALL ? 6 : Integer.MAX_VALUE;
+        TerminalStyle style = (TerminalStyle) AEConfig.instance().getConfigManager().getSetting(Settings.TERMINAL_STYLE);
+        if (style == TerminalStyle.TALL)
+            return guiConst.maxRows; // Probably usually maxInt
+        return this.getMinRows();
     }
+
+    protected int getMinRows() {
+        return this.guiConst.minRows;
+    }
+
 
     protected void repositionSlot(final AppEngSlot s) {
         s.yPos = s.getY() + this.ySize - 78 - 5;
@@ -538,4 +555,6 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
     void setStandardSize(final int standardSize) {
         this.standardSize = standardSize;
     }
+
+    public ExtendedCraftingGUIConstants getGuiConst() {return this.guiConst;}
 }

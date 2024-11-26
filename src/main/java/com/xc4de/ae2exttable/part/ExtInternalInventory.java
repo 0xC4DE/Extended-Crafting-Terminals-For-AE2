@@ -17,7 +17,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 /**
  * Manages an internal inventory
  *
- * @author BrockWS
+ * Originally authored by BrockWS
+ * Adapted by 0xC4DE
  */
 public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTagList>, Iterable<ItemStack> {
 

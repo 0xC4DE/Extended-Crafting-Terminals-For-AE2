@@ -10,6 +10,9 @@ import appeng.core.localization.GuiText;
 import appeng.core.sync.network.NetworkHandler;
 import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
+import com.blakebr0.cucumber.util.Utils;
+import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -21,8 +24,9 @@ public class GuiBasicCraftingTerminal extends GuiMEMonitorableTwo {
     private GuiImgButton clearBtn;
 
     public GuiBasicCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {
-        super(inventoryPlayer, te, container);
-        this.setReservedSpace(73);
+        super(inventoryPlayer, te, container, ExtendedCraftingGUIConstants.BASIC_CRAFTING_TERMINAL);
+        setGuiType(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL);
+        // Kinda like a buffer between the inventory and crafting grid
     }
 
     @Override
@@ -48,19 +52,27 @@ public class GuiBasicCraftingTerminal extends GuiMEMonitorableTwo {
     @Override
     public void initGui() {
         super.initGui();
-        this.buttonList.add(this.clearBtn = new GuiImgButton(this.guiLeft + 92, this.guiTop + this.ySize - 156, Settings.ACTIONS, ActionItems.STASH));
+        // guiLeft is the offset from the left side of the screen
+        // guiTop is the offset from the top of the screen (often small)
+        // ySize is how tall it is (like a yMAX) It can be simplified
+        // This means the offset for the button is essentially an x,y pair
+        this.buttonList.add(this.clearBtn = new GuiImgButton(this.guiLeft + this.getGuiConst().clearButtonOffset.x, this.guiTop + this.ySize - this.getGuiConst().clearButtonOffset.y, Settings.ACTIONS, ActionItems.STASH));
         this.clearBtn.setHalfSize(true);
     }
 
     @Override
     public void drawFG(final int offsetX, final int offsetY, final int mouseX, final int mouseY) {
         super.drawFG(offsetX, offsetY, mouseX, mouseY);
-        this.fontRenderer.drawString(GuiText.CraftingTerminal.getLocal(), 8, this.ySize - 96 + 1 - this.getReservedSpace(), 4210752);
+        // TODO: Change text
+
+        String displayName = Utils.localize(Tags.MODID + "." + this.getGuiType().toString().toLowerCase() + ".crafting");
+        // TODO: 96 is a crafting table head offset, which doesn't work when tables are bigger than normal
+        this.fontRenderer.drawString(displayName, 8, this.ySize - 96 + 1 - this.getReservedSpace(), 4210752);
     }
 
     @Override
     protected String getBackground() {
-        return "guis/crafting.png";
+        return "textures/gui/basic_extended_crafting_terminal.png";
     }
 }
 

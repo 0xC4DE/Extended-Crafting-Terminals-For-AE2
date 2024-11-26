@@ -27,7 +27,7 @@ public class GuiCustomCrafting extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         this.fontRenderer.drawString(Utils.localize("container.ae2exttable.custom_extended_table"), 32, 6, 4210752);
-        this.fontRenderer.drawString(Utils.localize("container.inventory"), 8, this.ySize - 94, 4210752);
+        this.fontRenderer.drawString(Utils.localize("container.inventory.idk.name"), 8, this.ySize - 94, 4210752);
     }
 
     @Override

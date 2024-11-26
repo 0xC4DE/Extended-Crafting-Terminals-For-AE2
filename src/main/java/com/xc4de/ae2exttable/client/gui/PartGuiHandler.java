@@ -74,7 +74,6 @@ public class PartGuiHandler implements IGuiHandler {
 
         switch(guiID) {
             case BASIC_CRAFTING_TERMINAL:
-                // FIXME: Cast probably wont work.
                 return new GuiBasicCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part));
             default:
                 return null;

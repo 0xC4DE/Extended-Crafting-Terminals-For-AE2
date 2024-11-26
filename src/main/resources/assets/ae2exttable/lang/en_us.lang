@@ -6,4 +6,6 @@ container.ae2exttable.custom_extended_table=Cooler Crafting
 tooltip.ae2exttable.custom_extended_table=Because the Extended Crafting Table wasn't cool enough
 
 item.ae2exttable.basic_crafting_terminal.name=Basic Extended Crafting Terminal
+ae2exttable.basic_crafting_terminal=Terminal
+ae2exttable.basic_crafting_terminal.crafting=Basic Crafting Terminal
 
