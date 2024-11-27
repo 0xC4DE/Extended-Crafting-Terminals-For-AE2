@@ -13,3 +13,10 @@ item.ae2exttable.advanced_crafting_terminal.name=Advanced Extended Crafting Term
 ae2exttable.advanced_crafting_terminal=Terminal
 ae2exttable.advanced_crafting_terminal.crafting=Advanced Crafting
 
+item.ae2exttable.elite_crafting_terminal.name=Elite Extended Crafting Terminal
+ae2exttable.elite_crafting_terminal=Terminal
+ae2exttable.elite_crafting_terminal.crafting=Elite Crafting
+
+item.ae2exttable.ultimate_crafting_terminal.name=Ultimate Extended Crafting Terminal
+ae2exttable.ultimate_crafting_terminal=Terminal
+ae2exttable.ultimate_crafting_terminal.crafting=Ultimate Crafting

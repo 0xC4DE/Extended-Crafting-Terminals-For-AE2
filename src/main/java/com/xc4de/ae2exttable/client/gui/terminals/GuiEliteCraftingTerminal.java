@@ -10,7 +10,7 @@ import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
 import com.blakebr0.cucumber.util.Utils;
 import com.xc4de.ae2exttable.Tags;
-import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.ContainerEliteCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.client.gui.GuiButton;
@@ -22,7 +22,7 @@ public class GuiEliteCraftingTerminal extends GuiMEMonitorableTwo {
 
     private GuiImgButton clearBtn;
 
-    public GuiEliteCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {
+    public GuiEliteCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerEliteCraftingTerminal container) {
         super(inventoryPlayer, te, container, ExtendedCraftingGUIConstants.ELITE_CRAFTING_TERMINAL);
         setGuiType(AE2ExtendedGUIs.ELITE_CRAFTING_TERMINAL);
     }

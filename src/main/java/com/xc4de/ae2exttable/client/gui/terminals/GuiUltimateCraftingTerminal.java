@@ -11,6 +11,7 @@ import appeng.helpers.InventoryAction;
 import com.blakebr0.cucumber.util.Utils;
 import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.ContainerUltimateCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.client.gui.GuiButton;
@@ -22,7 +23,7 @@ public class GuiUltimateCraftingTerminal extends GuiMEMonitorableTwo {
 
     private GuiImgButton clearBtn;
 
-    public GuiUltimateCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {
+    public GuiUltimateCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerUltimateCraftingTerminal container) {
         super(inventoryPlayer, te, container, ExtendedCraftingGUIConstants.ULTIMATE_CRAFTING_TERMINAL);
         setGuiType(AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL);
     }
@@ -70,7 +71,7 @@ public class GuiUltimateCraftingTerminal extends GuiMEMonitorableTwo {
 
     @Override
     protected String getBackground() {
-        return "textures/gui/basic_extended_crafting_terminal.png";
+        return "textures/gui/ultimate_extended_crafting_terminal.png";
     }
 }
 

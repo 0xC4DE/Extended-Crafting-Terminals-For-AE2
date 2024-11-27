@@ -7,10 +7,16 @@ import appeng.api.util.AEPartLocation;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.client.container.ContainerAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.ContainerEliteCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.ContainerUltimateCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.gui.terminals.GuiEliteCraftingTerminal;
+import com.xc4de.ae2exttable.client.gui.terminals.GuiUltimateCraftingTerminal;
 import com.xc4de.ae2exttable.part.PartAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
+import com.xc4de.ae2exttable.part.PartEliteCraftingTerminal;
+import com.xc4de.ae2exttable.part.PartUltimateCraftingTerminal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -66,6 +72,10 @@ public class PartGuiHandler implements IGuiHandler {
                 return new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part);
             case ADVANCED_CRAFTING_TERMINAL:
                 return new ContainerAdvancedCraftingTerminal(player.inventory, (PartAdvancedCraftingTerminal) part);
+            case ELITE_CRAFTING_TERMINAL:
+                return new ContainerEliteCraftingTerminal(player.inventory, (PartEliteCraftingTerminal) part);
+            case ULTIMATE_CRAFTING_TERMINAL:
+                return new ContainerUltimateCraftingTerminal(player.inventory, (PartUltimateCraftingTerminal) part);
             default:
                 return null;
         }
@@ -82,6 +92,10 @@ public class PartGuiHandler implements IGuiHandler {
                 return new GuiBasicCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part));
             case ADVANCED_CRAFTING_TERMINAL:
                 return new GuiAdvancedCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerAdvancedCraftingTerminal(player.inventory, (PartAdvancedCraftingTerminal) part));
+            case ELITE_CRAFTING_TERMINAL:
+                return new GuiEliteCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerEliteCraftingTerminal(player.inventory, (PartEliteCraftingTerminal) part));
+            case ULTIMATE_CRAFTING_TERMINAL:
+                return new GuiUltimateCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerUltimateCraftingTerminal(player.inventory, (PartUltimateCraftingTerminal) part));
             default:
                 return null;
         }

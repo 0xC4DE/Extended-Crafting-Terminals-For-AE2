@@ -32,11 +32,14 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
     private IRecipe currentRecipe;
     protected final int slotWidth;
     protected final int slotHeight;
-    protected final SlotCraftingMatrix[] craftingSlots;
     private final PartSharedCraftingTerminal ct;
-    private final AppEngInternalInventory output;
     private final SlotCraftingTerm outputSlot;
     private final ExtendedCraftingGUIConstants guiConst;
+
+    protected final SlotCraftingMatrix[] craftingSlots;
+    private final AppEngInternalInventory output;
+
+    private static final int craftingSlotWidth = 18;
 
     public ContainerMEMonitorableTwo(final InventoryPlayer ip, final ITerminalHost monitorable, final boolean isWireless,
                                      final int slotWidth, final int slotHeight, ExtendedCraftingGUIConstants guiConst) {
@@ -50,14 +53,19 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
 
         final IItemHandler crafting = this.ct.getInventoryByName("craftingGrid");
 
+
+        int craftingTableXOffset = guiConst.craftingGridOffset.x;
+        int craftingTableYOffset = guiConst.craftingGridOffset.y;
         for (int y = 0; y < this.slotHeight; y++) {
             for (int x = 0; x < this.slotWidth; x++) {
-                this.addSlotToContainer(this.craftingSlots[x + y * this.slotHeight] = new SlotCraftingMatrix(this, crafting, x + y * this.slotHeight, 37 + x * 18, -72 + y * 18));
+                this.addSlotToContainer(this.craftingSlots[x + y * this.slotHeight] = new SlotCraftingMatrix(this, crafting, x + y * this.slotHeight, craftingTableXOffset + x * craftingSlotWidth, craftingTableYOffset + y * craftingSlotWidth));
             }
         }
 
+        int outputX = guiConst.outputSlotOffset.x;
+        int outputY = guiConst.outputSlotOffset.y;
         this.addSlotToContainer(this.outputSlot = new SlotCraftingTerm(this.getPlayerInv().player, this.getActionSource(), this
-                .getPowerSource(), monitorable, crafting, crafting, this.output, 131, -72 + 18, this));
+                .getPowerSource(), monitorable, crafting, crafting, this.output, outputX, outputY, this));
 
         // Player Inventory for Tables, offsetX is the distance from the left edge of the GUI to the left edge of the player inventory
         // where the players inventory left edge is the first "inner" pixel of the leftmost slot minus 9 pixels (because why not)
@@ -69,6 +77,8 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
 
     // TODO: This is where crafting matrix can be adapted to Extended Crafting
     public void onCraftMatrixChanged(IInventory inventory) {
+        return;
+        /*
         final ContainerNull cn = new ContainerNull();
         final InventoryCrafting ic = new InventoryCrafting(cn, this.slotWidth, this.slotHeight);
 
@@ -87,6 +97,8 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
 
             this.outputSlot.putStack(craftingResult);
         }
+
+         */
     }
 
     public void postUpdate(final List<IAEItemStack> list) {

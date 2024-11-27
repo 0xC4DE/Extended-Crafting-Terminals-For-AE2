@@ -73,7 +73,6 @@ public class TileCustomExtendedTable extends TileEntity implements IInventory, I
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack) {
-        AE2ExtendedCraftingTable.LOGGER.info("SETTING SLOT " + slot);
         this.matrix.set(slot, stack);
     }
 

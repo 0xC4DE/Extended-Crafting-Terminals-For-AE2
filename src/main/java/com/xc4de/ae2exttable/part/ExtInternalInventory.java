@@ -164,6 +164,7 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
 
     @Override
     public void deserializeNBT(NBTTagList nbt) {
+        AE2ExtendedCraftingTable.LOGGER.error("DESERIALIZING NBT: " + nbt);
         for (int i = 0; i < nbt.tagCount(); i++)
             this.slots.set(i, new ItemStack((NBTTagCompound) nbt.get(i)));
         this.markDirty();
