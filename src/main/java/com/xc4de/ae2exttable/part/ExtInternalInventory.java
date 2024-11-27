@@ -3,6 +3,7 @@ package com.xc4de.ae2exttable.part;
 import java.util.Collections;
 import java.util.Iterator;
 
+import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -83,6 +84,7 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     public void setInventorySlotContents(int index, ItemStack stack) {
         if (stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
             stack.setCount(this.getInventoryStackLimit());
+        AE2ExtendedCraftingTable.LOGGER.error("SETTING SLOT: " + index + " TO: " + stack);
         this.slots.set(index, stack);
         this.markDirty();
     }
@@ -156,6 +158,7 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     public NBTTagList serializeNBT() {
         NBTTagList nbt = new NBTTagList();
         this.slots.forEach(slot -> nbt.appendTag(slot.serializeNBT()));
+        AE2ExtendedCraftingTable.LOGGER.error("SERIALIZING NBT: " + nbt);
         return nbt;
     }
 

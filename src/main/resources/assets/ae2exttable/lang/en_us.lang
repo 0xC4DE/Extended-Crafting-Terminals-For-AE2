@@ -7,5 +7,9 @@ tooltip.ae2exttable.custom_extended_table=Because the Extended Crafting Table wa
 
 item.ae2exttable.basic_crafting_terminal.name=Basic Extended Crafting Terminal
 ae2exttable.basic_crafting_terminal=Terminal
-ae2exttable.basic_crafting_terminal.crafting=Basic Crafting Terminal
+ae2exttable.basic_crafting_terminal.crafting=Basic Crafting
+
+item.ae2exttable.advanced_crafting_terminal.name=Advanced Extended Crafting Terminal
+ae2exttable.advanced_crafting_terminal=Terminal
+ae2exttable.advanced_crafting_terminal.crafting=Advanced Crafting
 

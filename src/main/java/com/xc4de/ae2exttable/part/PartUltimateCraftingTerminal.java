@@ -9,16 +9,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec3d;
 
-public class PartBasicCraftingTerminal extends PartSharedCraftingTerminal {
+public class PartUltimateCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
-    public PartBasicCraftingTerminal(final ItemStack is) {
-        super(is, AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL.getGridSize());
+    public PartUltimateCraftingTerminal(final ItemStack is) {
+        super(is, AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL.getGridSize());
+
     }
 
     public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
         if (Platform.isServer()) {
-            PartGuiHandler.openGUI(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL, player, this.getHost().getTile().getPos(), this.getSide());
+            PartGuiHandler.openGUI(AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL, player, this.getHost().getTile().getPos(), this.getSide());
         }
 
         return true;

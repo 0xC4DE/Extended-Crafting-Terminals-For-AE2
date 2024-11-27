@@ -1,19 +1,18 @@
-package com.xc4de.ae2exttable.client.gui;
+package com.xc4de.ae2exttable.client.gui.terminals;
 
 import appeng.api.config.ActionItems;
 import appeng.api.config.Settings;
 import appeng.api.storage.ITerminalHost;
 import appeng.client.gui.widgets.GuiImgButton;
-import appeng.container.implementations.ContainerCraftingTerm;
 import appeng.container.slot.SlotCraftingMatrix;
-import appeng.core.localization.GuiText;
 import appeng.core.sync.network.NetworkHandler;
 import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
 import com.blakebr0.cucumber.util.Utils;
-import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
+import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -26,7 +25,6 @@ public class GuiBasicCraftingTerminal extends GuiMEMonitorableTwo {
     public GuiBasicCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {
         super(inventoryPlayer, te, container, ExtendedCraftingGUIConstants.BASIC_CRAFTING_TERMINAL);
         setGuiType(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL);
-        // Kinda like a buffer between the inventory and crafting grid
     }
 
     @Override

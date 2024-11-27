@@ -7,6 +7,7 @@ import appeng.items.parts.PartModels;
 import appeng.parts.PartModel;
 import appeng.parts.reporting.AbstractPartTerminal;
 import appeng.util.Platform;
+import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
@@ -39,12 +40,18 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
     public static final IPartModel MODELS_ON = new PartModel(MODEL_BASE, MODEL_ON, MODEL_STATUS_ON);
     public static final IPartModel MODELS_HAS_CHANNEL = new PartModel(MODEL_BASE, MODEL_ON, MODEL_STATUS_HAS_CHANNEL);
 
-    // This is important to change
-    protected final ExtInternalInventory craftingGrid = new ExtInternalInventory("craftingGrid", 9, 64);
+    protected ExtInternalInventory craftingGrid;
 
     @Reflected
     public PartSharedCraftingTerminal(final ItemStack is) {
         super(is);
+        craftingGrid = new ExtInternalInventory("craftingGrid", 3 * 3, 64);
+    }
+
+    @Reflected
+    public PartSharedCraftingTerminal(final ItemStack is, final int gridSize) {
+        super(is);
+        this.craftingGrid = new ExtInternalInventory("craftingGrid", gridSize, 64);
     }
 
     @Override
@@ -56,6 +63,7 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
                 drops.add(is);
             }
         }
+        drops.add(this.getItemStack());
     }
 
     @Override
@@ -69,12 +77,14 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
     @Override
     public void writeToNBT(final NBTTagCompound tag) {
         super.writeToNBT(tag);
+        AE2ExtendedCraftingTable.LOGGER.error("Writing NBT: " + tag);
         tag.setTag("craftingGrid", this.craftingGrid.serializeNBT());
     }
 
     @Override
     public IItemHandler getInventoryByName(final String name) {
         if (name.equals("craftingGrid")) {
+            AE2ExtendedCraftingTable.LOGGER.error("CRAFTING GRID: " + new InvWrapper(this.craftingGrid).getSlots());
             return new InvWrapper(this.craftingGrid);
         }
         return super.getInventoryByName(name);
@@ -88,7 +98,6 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
             return MODELS_ON;
         }
         return MODELS_OFF;
-
     }
 
     @Override

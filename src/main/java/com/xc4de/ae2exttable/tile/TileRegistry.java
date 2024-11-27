@@ -6,6 +6,5 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 public class TileRegistry {
     public static void init() {
         GameRegistry.registerTileEntity(TileCustomExtendedTable.class, new ResourceLocation("ae2exttable", "custom_extended_table"));
-        GameRegistry.registerTileEntity(TileBasicCraftingTerminal.class, new ResourceLocation("ae2exttable", "basic_crafting_terminal"));
     }
 }

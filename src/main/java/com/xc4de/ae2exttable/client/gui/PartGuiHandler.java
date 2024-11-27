@@ -5,7 +5,11 @@ import appeng.api.parts.IPartHost;
 import appeng.api.storage.ITerminalHost;
 import appeng.api.util.AEPartLocation;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.client.container.ContainerAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.gui.terminals.GuiAdvancedCraftingTerminal;
+import com.xc4de.ae2exttable.client.gui.terminals.GuiBasicCraftingTerminal;
+import com.xc4de.ae2exttable.part.PartAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
@@ -59,8 +63,9 @@ public class PartGuiHandler implements IGuiHandler {
         IPart part = PartGuiHandler.getPartFromWorld(world, new BlockPos(x,y,z), side);
         switch(guiID) {
             case BASIC_CRAFTING_TERMINAL:
-                PartBasicCraftingTerminal p = (PartBasicCraftingTerminal) part;
                 return new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part);
+            case ADVANCED_CRAFTING_TERMINAL:
+                return new ContainerAdvancedCraftingTerminal(player.inventory, (PartAdvancedCraftingTerminal) part);
             default:
                 return null;
         }
@@ -75,6 +80,8 @@ public class PartGuiHandler implements IGuiHandler {
         switch(guiID) {
             case BASIC_CRAFTING_TERMINAL:
                 return new GuiBasicCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part));
+            case ADVANCED_CRAFTING_TERMINAL:
+                return new GuiAdvancedCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerAdvancedCraftingTerminal(player.inventory, (PartAdvancedCraftingTerminal) part));
             default:
                 return null;
         }
