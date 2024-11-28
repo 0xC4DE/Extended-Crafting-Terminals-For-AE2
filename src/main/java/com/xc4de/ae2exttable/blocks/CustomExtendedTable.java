@@ -6,6 +6,7 @@ import com.xc4de.ae2exttable.client.gui.GuiHandler;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.tile.TileCustomExtendedTable;
+import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -67,7 +68,7 @@ public class CustomExtendedTable extends BlockBase implements ITileEntityProvide
             NonNullList<ItemStack> matrix = tile.getMatrix();
             for (int i = 0; i < matrix.size(); i++) {
                 ItemStack stack = matrix.get(i);
-                this.spawnAsEntity(world, pos, stack);
+                spawnAsEntity(world, pos, stack);
             }
         }
 

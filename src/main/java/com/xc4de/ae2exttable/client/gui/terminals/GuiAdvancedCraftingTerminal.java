@@ -64,7 +64,6 @@ public class GuiAdvancedCraftingTerminal extends GuiMEMonitorableTwo {
 
         String displayName = Utils.localize(Tags.MODID + "." + this.getGuiType().toString().toLowerCase() + ".crafting");
 
-        // TODO: 96 is a crafting table head offset, which doesn't work when tables are bigger than normal, probably
         this.fontRenderer.drawString(displayName, 8, this.ySize - 96 + 1 - this.getReservedSpace(), 4210752);
     }
 

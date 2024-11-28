@@ -1,6 +1,5 @@
 package com.xc4de.ae2exttable.tile;
 
-import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.interfaces.IAE2ExtendedTable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

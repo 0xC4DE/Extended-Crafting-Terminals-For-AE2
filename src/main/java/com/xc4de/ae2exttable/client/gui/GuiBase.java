@@ -6,5 +6,5 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 public abstract class GuiBase extends GuiContainer {
    public GuiBase(ContainerBase container) {
        super(container);
-   };
+   }
 }

@@ -32,7 +32,7 @@ public class TableResultHandlerTwo extends Slot {
 
         for(int i = 0; i < remaining.size(); ++i) {
             ItemStack itemstack = this.matrix.getStackInSlot(i);
-            ItemStack itemstack1 = (ItemStack)remaining.get(i);
+            ItemStack itemstack1 = remaining.get(i);
             if (!itemstack.isEmpty()) {
                 this.matrix.decrStackSize(i, 1);
                 itemstack = this.matrix.getStackInSlot(i);

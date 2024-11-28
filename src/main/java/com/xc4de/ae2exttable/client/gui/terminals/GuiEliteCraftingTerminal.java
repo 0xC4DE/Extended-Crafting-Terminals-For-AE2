@@ -61,10 +61,8 @@ public class GuiEliteCraftingTerminal extends GuiMEMonitorableTwo {
     @Override
     public void drawFG(final int offsetX, final int offsetY, final int mouseX, final int mouseY) {
         super.drawFG(offsetX, offsetY, mouseX, mouseY);
-        // TODO: Change text
 
         String displayName = Utils.localize(Tags.MODID + "." + this.getGuiType().toString().toLowerCase() + ".crafting");
-        // TODO: 96 is a crafting table head offset, which doesn't work when tables are bigger than normal
         this.fontRenderer.drawString(displayName, 8, this.ySize - 96 + 1 - this.getReservedSpace(), 4210752);
     }
 

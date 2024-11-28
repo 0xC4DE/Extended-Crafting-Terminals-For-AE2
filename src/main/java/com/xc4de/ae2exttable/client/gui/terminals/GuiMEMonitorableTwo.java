@@ -31,6 +31,7 @@ import appeng.util.IConfigManagerHost;
 import appeng.util.Platform;
 import com.blakebr0.cucumber.helper.RenderHelper;
 import com.blakebr0.cucumber.util.Utils;
+import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
@@ -77,7 +78,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
     private int currentMouseY = 0;
     private boolean delayedUpdate;
     private AE2ExtendedGUIs guiType;
-    private ExtendedCraftingGUIConstants guiConst;
+    private final ExtendedCraftingGUIConstants guiConst;
 
     protected int jeiOffset = Platform.isModLoaded("jei") ? 24 : 0;
 
@@ -111,7 +112,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
         this.guiType = gui;
     }
 
-    public AE2ExtendedGUIs getGuiType() { return this.guiType; };
+    public AE2ExtendedGUIs getGuiType() { return this.guiType; }
 
     public void postUpdate(final List<IAEItemStack> list) {
         for (final IAEItemStack is : list) {
@@ -208,14 +209,14 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
             this.xSize = this.standardSize;
         }
 
+        // Determines guiTop and guiLeft
+        // ensures all player slots are slotME
         super.initGui();
         // full size : 204
         // extra slots : 72
         // slot 18
 
-        // draws the slots, I think?
         this.ySize = magicNumber + this.rows * 18 + this.reservedSpace;
-        // this.guiTop = top;
         final int unusedSpace = this.height - this.ySize;
         this.guiTop = (int) Math.floor(unusedSpace / (unusedSpace < 0 ? 3.8f : 2.0f));
 
@@ -229,6 +230,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
             }
         }
 
+        // Adding the buttons for terminal styling
         if (this.viewCell) {
             this.buttonList
                     .add(this.ViewBox = new GuiImgButton(this.guiLeft - 18, offset, Settings.VIEW_MODE, this.configSrc.getSetting(Settings.VIEW_MODE)));
@@ -251,6 +253,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
                 .getConfigManager()
                 .getSetting(Settings.TERMINAL_STYLE)));
 
+        // Adding Search bar
         this.searchField = new MEGuiTextField(this.fontRenderer, this.guiLeft + Math.max(80, this.offsetX), this.guiTop + 4, 90, 12);
         this.searchField.setEnableBackgroundDrawing(false);
         this.searchField.setMaxStringLength(25);
@@ -258,12 +261,14 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
         this.searchField.setSelectionColor(0xFF008000);
         this.searchField.setVisible(true);
 
+        // Button for Crafting status
         if (this.viewCell) {
             this.buttonList.add(this.craftingStatusBtn = new GuiTabButton(this.guiLeft + 170, this.guiTop - 4, 2 + 11 * 16, GuiText.CraftingStatus
                     .getLocal(), this.itemRender));
             this.craftingStatusBtn.setHideEdge(13);
         }
 
+        // More search related objects
         final Enum searchModeSetting = AEConfig.instance().getConfigManager().getSetting(Settings.SEARCH_MODE);
 
         this.isAutoFocus = SearchBoxMode.AUTOSEARCH == searchModeSetting || SearchBoxMode.JEI_AUTOSEARCH == searchModeSetting || SearchBoxMode.AUTOSEARCH_KEEP == searchModeSetting || SearchBoxMode.JEI_AUTOSEARCH_KEEP == searchModeSetting;
@@ -283,6 +288,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
             this.setScrollBar();
         }
 
+        // Render the internal crafting grid slots NOT slice of GUI
         craftingGridOffsetX = Integer.MAX_VALUE;
         craftingGridOffsetY = Integer.MAX_VALUE;
 
@@ -302,6 +308,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
             }
         }
 
+        // Purpose: ???
         craftingGridOffsetX -= 25;
         craftingGridOffsetY -= 6;
 
@@ -364,26 +371,36 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
         ResourceLocation loc = new ResourceLocation(Tags.MODID, this.getBackground());
         this.mc.getTextureManager().bindTexture(loc);
 
-        // Thank you blake
+        // Thank you blake for drawTexturedMODELRect.
         //RenderHelper.drawTexturedModelRect(offsetX, offsetY, 0, 0, this.xSize, this.ySize, textureFullWidth, textureFullHeight);
-        final int x_width = 197; // x_width for inventory rendering to cut out the cells
+        int x_width = 197; // INITIAL x_width for inventory rendering to cut out the cells, needs to be bigger for other GUIs
 
         // Render area for search bar
         RenderHelper.drawTexturedModelRect(offsetX, offsetY, 0, 0, x_width, 18, textureFullWidth, textureFullHeight);
 
         if (this.viewCell) {
             // Renders the view cell bar away from the top right of the actual render window, away from JEI
-            RenderHelper.drawTexturedModelRect(offsetX + x_width, offsetY + jeiOffset, x_width, 0, 46, 128, textureFullWidth, textureFullHeight);
+            RenderHelper.drawTexturedModelRect(offsetX + x_width, offsetY , x_width, 0, 46, 104, textureFullWidth, textureFullHeight);
         }
 
-        // Renders the actual rows of items in the system
+        // Renders the actual rows of items inside the AE/ME system
         for (int x = 0; x < this.rows; x++) {
             RenderHelper.drawTexturedModelRect(offsetX, offsetY + 18 + x * 18, 0, 18, x_width, 18, textureFullWidth, textureFullHeight);
         }
 
-        // Draws grid and inventory
+        // Draws grid and then inventory, needs to be segmented.
+        // 104 is the default height of the view cell box that is stored in the sprite.
+        // 106-18-18 is the y value of the texture up to the point that the standard ME grid is 'done'. hence the starting point.
+        // 37 is my magic offset to avoid all view cell texture.
         RenderHelper.drawTexturedModelRect(offsetX, offsetY + 16 + this.rows * 18 + this.lowerTextureOffset, 0, 106 - 18 - 18, x_width,
-                99 + this.reservedSpace - this.lowerTextureOffset, textureFullWidth, textureFullHeight);
+                37, textureFullWidth, textureFullHeight);
+
+        // Swapped to full width as I am now out of the way of the view cells, probably
+        // Start at oldY+37 to actually render the rest of it.
+        // Also add 37 to internal starting point. then remove 37 from ending point
+        RenderHelper.drawTexturedModelRect(offsetX, (offsetY + 16 + this.rows * 18 + this.lowerTextureOffset) + 37, 0, 106 - 18 - 18 + 37,
+                textureFullWidth, 99 + this.reservedSpace - 37, textureFullWidth, textureFullHeight);
+
 
         if (this.viewCell) {
             boolean update = false;

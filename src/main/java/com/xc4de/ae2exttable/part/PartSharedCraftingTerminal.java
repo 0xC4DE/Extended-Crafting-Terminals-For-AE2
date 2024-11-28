@@ -45,13 +45,13 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
     @Reflected
     public PartSharedCraftingTerminal(final ItemStack is) {
         super(is);
-        craftingGrid = new ExtInternalInventory("craftingGrid", 3 * 3, 64);
+        craftingGrid = new ExtInternalInventory("crafting", 3 * 3, 64);
     }
 
     @Reflected
     public PartSharedCraftingTerminal(final ItemStack is, final int gridSize) {
         super(is);
-        this.craftingGrid = new ExtInternalInventory("craftingGrid", gridSize, 64);
+        this.craftingGrid = new ExtInternalInventory("crafting", gridSize, 64);
     }
 
     @Override
@@ -69,8 +69,8 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
     @Override
     public void readFromNBT(final NBTTagCompound tag) {
         super.readFromNBT(tag);
-        if (tag.hasKey("craftingGrid")) {
-            this.craftingGrid.deserializeNBT(tag.getTagList("craftingGrid", 10));
+        if (tag.hasKey("crafting")) {
+            this.craftingGrid.deserializeNBT(tag.getTagList("crafting", 10));
         }
     }
 
@@ -78,12 +78,12 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
     public void writeToNBT(final NBTTagCompound tag) {
         super.writeToNBT(tag);
         AE2ExtendedCraftingTable.LOGGER.error("Writing NBT: " + tag);
-        tag.setTag("craftingGrid", this.craftingGrid.serializeNBT());
+        tag.setTag("crafting", this.craftingGrid.serializeNBT());
     }
 
     @Override
     public IItemHandler getInventoryByName(final String name) {
-        if (name.equals("craftingGrid")) {
+        if (name.equals("crafting")) {
             AE2ExtendedCraftingTable.LOGGER.error("CRAFTING GRID: " + new InvWrapper(this.craftingGrid).getSlots());
             return new InvWrapper(this.craftingGrid);
         }

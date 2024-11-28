@@ -5,7 +5,7 @@ import net.minecraft.inventory.InventoryCraftResult;
 import net.minecraft.item.ItemStack;
 
 public class TableCraftResultTwo extends InventoryCraftResult {
-    private IAE2ExtendedTable tile;
+    private final IAE2ExtendedTable tile;
 
     public TableCraftResultTwo(IAE2ExtendedTable tile) {
         this.tile = tile;

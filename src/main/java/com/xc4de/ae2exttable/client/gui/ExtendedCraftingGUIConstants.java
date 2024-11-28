@@ -7,9 +7,9 @@ import com.xc4de.ae2exttable.util.Vector2D;
 public enum ExtendedCraftingGUIConstants {
     // AE2 crafting terminal shares this
     BASIC_CRAFTING_TERMINAL(256,256, 230, 241, 37, -72, 92, 156, 0, 0,131,-54,73, 3, Integer.MAX_VALUE),
-    ADVANCED_CRAFTING_TERMINAL(512,512, 230, 269, 15, -103, 106, 186, 1, 0, 143,-68,101, 3, Integer.MAX_VALUE),
-    ELITE_CRAFTING_TERMINAL(512,512, 230, 303, 9, -138, 136, 223, 8, 0, 173,-85,136, 3, Integer.MAX_VALUE),
-    ULTIMATE_CRAFTING_TERMINAL(512,512, 230, 340, 9, -174, 172, 257, 27, 0, 206,-103,173, 3, Integer.MAX_VALUE);
+    ADVANCED_CRAFTING_TERMINAL(512,512, 230, 269, 15, -103, 107, 186, 10-9, 0, 143,-68,101, 3, Integer.MAX_VALUE),
+    ELITE_CRAFTING_TERMINAL(512,512, 230, 303, 9, -138, 135, 223, 17-9, 0, 165,-85,136, 3, Integer.MAX_VALUE),
+    ULTIMATE_CRAFTING_TERMINAL(512,512, 230, 340, 9, -174, 172, 258, 38-9, 0, 206,156,172, 3, Integer.MAX_VALUE);
 
 
     public final Vector2D textureSize;
@@ -25,6 +25,8 @@ public enum ExtendedCraftingGUIConstants {
     public final Vector2D outputSlotOffset;
 
     // Somewhat nebulous argument that defines the space that the area with the crafting grid will take up
+    // This is calculated as the Y value from the bottom dark pixel of the last ME Row BEFORE the crafting grid all the way down to the bottom minus 99, why 99? idk.
+    // All I know is that it works when you do the above
     public final int reservedSpace;
     public final int minRows; // These are the rows of AE2 Items NOT anything with crafting
     public final int maxRows;
