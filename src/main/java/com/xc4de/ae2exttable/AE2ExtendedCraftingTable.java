@@ -12,9 +12,9 @@ import org.apache.logging.log4j.Logger;
 import net.minecraftforge.fml.common.SidedProxy;
 
 import com.xc4de.ae2exttable.proxy.CommonProxy;
-import com.xc4de.ae2exttable.blocks.BlockRegistry;
 
-@Mod(modid = Tags.MODID, version = Tags.VERSION, name = Tags.MODNAME, acceptedMinecraftVersions = "[1.12.2]")
+@Mod(modid = Tags.MODID, version = Tags.VERSION, name = Tags.MODNAME, acceptedMinecraftVersions = "[1.12.2]",
+        dependencies = "required-after:appliedenergistics2;")
 public class AE2ExtendedCraftingTable {
 
     public static final Logger LOGGER = LogManager.getLogger(Tags.MODID);
@@ -26,7 +26,6 @@ public class AE2ExtendedCraftingTable {
 
     @SidedProxy(clientSide="com.xc4de.ae2exttable.proxy.ClientProxy", serverSide="com.xc4de.ae2exttable.proxy.ServerProxy")
     public static CommonProxy proxy;
-
 
     @EventHandler
     // register server commands in this event handler (Remove if not needed)

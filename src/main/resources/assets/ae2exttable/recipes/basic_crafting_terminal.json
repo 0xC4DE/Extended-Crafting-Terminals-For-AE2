@@ -1,0 +1,40 @@
+{
+  "conditions": [
+    {
+      "type": "minecraft:item_exists",
+      "item": "ae2exttable:basic_crafting_terminal"
+    }
+  ],
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "BAB",
+    "CIC",
+    "BSB"
+  ],
+  "key": {
+    "A": {
+      "type": "appliedenergistics2:part",
+      "part": "material.engineering_processor"
+    },
+    "B": {
+      "item": "extendedcrafting:material",
+      "data": 8
+    },
+    "C": {
+      "item": "extendedcrafting:table_basic",
+      "data": 0
+    },
+    "I": {
+      "type": "appliedenergistics2:part",
+      "part": "part.crafting_terminal"
+    },
+    "S": {
+      "item": "extendedcrafting:material",
+      "data": 2
+    }
+  },
+  "result": {
+    "item": "ae2exttable:basic_crafting_terminal",
+    "count": 1
+  }
+}

@@ -84,7 +84,6 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     public void setInventorySlotContents(int index, ItemStack stack) {
         if (stack.isEmpty() && stack.getCount() > this.getInventoryStackLimit())
             stack.setCount(this.getInventoryStackLimit());
-        AE2ExtendedCraftingTable.LOGGER.error("SETTING SLOT: " + index + " TO: " + stack);
         this.slots.set(index, stack);
         this.markDirty();
     }
@@ -158,13 +157,11 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     public NBTTagList serializeNBT() {
         NBTTagList nbt = new NBTTagList();
         this.slots.forEach(slot -> nbt.appendTag(slot.serializeNBT()));
-        AE2ExtendedCraftingTable.LOGGER.error("SERIALIZING NBT: " + nbt);
         return nbt;
     }
 
     @Override
     public void deserializeNBT(NBTTagList nbt) {
-        AE2ExtendedCraftingTable.LOGGER.error("DESERIALIZING NBT: " + nbt);
         for (int i = 0; i < nbt.tagCount(); i++)
             this.slots.set(i, new ItemStack((NBTTagCompound) nbt.get(i)));
         this.markDirty();

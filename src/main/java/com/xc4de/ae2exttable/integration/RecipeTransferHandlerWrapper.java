@@ -4,7 +4,6 @@
  * https://github.com/AE2-UEL/Applied-Energistics-2/blob/master/src/main/java/appeng/integration/modules/jei/RecipeTransferHandler.java
  */
 package com.xc4de.ae2exttable.integration;
-
 import java.lang.reflect.Constructor;
 
 public class RecipeTransferHandlerWrapper {
@@ -17,4 +16,3 @@ public class RecipeTransferHandlerWrapper {
         constructor.setAccessible(true);
     }
 }
-

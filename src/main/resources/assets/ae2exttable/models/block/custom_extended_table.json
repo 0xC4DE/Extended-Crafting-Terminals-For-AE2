@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "ae2exttable:blocks/custom_extended_table",
-    "particle": "ae2exttable:blocks/custom_extended_table"
-  }
-}

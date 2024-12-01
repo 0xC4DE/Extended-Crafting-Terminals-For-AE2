@@ -1,9 +1,7 @@
 package com.xc4de.ae2exttable;
 
-import mezz.jei.api.gui.IDrawable;
-import net.minecraft.client.Minecraft;
+import com.xc4de.ae2exttable.items.ItemRegistry;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,6 +12,6 @@ public class AE2ExtendedTableTab extends CreativeTabs {
 
     @Override
     public @NotNull ItemStack createIcon() {
-        return new ItemStack(Blocks.DIRT);
+        return new ItemStack(ItemRegistry.BASIC_TERMINAL);
     }
 }

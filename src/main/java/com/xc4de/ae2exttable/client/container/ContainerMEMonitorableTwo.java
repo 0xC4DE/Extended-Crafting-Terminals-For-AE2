@@ -7,7 +7,6 @@ package com.xc4de.ae2exttable.client.container;
 import appeng.api.implementations.tiles.IViewCellStorage;
 import appeng.container.slot.SlotRestrictedInput;
 import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
-import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import net.minecraft.init.Blocks;
 import appeng.api.storage.ITerminalHost;
 import appeng.api.storage.data.IAEItemStack;
@@ -56,7 +55,6 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
             this.inventorySlots.remove(this.inventorySlots.size() - 1);
         }
         for(int y = 0; y < 5; ++y) {
-            AE2ExtendedCraftingTable.LOGGER.info("Adding slot for y: " + jeiOffset);
             this.cellView[y] = new SlotRestrictedInput(SlotRestrictedInput.PlacableItemType.VIEW_CELL, ((IViewCellStorage)monitorable).getViewCellStorage(), y, 206, y * 18 + 8, this.getInventoryPlayer());
             this.cellView[y].setAllowEdit(this.canAccessViewCells);
             super.addSlotToContainer(this.cellView[y]);
@@ -107,26 +105,6 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
         } else {
             this.outputSlot.putStack(result);
         }
-        /*
-        this.result.setInventorySlotContents(0, result);
-
-        for (int x = 0; x < this.slotWidth*this.slotHeight; x++) {
-            ic.setInventorySlotContents(x, this.craftingSlots[x].getStack());
-        }
-
-        if (this.currentRecipe == null || !this.currentRecipe.matches(ic, this.getPlayerInv().player.world)) {
-            this.currentRecipe = CraftingManager.findMatchingRecipe(ic, this.getPlayerInv().player.world);
-        }
-
-        if (this.currentRecipe == null) {
-            this.outputSlot.putStack(ItemStack.EMPTY);
-        } else {
-            final ItemStack craftingResult = this.currentRecipe.getCraftingResult(ic);
-
-            this.outputSlot.putStack(craftingResult);
-        }
-
-         */
     }
 
     public void postUpdate(final List<IAEItemStack> list) {
