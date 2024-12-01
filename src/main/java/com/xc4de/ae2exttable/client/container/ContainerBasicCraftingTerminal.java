@@ -2,6 +2,7 @@ package com.xc4de.ae2exttable.client.container;
 
 import appeng.api.storage.ITerminalHost;
 
+import appeng.container.ContainerOpenContext;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.entity.player.InventoryPlayer;
 

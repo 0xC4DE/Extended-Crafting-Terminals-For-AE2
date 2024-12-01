@@ -2,37 +2,28 @@
   "conditions": [
     {
       "type": "minecraft:item_exists",
-      "item": "ae2exttable:basic_crafting_terminal"
+      "item": "ae2exttable:ultimate_crafting_terminal"
     }
   ],
-  "type": "forge:ore_shaped",
-  "pattern": [
-    "BAB",
-    "CIC",
-    "BSB"
-  ],
-  "key": {
-    "A": {
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
       "type": "appliedenergistics2:part",
       "part": "material.engineering_processor"
     },
-    "B": {
+    {
       "item": "extendedcrafting:material",
       "data": 11
     },
-    "C": {
+    {
       "item": "extendedcrafting:table_ultimate",
       "data": 0
     },
-    "I": {
+    {
       "type": "appliedenergistics2:part",
       "part": "part.crafting_terminal"
-    },
-    "S": {
-      "item": "extendedcrafting:material",
-      "data": 17
     }
-  },
+  ],
   "result": {
     "item": "ae2exttable:ultimate_crafting_terminal",
     "count": 1
