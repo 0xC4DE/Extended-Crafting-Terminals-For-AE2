@@ -16,6 +16,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class PartUltimateCraftingTerminal extends PartSharedCraftingTerminal {
 
+    public static AE2ExtendedGUIs guiType = AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL;
+
     public static ResourceLocation[] resources = new ResourceLocation[] {
             new ResourceLocation(Tags.MODID, "part/display_base"), // MODEL_BASE
             new ResourceLocation(Tags.MODID, "part/ultimate_on"), // MODEL_ON
@@ -31,13 +33,13 @@ public class PartUltimateCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
     public PartUltimateCraftingTerminal(final ItemStack is) {
-        super(is, AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL.getGridSize());
+        super(is, guiType.getGridSize());
 
     }
 
     public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
         if (Platform.isServer()) {
-            PartGuiHandler.openGUI(AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL, player, this.getHost().getTile().getPos(), this.getSide());
+            PartGuiHandler.openGUI(guiType, player, this.getHost().getTile().getPos(), this.getSide());
         }
         return true;
     }

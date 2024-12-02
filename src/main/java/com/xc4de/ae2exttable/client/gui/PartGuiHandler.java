@@ -72,7 +72,7 @@ public class PartGuiHandler implements IGuiHandler {
         AE2ExtendedGUIs guiID = PartGuiHandler.getGUIFromOrdinal(ID);
         AEPartLocation side = PartGuiHandler.getSideFromOrdinal(ID);
         final boolean usingItemOnTile = ((ID >> 3) & 1) == 1;
-        if (guiID.ordinal() > 3) { // idk is item
+        if (guiID.ordinal() > 4) { // idk is item
            ItemStack it = ItemStack.EMPTY;
            if (usingItemOnTile) {
                it = player.inventory.getCurrentItem();
@@ -92,17 +92,20 @@ public class PartGuiHandler implements IGuiHandler {
             if (part == null) {
                 return null;
             }
-            return this.updateGui(this.getGuiObject(guiID, ItemStack.EMPTY, player, world, x, y, z, side), world, x, y, z, side, part);
+            Object gui = this.getGuiObject(guiID, ItemStack.EMPTY, player, world, x, y, z, side);
+            return this.updateGui(gui, world, x, y, z, side, part);
         }
-        return this.updateGui(this.getGuiObject(guiID, ItemStack.EMPTY, player, world, x, y, z, side), world, x, y, z, side, ItemStack.EMPTY);
+
+        Object gui = this.getGuiObject(guiID, ItemStack.EMPTY, player, world, x, y, z, side);
+        return this.updateGui(gui, world, x, y, z, side, ItemStack.EMPTY);
     }
 
     private Object getGuiObject(final AE2ExtendedGUIs guiID, final ItemStack myItem, final EntityPlayer player, final World world, final int x, final int y, final int z, final AEPartLocation side) {
-        IPart part = PartGuiHandler.getPartFromWorld(world, new BlockPos(x,y,z), side);
         // final IWirelessTermHandler wh = AEApi.instance().registries().wireless().getWirelessTerminalHandler(it);
         //if (wh != null) {
         //   return new WirelessTerminalGuiObject(wh, myItem, player, world, x, y, z, side);
         //}
+        IPart part = PartGuiHandler.getPartFromWorld(world, new BlockPos(x,y,z), side);
         switch(guiID) {
             case BASIC_CRAFTING_TERMINAL:
                 return new ContainerBasicCraftingTerminal(player.inventory, (PartBasicCraftingTerminal) part);

@@ -1,6 +1,7 @@
 package com.xc4de.ae2exttable.client.container;
 
 import appeng.api.storage.ITerminalHost;
+import appeng.core.sync.packets.PacketSwitchGuis;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.entity.player.InventoryPlayer;
 

@@ -1,32 +1,21 @@
 package com.xc4de.ae2exttable.part;
 
-import appeng.api.parts.IPartModel;
-import appeng.api.util.AEColor;
-import appeng.core.AppEng;
 import appeng.helpers.Reflected;
-import appeng.items.parts.PartModels;
-import appeng.parts.PartModel;
 import appeng.parts.reporting.AbstractPartTerminal;
-import appeng.util.Platform;
-import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
-import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
-import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
 
-
+    public static AE2ExtendedGUIs guiType = null;
     protected ExtInternalInventory craftingGrid;
 
     @Reflected
@@ -77,4 +66,8 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
 
     @Override
     public abstract boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos);
+
+    // Overwrite me!
+    public AE2ExtendedGUIs getGuiType(){return null;};
+
 }

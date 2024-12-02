@@ -50,6 +50,7 @@ import java.util.List;
 
 public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, IConfigManagerHost {
 
+    public static AE2ExtendedGUIs guiType;
     private static int craftingGridOffsetX;
     private static int craftingGridOffsetY;
 
@@ -77,7 +78,6 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
     private int currentMouseX = 0;
     private int currentMouseY = 0;
     private boolean delayedUpdate;
-    private AE2ExtendedGUIs guiType;
     private final ExtendedCraftingGUIConstants guiConst;
 
     protected int jeiOffset = Platform.isModLoaded("jei") ? 24 : 0;

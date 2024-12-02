@@ -10,7 +10,6 @@ import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
 import com.blakebr0.cucumber.util.Utils;
 import com.xc4de.ae2exttable.Tags;
-import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.ContainerUltimateCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;

@@ -1,10 +1,12 @@
 package com.xc4de.ae2exttable.proxy;
 
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.client.ItemColors;
 import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
 import com.xc4de.ae2exttable.crafting.RecipeRegister;
 import com.xc4de.ae2exttable.items.ItemRegistry;
+import com.xc4de.ae2exttable.network.ExtendedTerminalNetworkHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -36,5 +38,6 @@ public class CommonProxy {
 
     public void postInit(FMLPostInitializationEvent event) {
         RecipeRegister.init();
+        ExtendedTerminalNetworkHandler.init(Tags.MODID);
     }
 }
