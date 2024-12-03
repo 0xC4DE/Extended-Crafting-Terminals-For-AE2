@@ -1,0 +1,16 @@
+{
+  "package": "com.xc4de.ae2exttable.mixins",
+  "refmap": "mixins.ae2exttable.refmap.json",
+  "target": "@env(DEFAULT)",
+  "minVersion": "0.8",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "ContainerCraftConfirmMixin",
+    "GuiCraftAmountMixin",
+    "GuiCraftConfirmMixin",
+    "GuiCraftingStatusMixin"
+  ],
+  "client": [
+  ],
+  "server": []
+}

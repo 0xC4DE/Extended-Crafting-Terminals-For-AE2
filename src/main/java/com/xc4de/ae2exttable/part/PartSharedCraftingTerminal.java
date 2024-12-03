@@ -15,7 +15,7 @@ import java.util.List;
 
 public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
 
-    public static AE2ExtendedGUIs guiType = null;
+    public AE2ExtendedGUIs guiType;
     protected ExtInternalInventory craftingGrid;
 
     @Reflected
@@ -68,6 +68,6 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
     public abstract boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos);
 
     // Overwrite me!
-    public AE2ExtendedGUIs getGuiType(){return null;};
+    public abstract AE2ExtendedGUIs getGuiType();
 
 }

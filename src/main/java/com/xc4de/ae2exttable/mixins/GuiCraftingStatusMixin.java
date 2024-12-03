@@ -26,7 +26,6 @@ public class GuiCraftingStatusMixin {
     @Shadow(remap=false)
     private ItemStack myIcon;
 
-    @Unique
     private AE2ExtendedGUIs extendedOriginalGui;
 
     @SuppressWarnings("InjectIntoConstructor")

@@ -35,7 +35,7 @@ public class PartEliteCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
     public PartEliteCraftingTerminal(final ItemStack is) {
-        super(is, guiType.getGridSize());
+        super(is, AE2ExtendedGUIs.ELITE_CRAFTING_TERMINAL.getGridSize());
     }
 
     public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
@@ -44,6 +44,11 @@ public class PartEliteCraftingTerminal extends PartSharedCraftingTerminal {
         }
 
         return true;
+    }
+
+    @Override
+    public AE2ExtendedGUIs getGuiType() {
+        return this.guiType;
     }
 
     @Override

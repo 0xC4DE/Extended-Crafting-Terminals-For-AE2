@@ -14,7 +14,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
-public class PartAdvancedCraftingTerminal extends PartSharedCraftingTerminal {
+public class PartAdvancedCraftingTerminal extends PartSharedCraftingTerminal implements IGuiType {
 
     public static AE2ExtendedGUIs guiType = AE2ExtendedGUIs.ADVANCED_CRAFTING_TERMINAL;
 
@@ -33,7 +33,7 @@ public class PartAdvancedCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
     public PartAdvancedCraftingTerminal(final ItemStack is) {
-        super(is, guiType.getGridSize());
+        super(is, AE2ExtendedGUIs.ADVANCED_CRAFTING_TERMINAL.getGridSize());
     }
 
     public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
@@ -42,6 +42,11 @@ public class PartAdvancedCraftingTerminal extends PartSharedCraftingTerminal {
         }
 
         return true;
+    }
+
+    @Override
+    public AE2ExtendedGUIs getGuiType() {
+        return this.guiType;
     }
 
     @Override

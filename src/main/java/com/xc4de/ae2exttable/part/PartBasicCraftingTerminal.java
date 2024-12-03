@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class PartBasicCraftingTerminal extends PartSharedCraftingTerminal {
 
-    public static AE2ExtendedGUIs guiType = AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL;
+    public AE2ExtendedGUIs guiType = AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL;
 
     public static ResourceLocation[] resources = new ResourceLocation[] {
         new ResourceLocation(Tags.MODID, "part/display_base"), // MODEL_BASE
@@ -36,7 +36,7 @@ public class PartBasicCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
     public PartBasicCraftingTerminal(final ItemStack is) {
-        super(is, guiType.getGridSize());
+        super(is, AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL.getGridSize());
     }
 
     public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
@@ -45,6 +45,11 @@ public class PartBasicCraftingTerminal extends PartSharedCraftingTerminal {
         }
 
         return true;
+    }
+
+    @Override
+    public AE2ExtendedGUIs getGuiType() {
+        return this.guiType;
     }
 
     @Override

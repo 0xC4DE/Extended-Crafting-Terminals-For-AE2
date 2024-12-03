@@ -33,7 +33,7 @@ public class PartUltimateCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
     public PartUltimateCraftingTerminal(final ItemStack is) {
-        super(is, guiType.getGridSize());
+        super(is, AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL.getGridSize());
 
     }
 
@@ -42,6 +42,11 @@ public class PartUltimateCraftingTerminal extends PartSharedCraftingTerminal {
             PartGuiHandler.openGUI(guiType, player, this.getHost().getTile().getPos(), this.getSide());
         }
         return true;
+    }
+
+    @Override
+    public AE2ExtendedGUIs getGuiType() {
+        return this.guiType;
     }
 
     @Override
