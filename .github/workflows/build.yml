@@ -6,8 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Grant execute permissions for gradlew
-        run: chmod +x gradlew
+      
         
       - uses: actions/checkout@v4
       - name: Set up OpenJDK 17
@@ -15,7 +14,8 @@ jobs:
         with:
           java-version: '17'
           distribution: 'zulu'
-          
+      - name: Grant execute permissions for gradlew
+        run: chmod +x gradlew
       - name: Build with Gradle
         run: ./gradlew build # Ensure your gradlew script is executable
       - name: Upload Artifact
