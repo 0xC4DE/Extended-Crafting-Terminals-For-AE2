@@ -1,5 +1,6 @@
 package com.xc4de.ae2exttable.items;
 
+import appeng.bootstrap.FeatureFactory;
 import com.blakebr0.cucumber.registry.ModRegistry;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
@@ -16,6 +17,8 @@ public class ItemRegistry {
     public static ItemEliteCraftingTerminal ELITE_TERMINAL = new ItemEliteCraftingTerminal("elite_crafting_terminal");
     public static ItemUltimateCraftingTerminal ULTIMATE_TERMINAL = new ItemUltimateCraftingTerminal("ultimate_crafting_terminal");
 
+    public static ItemWirelessBasicTerminal WIRELESS_BASIC_TERMINAL = new ItemWirelessBasicTerminal();
+
     public static void init() {
         final ModRegistry registry = AE2ExtendedCraftingTable.REGISTRY;
         registry.register(BASIC_TERMINAL, "basic_crafting_terminal");
@@ -29,6 +32,8 @@ public class ItemRegistry {
 
         registry.register(ULTIMATE_TERMINAL, "ultimate_crafting_terminal");
         REVERSE_LOOKUP.put(AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL, ULTIMATE_TERMINAL);
+
+        registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
 
         initModels();
     }

@@ -5,27 +5,35 @@ import appeng.api.config.Settings;
 import appeng.api.storage.ITerminalHost;
 import appeng.client.gui.widgets.GuiImgButton;
 import appeng.container.slot.SlotCraftingMatrix;
+import appeng.core.sync.GuiWrapper;
 import appeng.core.sync.network.NetworkHandler;
 import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
 import com.blakebr0.cucumber.util.Utils;
 import com.xc4de.ae2exttable.Tags;
-import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
+import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
+import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 
 public class GuiBasicCraftingTerminal extends GuiMEMonitorableTwo {
 
     private GuiImgButton clearBtn;
+    public final PartBasicCraftingTerminal te;
 
     public GuiBasicCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {
         super(inventoryPlayer, te, container, ExtendedCraftingGUIConstants.BASIC_CRAFTING_TERMINAL);
         setGuiType(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL);
+        this.te = (PartBasicCraftingTerminal) te;
     }
+
 
     @Override
     protected void actionPerformed(final GuiButton btn) {

@@ -4,10 +4,10 @@ import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.AdvancedTableCateg
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.BasicTableCategory;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.EliteTableCategory;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.UltimateTableCategory;
-import com.xc4de.ae2exttable.client.container.ContainerAdvancedCraftingTerminal;
-import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
-import com.xc4de.ae2exttable.client.container.ContainerEliteCraftingTerminal;
-import com.xc4de.ae2exttable.client.container.ContainerUltimateCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerAdvancedCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerEliteCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerUltimateCraftingTerminal;
 import mezz.jei.api.IModRegistry;
 import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import mezz.jei.api.recipe.transfer.IRecipeTransferHandler;

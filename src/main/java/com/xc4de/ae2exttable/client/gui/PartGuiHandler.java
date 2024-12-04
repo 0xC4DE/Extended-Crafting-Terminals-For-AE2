@@ -1,5 +1,7 @@
 package com.xc4de.ae2exttable.client.gui;
 
+import appeng.api.AEApi;
+import appeng.api.features.IWirelessTermHandler;
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartHost;
 import appeng.api.storage.ITerminalHost;
@@ -9,10 +11,10 @@ import appeng.container.ContainerOpenContext;
 import appeng.helpers.WirelessTerminalGuiObject;
 import baubles.api.BaublesApi;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
-import com.xc4de.ae2exttable.client.container.ContainerAdvancedCraftingTerminal;
-import com.xc4de.ae2exttable.client.container.ContainerBasicCraftingTerminal;
-import com.xc4de.ae2exttable.client.container.ContainerEliteCraftingTerminal;
-import com.xc4de.ae2exttable.client.container.ContainerUltimateCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerAdvancedCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerBasicCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerEliteCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.terminals.ContainerUltimateCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiEliteCraftingTerminal;
@@ -30,7 +32,7 @@ import net.minecraftforge.fml.common.network.IGuiHandler;
 import org.jetbrains.annotations.Nullable;
 
 public class PartGuiHandler implements IGuiHandler {
-    public static void openGUI(AE2ExtendedGUIs gui, EntityPlayer player, BlockPos pos, AEPartLocation side) {
+    public static void penGUI(AE2ExtendedGUIs gui, EntityPlayer player, BlockPos pos, AEPartLocation side) {
         if (gui == null) {
             throw new IllegalArgumentException("gui cannot be null");
         }
@@ -101,10 +103,10 @@ public class PartGuiHandler implements IGuiHandler {
     }
 
     private Object getGuiObject(final AE2ExtendedGUIs guiID, final ItemStack myItem, final EntityPlayer player, final World world, final int x, final int y, final int z, final AEPartLocation side) {
-        // final IWirelessTermHandler wh = AEApi.instance().registries().wireless().getWirelessTerminalHandler(it);
-        //if (wh != null) {
-        //   return new WirelessTerminalGuiObject(wh, myItem, player, world, x, y, z, side);
-        //}
+        final IWirelessTermHandler wh = AEApi.instance().registries().wireless().getWirelessTerminalHandler(myItem);
+        if (wh != null) {
+           return new WirelessTerminalGuiObject(wh, myItem, player, world, x, y, z);
+        }
         IPart part = PartGuiHandler.getPartFromWorld(world, new BlockPos(x,y,z), side);
         switch(guiID) {
             case BASIC_CRAFTING_TERMINAL:
@@ -150,6 +152,7 @@ public class PartGuiHandler implements IGuiHandler {
                 return new GuiEliteCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerEliteCraftingTerminal(player.inventory, (PartEliteCraftingTerminal) part));
             case ULTIMATE_CRAFTING_TERMINAL:
                 return new GuiUltimateCraftingTerminal(player.inventory, (ITerminalHost) part, new ContainerUltimateCraftingTerminal(player.inventory, (PartUltimateCraftingTerminal) part));
+            case WIRELESS_BASIC_TERMINAL:
             default:
                 return null;
         }

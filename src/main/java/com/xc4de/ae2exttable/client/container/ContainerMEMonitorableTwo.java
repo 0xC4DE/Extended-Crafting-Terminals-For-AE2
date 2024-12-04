@@ -32,14 +32,14 @@ import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
 import java.util.List;
 
-public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements IAEAppEngInventory, IContainerCraftingPacket {
+public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements IAEAppEngInventory, IContainerCraftingPacket {
 
     private IRecipe currentRecipe;
     protected final int slotWidth;
     protected final int slotHeight;
     private final PartSharedCraftingTerminal ct;
     private final SlotCraftingTerm outputSlot;
-    private final ExtendedCraftingGUIConstants guiConst;
+    final ExtendedCraftingGUIConstants guiConst;
 
     protected final SlotCraftingMatrix[] craftingSlots;
     private final AppEngInternalInventory output;
@@ -114,9 +114,15 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
         ((GuiMEMonitorableTwo) this.getGui()).postUpdate(list);
     }
 
+    public abstract int availableUpgrades();
+
+    public abstract void setupUpgrades();
+
     public void saveChanges() {
 
     }
+
+    protected abstract void loadFromNBT();
 
     public void onChangeInventory(final IItemHandler inv, final int slot, final InvOperation mc, final ItemStack removedStack, final ItemStack newStack) {
 
@@ -136,4 +142,8 @@ public class ContainerMEMonitorableTwo extends ContainerMEMonitorable implements
     public IRecipe getCurrentRecipe() {
         return this.currentRecipe;
     }
+
+    public abstract int getInventorySlot();
+
+    public abstract boolean isBaubleSlot();
 }
