@@ -5,6 +5,7 @@ import appeng.api.features.IWirelessTermHandler;
 import appeng.core.sync.GuiWrapper;
 import appeng.items.tools.powered.ToolWirelessTerminal;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
 import com.xc4de.ae2exttable.interfaces.IExtendedGui;
@@ -21,6 +22,7 @@ public class ItemWirelessBasicTerminal extends ToolWirelessTerminal {
     public ItemWirelessBasicTerminal() {
         super();
         this.setRegistryName("wireless_basic_crafting_terminal");
+        this.setTranslationKey(Tags.MODID+"."+"wireless_basic_crafting_terminal");
         this.setCreativeTab(AE2ExtendedCraftingTable.EXTENDED_TABLE_TAB);
 
         // This is registered so that "canHandle" and "getGuiHandler" are actually called

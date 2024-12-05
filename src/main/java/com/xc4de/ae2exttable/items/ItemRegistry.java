@@ -1,9 +1,12 @@
 package com.xc4de.ae2exttable.items;
 
-import appeng.bootstrap.FeatureFactory;
 import com.blakebr0.cucumber.registry.ModRegistry;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
+import com.xc4de.ae2exttable.items.terminals.ItemAdvancedCraftingTerminal;
+import com.xc4de.ae2exttable.items.terminals.ItemBasicCraftingTerminal;
+import com.xc4de.ae2exttable.items.terminals.ItemEliteCraftingTerminal;
+import com.xc4de.ae2exttable.items.terminals.ItemUltimateCraftingTerminal;
 import net.minecraft.item.Item;
 
 import java.util.HashMap;
@@ -12,11 +15,13 @@ import java.util.Map;
 public class ItemRegistry {
     private static final Map<AE2ExtendedGUIs, Item> REVERSE_LOOKUP = new HashMap<>();
 
+    // Wired terms go here
     public static ItemBasicCraftingTerminal BASIC_TERMINAL = new ItemBasicCraftingTerminal("basic_crafting_terminal");
     public static ItemAdvancedCraftingTerminal ADVANCED_TERMINAL = new ItemAdvancedCraftingTerminal("advanced_crafting_terminal");
     public static ItemEliteCraftingTerminal ELITE_TERMINAL = new ItemEliteCraftingTerminal("elite_crafting_terminal");
     public static ItemUltimateCraftingTerminal ULTIMATE_TERMINAL = new ItemUltimateCraftingTerminal("ultimate_crafting_terminal");
 
+    // Wireless terms go here
     public static ItemWirelessBasicTerminal WIRELESS_BASIC_TERMINAL = new ItemWirelessBasicTerminal();
 
     public static void init() {
@@ -33,7 +38,7 @@ public class ItemRegistry {
         registry.register(ULTIMATE_TERMINAL, "ultimate_crafting_terminal");
         REVERSE_LOOKUP.put(AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL, ULTIMATE_TERMINAL);
 
-        //registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
+        registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
 
         initModels();
     }
