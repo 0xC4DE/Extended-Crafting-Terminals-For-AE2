@@ -33,7 +33,7 @@ public class ItemRegistry {
         registry.register(ULTIMATE_TERMINAL, "ultimate_crafting_terminal");
         REVERSE_LOOKUP.put(AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL, ULTIMATE_TERMINAL);
 
-        registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
+        //registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
 
         initModels();
     }

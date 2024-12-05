@@ -4,6 +4,7 @@ import appeng.api.storage.ITerminalHost;
 import com.xc4de.ae2exttable.client.container.ContainerMEMonitorableTwo;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.entity.player.InventoryPlayer;
+import net.minecraftforge.items.IItemHandler;
 
 public class ContainerAdvancedCraftingTerminal extends ContainerMEMonitorableTwo {
     public ContainerAdvancedCraftingTerminal(final InventoryPlayer ip, final ITerminalHost monitorable) {

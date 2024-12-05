@@ -23,9 +23,6 @@ public class CommonProxy {
         //TileRegistry.init();
         ItemRegistry.init();
 
-        GuiWrapper.Opener wrapper = new GuiBasicCraftingTerminalWrapper();
-        GuiWrapper.INSTANCE.registerExternalGuiHandler(new ResourceLocation("ae2extgui","gui_basic_crafting_terminal"), wrapper);
-
         MinecraftForge.EVENT_BUS.register(AE2ExtendedCraftingTable.REGISTRY);
         MinecraftForge.EVENT_BUS.register(this);
     }

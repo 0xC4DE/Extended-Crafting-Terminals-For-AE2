@@ -18,7 +18,7 @@ import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
-public class GuiUltimateCraftingTerminal extends GuiMEMonitorableTwo {
+public class GuiUltimateCraftingTerminal extends GuiCraftingTerm {
 
     private GuiImgButton clearBtn;
 

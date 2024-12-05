@@ -49,13 +49,14 @@ public class PacketSwitchGui extends ExtendedTerminalPacket {
                     final TileEntity te = context.getTile();
 
                     if (te != null) {
-                        PartGuiHandler.openGUI(this.gui, player, te.getPos(), context.getSide());
+                        PartGuiHandler.openGUI(this.gui, player, te, context.getSide(), false);
                     } else {
                         if (ah instanceof IInventorySlotAware) {
-                            return;
+                            // TODO: BAUBLES, maybe need more? idk figure it out.
                             //IInventorySlotAware i = ((IInventorySlotAware) ah);
-                            // TODO: BAUBLES
-                            //PartGuiHandler.openGUI(player, i.getInventorySlot(), this.gui, i.isBaubleSlot());
+                            //i.getInventorySlot();
+                            //i.getBaubleSlot();
+                            PartGuiHandler.openGUI(this.gui, player, null, null, true);
                         }
                     }
                 }

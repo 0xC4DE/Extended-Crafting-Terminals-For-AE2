@@ -6,6 +6,7 @@ package com.xc4de.ae2exttable.client.container;
 
 import appeng.api.implementations.tiles.IViewCellStorage;
 import appeng.container.slot.SlotRestrictedInput;
+import appeng.helpers.WirelessTerminalGuiObject;
 import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
 import net.minecraft.init.Blocks;
 import appeng.api.storage.ITerminalHost;
@@ -37,9 +38,10 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
     private IRecipe currentRecipe;
     protected final int slotWidth;
     protected final int slotHeight;
-    private final PartSharedCraftingTerminal ct;
     private final SlotCraftingTerm outputSlot;
     final ExtendedCraftingGUIConstants guiConst;
+    private PartSharedCraftingTerminal ct;
+    private WirelessTerminalGuiObject wt;
 
     protected final SlotCraftingMatrix[] craftingSlots;
     private final AppEngInternalInventory output;
@@ -50,9 +52,12 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
                                      final int slotWidth, final int slotHeight, ExtendedCraftingGUIConstants guiConst) {
         super(ip, monitorable, isWireless);
 
-        for(int i = 0; i < 5; i++) {
-            // Hacky. Removes old ViewCell slots.
-            this.inventorySlots.remove(this.inventorySlots.size() - 1);
+        // This check is here to debug easier
+        if (this.inventorySlots.size() >= 5) {
+            for (int i = 0; i < 5; i++) {
+                // Hacky. Removes old ViewCell slots.
+                this.inventorySlots.remove(this.inventorySlots.size() - 1);
+            }
         }
         for(int y = 0; y < 5; ++y) {
             this.cellView[y] = new SlotRestrictedInput(SlotRestrictedInput.PlacableItemType.VIEW_CELL, ((IViewCellStorage)monitorable).getViewCellStorage(), y, 206, y * 18 + 8, this.getInventoryPlayer());
@@ -64,11 +69,15 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
         this.slotHeight = slotHeight;
         this.output =  new AppEngInternalInventory(this, 1);
         this.craftingSlots = new SlotCraftingMatrix[this.slotWidth * this.slotHeight];
-        this.ct = (PartSharedCraftingTerminal) monitorable;
+        final IItemHandler crafting;
+        if (monitorable instanceof PartSharedCraftingTerminal) {
+            this.ct = (PartSharedCraftingTerminal) monitorable;
+            crafting = this.ct.getInventoryByName("crafting");
+        } else {
+            this.wt = (WirelessTerminalGuiObject) monitorable;
+            crafting = this.wt.getInventoryByName("crafting");
+        }
         this.guiConst = guiConst;
-
-        final IItemHandler crafting = this.ct.getInventoryByName("crafting");
-
 
         int craftingTableXOffset = guiConst.craftingGridOffset.x;
         int craftingTableYOffset = guiConst.craftingGridOffset.y;

@@ -10,6 +10,7 @@ import appeng.api.util.IConfigManager;
 import appeng.api.util.IConfigurableObject;
 import appeng.client.ActionKey;
 import appeng.client.gui.AEBaseMEGui;
+import appeng.client.gui.implementations.GuiPatternTerm;
 import appeng.client.gui.widgets.*;
 import appeng.client.me.InternalSlotME;
 import appeng.client.me.ItemRepo;
@@ -545,7 +546,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
         this.repo.updateView();
     }
 
-    int getReservedSpace() {
+    protected int getReservedSpace() {
         return this.reservedSpace;
     }
 
