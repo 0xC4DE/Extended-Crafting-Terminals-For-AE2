@@ -197,7 +197,7 @@ public class PartGuiHandler implements IGuiHandler {
             (PartUltimateCraftingTerminal) part);
       case WIRELESS_BASIC_TERMINAL:
         final IWirelessTermHandler handler = AEApi.instance().registries().wireless().getWirelessTerminalHandler(myItem);
-        final WirelessTerminalGuiObject wireless = new WirelessTerminalGuiObject(handler, myItem, player, world, x, y, z);
+        final WirelessTerminalGuiObjectTwo wireless = new WirelessTerminalGuiObjectTwo(handler, myItem, player, world, x, y, z);
         return new ContainerBasicWirelessTerminal(player.inventory, wireless);
       default:
         return null;
@@ -242,7 +242,7 @@ public class PartGuiHandler implements IGuiHandler {
             AEApi.instance().registries().wireless().getWirelessTerminalHandler(
                 player.inventory.getCurrentItem());
 
-        WirelessTerminalGuiObject gui = new WirelessTerminalGuiObject(
+        WirelessTerminalGuiObjectTwo gui = new WirelessTerminalGuiObjectTwo(
             handler, player.inventory.getCurrentItem(), player, world, x, y, z);
 
         ContainerBasicWirelessTerminal container = new ContainerBasicWirelessTerminal(

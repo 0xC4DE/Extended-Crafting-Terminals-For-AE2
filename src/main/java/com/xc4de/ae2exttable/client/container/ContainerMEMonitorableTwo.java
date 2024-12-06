@@ -9,6 +9,7 @@ import appeng.container.slot.SlotRestrictedInput;
 import appeng.helpers.WirelessTerminalGuiObject;
 import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.client.gui.WirelessTerminalGuiObjectTwo;
 import com.xc4de.ae2exttable.part.ExtInternalInventory;
 import net.minecraft.init.Blocks;
 import appeng.api.storage.ITerminalHost;
@@ -43,7 +44,7 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
     private final SlotCraftingTerm outputSlot;
     final ExtendedCraftingGUIConstants guiConst;
     private PartSharedCraftingTerminal ct;
-    private WirelessTerminalGuiObject wt;
+    private WirelessTerminalGuiObjectTwo wt;
 
     protected final SlotCraftingMatrix[] craftingSlots;
     private final AppEngInternalInventory output;
@@ -74,8 +75,7 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
             this.ct = (PartSharedCraftingTerminal) monitorable;
             crafting = this.ct.getInventoryByName("crafting");
         } else {
-            this.wt = (WirelessTerminalGuiObject) monitorable;
-            craftingGrid = new ExtInternalInventory("crafting", 3 * 3, 64);
+            this.wt = (WirelessTerminalGuiObjectTwo) monitorable;
             crafting = this.wt.getInventoryByName("crafting");
         }
         this.guiConst = guiConst;
@@ -106,10 +106,9 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
         final ContainerNull cn = new ContainerNull();
         final InventoryCrafting ic = new InventoryCrafting(cn, this.slotWidth, this.slotHeight);
         for (int x = 0; x < this.slotWidth*this.slotHeight; x++) {
-            AE2ExtendedCraftingTable.LOGGER.error("RealSize: " + this.craftingSlots.length);
-            AE2ExtendedCraftingTable.LOGGER.error("Slot: " + x + " Stack: " + this.craftingSlots[x].getStack());
             ic.setInventorySlotContents(x, this.craftingSlots[x].getStack());
         }
+        // This is the Blakebr0 Extended Tables recipe handler :)
         ItemStack result = TableRecipeManager.getInstance().findMatchingRecipe(ic, this.getInventoryPlayer().player.world);
         if (result == null) {
             this.outputSlot.putStack(new ItemStack(Blocks.AIR));
@@ -125,25 +124,28 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
         ((GuiMEMonitorableTwo) this.getGui()).postUpdate(list);
     }
 
-    public abstract int availableUpgrades();
-
-    public abstract void setupUpgrades();
-
-    public void saveChanges() {
-
-    }
+    public void saveChanges() {}
 
     protected abstract void loadFromNBT();
 
     public void onChangeInventory(final IItemHandler inv, final int slot, final InvOperation mc, final ItemStack removedStack, final ItemStack newStack) {
-
+        if (this.wt != null) {
+            this.wt.saveChanges();
+        } else if (this.ct != null) {
+           this.ct.saveChanges();
+        }
     }
 
     public IItemHandler getInventoryByName(final String name) {
         if (name.equals("player")) {
             return new PlayerInvWrapper(this.getInventoryPlayer());
         }
-        return this.ct.getInventoryByName(name);
+        if (this.ct != null) {
+            return this.ct.getInventoryByName(name);
+        } else if (this.wt != null) {
+            return this.wt.getInventoryByName(name);
+        }
+        return null;
     }
 
     public boolean useRealItems() {

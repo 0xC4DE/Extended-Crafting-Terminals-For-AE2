@@ -11,16 +11,6 @@ public class ContainerUltimateCraftingTerminal extends ContainerMEMonitorableTwo
     }
 
     @Override
-    public int availableUpgrades() {
-        return 0;
-    }
-
-    @Override
-    public void setupUpgrades() {
-
-    }
-
-    @Override
     protected void loadFromNBT() {
 
     }
