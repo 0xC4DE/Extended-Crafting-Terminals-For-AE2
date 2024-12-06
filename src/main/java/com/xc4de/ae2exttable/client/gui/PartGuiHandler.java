@@ -5,25 +5,31 @@
 
 package com.xc4de.ae2exttable.client.gui;
 
+import appeng.api.AEApi;
+import appeng.api.features.ILocatable;
+import appeng.api.features.IWirelessTermHandler;
+import appeng.api.features.IWirelessTermRegistry;
 import appeng.api.parts.IPart;
 import appeng.api.parts.IPartHost;
 import appeng.api.storage.ITerminalHost;
 import appeng.api.util.AEPartLocation;
 import appeng.container.AEBaseContainer;
 import appeng.container.ContainerOpenContext;
-import appeng.container.interfaces.IInventorySlotAware;
+import appeng.core.localization.PlayerMessages;
 import appeng.helpers.WirelessTerminalGuiObject;
+import appeng.util.Platform;
 import baubles.api.BaublesApi;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerEliteCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerUltimateCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.wireless.ContainerBasicWirelessTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiEliteCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiUltimateCraftingTerminal;
-import com.xc4de.ae2exttable.items.ItemWirelessBasicTerminal;
+import com.xc4de.ae2exttable.client.gui.terminals.GuiWirelessBasicCraftingTerm;
 import com.xc4de.ae2exttable.part.PartAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import com.xc4de.ae2exttable.part.PartEliteCraftingTerminal;
@@ -31,6 +37,7 @@ import com.xc4de.ae2exttable.part.PartUltimateCraftingTerminal;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
@@ -38,10 +45,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class PartGuiHandler implements IGuiHandler {
   public static void openGUI(AE2ExtendedGUIs gui, EntityPlayer player,
-                             TileEntity te, AEPartLocation side, boolean item) {
-    int x = 0;
-    int y = 0;
-    int z = Integer.MIN_VALUE;
+                             BlockPos pos, AEPartLocation side) {
 
     if (gui == null) {
       throw new IllegalArgumentException("gui cannot be null");
@@ -49,23 +53,44 @@ public class PartGuiHandler implements IGuiHandler {
       throw new IllegalArgumentException("player cannot be null");
     }
 
+    player.openGui(AE2ExtendedCraftingTable.instance,
+        PartGuiHandler.calculateOrdinal(gui, side),
+        player.getEntityWorld(), pos.getX(), pos.getY(), pos.getZ());
+  }
 
-    if (te == null && player.openContainer instanceof IInventorySlotAware) {
-      x = ((IInventorySlotAware) player.openContainer).getInventorySlot();
-      y = ((IInventorySlotAware) player.openContainer).isBaubleSlot() ? 1 : 0;
-    } else if (te == null) {
-      x = player.inventory.currentItem;
-      y = 0;
+  public static void openWirelessTerminalGui(ItemStack item, int invSlot,
+                                             boolean isBauble, World w,
+                                             EntityPlayer player,
+                                             AE2ExtendedGUIs gui) {
+    IWirelessTermRegistry registry = AEApi.instance().registries().wireless();
+    if (Platform.isClient()) {
+      return;
     }
-
-    if (te != null) {
-      player.openGui(AE2ExtendedCraftingTable.instance,
-          PartGuiHandler.calculateOrdinal(gui, side), player.getEntityWorld(),
-          te.getPos().getX(), te.getPos().getY(), te.getPos().getZ());
+    if (!registry.isWirelessTerminal(item)) {
+      player.sendMessage(PlayerMessages.DeviceNotWirelessTerminal.get());
+      return;
+    }
+    final IWirelessTermHandler handler =
+        registry.getWirelessTerminalHandler(item);
+    final String unparsedKey = handler.getEncryptionKey(item);
+    if (unparsedKey.isEmpty()) {
+      player.sendMessage(PlayerMessages.DeviceNotLinked.get());
+      return;
+    }
+    final long parsedKey = Long.parseLong(unparsedKey);
+    final ILocatable
+        securityStation =
+        AEApi.instance().registries().locatable().getLocatableBy(parsedKey);
+    if (securityStation == null) {
+      player.sendMessage(PlayerMessages.StationCanNotBeLocated.get());
+      return;
+    }
+    if (handler.hasPower(player, 0.5, item)) {
+      openGUI(gui, player,
+          new BlockPos(invSlot, isBauble ? 1 : 0, Integer.MIN_VALUE),
+          AEPartLocation.fromFacing(EnumFacing.DOWN));
     } else {
-      player.openGui(AE2ExtendedCraftingTable.instance,
-          PartGuiHandler.calculateOrdinal(gui, side),
-          player.getEntityWorld(), x, y, z);
+      player.sendMessage(PlayerMessages.DeviceNotPowered.get());
     }
   }
 
@@ -74,7 +99,7 @@ public class PartGuiHandler implements IGuiHandler {
       return (gui.ordinal() << 4);
     }
     if (side == null) {
-      return AEPartLocation.UP.ordinal();
+      side = AEPartLocation.fromOrdinal(AEPartLocation.UP.ordinal());
     }
     return (gui.ordinal() << 4) | side.ordinal();
   }
@@ -96,6 +121,21 @@ public class PartGuiHandler implements IGuiHandler {
     return null;
   }
 
+  private Object updateGui(final Object newContainer, final World w,
+                           final int x, final int y, final int z,
+                           final AEPartLocation side, final Object myItem) {
+    if (newContainer instanceof AEBaseContainer) {
+      final AEBaseContainer bc = (AEBaseContainer) newContainer;
+      bc.setOpenContext(new ContainerOpenContext(myItem));
+      bc.getOpenContext().setWorld(w);
+      bc.getOpenContext().setX(x);
+      bc.getOpenContext().setY(y);
+      bc.getOpenContext().setZ(z);
+      bc.getOpenContext().setSide(side);
+    }
+
+    return newContainer;
+  }
 
   @Override
   public @Nullable Object getServerGuiElement(int ID, EntityPlayer player,
@@ -156,25 +196,12 @@ public class PartGuiHandler implements IGuiHandler {
         return new ContainerUltimateCraftingTerminal(player.inventory,
             (PartUltimateCraftingTerminal) part);
       case WIRELESS_BASIC_TERMINAL:
+        final IWirelessTermHandler handler = AEApi.instance().registries().wireless().getWirelessTerminalHandler(myItem);
+        final WirelessTerminalGuiObject wireless = new WirelessTerminalGuiObject(handler, myItem, player, world, x, y, z);
+        return new ContainerBasicWirelessTerminal(player.inventory, wireless);
       default:
         return null;
     }
-  }
-
-  private Object updateGui(final Object newContainer, final World w,
-                           final int x, final int y, final int z,
-                           final AEPartLocation side, final Object myItem) {
-    if (newContainer instanceof AEBaseContainer) {
-      final AEBaseContainer bc = (AEBaseContainer) newContainer;
-      bc.setOpenContext(new ContainerOpenContext(myItem));
-      bc.getOpenContext().setWorld(w);
-      bc.getOpenContext().setX(x);
-      bc.getOpenContext().setY(y);
-      bc.getOpenContext().setZ(z);
-      bc.getOpenContext().setSide(side);
-    }
-
-    return newContainer;
   }
 
   @Override
@@ -208,7 +235,20 @@ public class PartGuiHandler implements IGuiHandler {
             (ITerminalHost) part,
             new ContainerUltimateCraftingTerminal(player.inventory,
                 (PartUltimateCraftingTerminal) part));
+
       case WIRELESS_BASIC_TERMINAL:
+        // TODO: Fix for baubles, I guess
+        IWirelessTermHandler handler =
+            AEApi.instance().registries().wireless().getWirelessTerminalHandler(
+                player.inventory.getCurrentItem());
+
+        WirelessTerminalGuiObject gui = new WirelessTerminalGuiObject(
+            handler, player.inventory.getCurrentItem(), player, world, x, y, z);
+
+        ContainerBasicWirelessTerminal container = new ContainerBasicWirelessTerminal(
+            player.inventory, gui);
+
+        return new GuiWirelessBasicCraftingTerm(player.inventory, gui, container);
       default:
         return null;
     }

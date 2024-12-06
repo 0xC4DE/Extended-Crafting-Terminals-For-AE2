@@ -5,6 +5,7 @@ import appeng.client.gui.widgets.GuiImgButton;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerEliteCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
+import com.xc4de.ae2exttable.client.gui.GuiCraftingTerm;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiEliteCraftingTerminal extends GuiCraftingTerm {

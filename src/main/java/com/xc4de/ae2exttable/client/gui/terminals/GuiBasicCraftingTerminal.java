@@ -5,12 +5,12 @@ import appeng.client.gui.widgets.GuiImgButton;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
+import com.xc4de.ae2exttable.client.gui.GuiCraftingTerm;
 import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiBasicCraftingTerminal extends GuiCraftingTerm {
 
-    private GuiImgButton clearBtn;
     public final PartBasicCraftingTerminal te;
 
     public GuiBasicCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {

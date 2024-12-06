@@ -1,4 +1,4 @@
-package com.xc4de.ae2exttable.client.gui.terminals;
+package com.xc4de.ae2exttable.client.gui;
 
 import appeng.api.config.ActionItems;
 import appeng.api.config.Settings;
@@ -11,7 +11,6 @@ import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
 import com.blakebr0.cucumber.util.Utils;
 import com.xc4de.ae2exttable.Tags;
-import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;

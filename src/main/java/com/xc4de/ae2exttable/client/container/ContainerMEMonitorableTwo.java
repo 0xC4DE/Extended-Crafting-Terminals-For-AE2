@@ -8,6 +8,8 @@ import appeng.api.implementations.tiles.IViewCellStorage;
 import appeng.container.slot.SlotRestrictedInput;
 import appeng.helpers.WirelessTerminalGuiObject;
 import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
+import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
+import com.xc4de.ae2exttable.part.ExtInternalInventory;
 import net.minecraft.init.Blocks;
 import appeng.api.storage.ITerminalHost;
 import appeng.api.storage.data.IAEItemStack;
@@ -21,7 +23,7 @@ import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
 import appeng.util.inv.WrapperInvItemHandler;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
-import com.xc4de.ae2exttable.client.gui.terminals.GuiMEMonitorableTwo;
+import com.xc4de.ae2exttable.client.gui.GuiMEMonitorableTwo;
 import com.xc4de.ae2exttable.part.PartSharedCraftingTerminal;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.IInventory;
@@ -53,11 +55,9 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
         super(ip, monitorable, isWireless);
 
         // This check is here to debug easier
-        if (this.inventorySlots.size() >= 5) {
-            for (int i = 0; i < 5; i++) {
-                // Hacky. Removes old ViewCell slots.
-                this.inventorySlots.remove(this.inventorySlots.size() - 1);
-            }
+        for (int i = 0; i < 5; i++) {
+            // Hacky. Removes old ViewCell slots.
+            this.inventorySlots.remove(this.inventorySlots.size() - 1);
         }
         for(int y = 0; y < 5; ++y) {
             this.cellView[y] = new SlotRestrictedInput(SlotRestrictedInput.PlacableItemType.VIEW_CELL, ((IViewCellStorage)monitorable).getViewCellStorage(), y, 206, y * 18 + 8, this.getInventoryPlayer());
@@ -75,6 +75,7 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
             crafting = this.ct.getInventoryByName("crafting");
         } else {
             this.wt = (WirelessTerminalGuiObject) monitorable;
+            craftingGrid = new ExtInternalInventory("crafting", 3 * 3, 64);
             crafting = this.wt.getInventoryByName("crafting");
         }
         this.guiConst = guiConst;
@@ -101,11 +102,12 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable i
         this.onCraftMatrixChanged(new WrapperInvItemHandler(crafting));
     }
 
-    // TODO: This is where crafting matrix can be adapted to Extended Crafting
     public void onCraftMatrixChanged(IInventory inventory) {
         final ContainerNull cn = new ContainerNull();
         final InventoryCrafting ic = new InventoryCrafting(cn, this.slotWidth, this.slotHeight);
         for (int x = 0; x < this.slotWidth*this.slotHeight; x++) {
+            AE2ExtendedCraftingTable.LOGGER.error("RealSize: " + this.craftingSlots.length);
+            AE2ExtendedCraftingTable.LOGGER.error("Slot: " + x + " Stack: " + this.craftingSlots[x].getStack());
             ic.setInventorySlotContents(x, this.craftingSlots[x].getStack());
         }
         ItemStack result = TableRecipeManager.getInstance().findMatchingRecipe(ic, this.getInventoryPlayer().player.world);

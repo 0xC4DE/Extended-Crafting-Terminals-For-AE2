@@ -39,7 +39,7 @@ public class PartUltimateCraftingTerminal extends PartSharedCraftingTerminal {
 
     public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {
         if (Platform.isServer()) {
-            PartGuiHandler.openGUI(guiType, player, this.getHost().getTile(), this.getSide(), false);
+            PartGuiHandler.openGUI(guiType, player, this.getHost().getTile().getPos(), this.getSide());
         }
         return true;
     }
