@@ -7,21 +7,11 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class ContainerUltimateCraftingTerminal extends ContainerMEMonitorableTwo {
     public ContainerUltimateCraftingTerminal(final InventoryPlayer ip, final ITerminalHost monitorable) {
-        super(ip, monitorable, false, 9, 9, ExtendedCraftingGUIConstants.ULTIMATE_CRAFTING_TERMINAL);
+        super(ip, monitorable, 9, 9, ExtendedCraftingGUIConstants.ULTIMATE_CRAFTING_TERMINAL);
     }
 
     @Override
     protected void loadFromNBT() {
 
-    }
-
-    @Override
-    public int getInventorySlot() {
-        return 0;
-    }
-
-    @Override
-    public boolean isBaubleSlot() {
-        return false;
     }
 }

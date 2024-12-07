@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ItemRegistry {
+    private static final Map<Item, AE2ExtendedGUIs> FORWARD_LOOKUP = new HashMap<>();
     private static final Map<AE2ExtendedGUIs, Item> REVERSE_LOOKUP = new HashMap<>();
 
     // Wired terms go here
@@ -39,6 +40,7 @@ public class ItemRegistry {
         REVERSE_LOOKUP.put(AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL, ULTIMATE_TERMINAL);
 
         registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
+        FORWARD_LOOKUP.put(WIRELESS_BASIC_TERMINAL, AE2ExtendedGUIs.WIRELESS_BASIC_TERMINAL);
 
         initModels();
     }
@@ -53,5 +55,9 @@ public class ItemRegistry {
     // ONLY returns the ITEM for the GUI type, cannot do wireless terminals
     public static Item partByGuiType(AE2ExtendedGUIs guiType) {
         return REVERSE_LOOKUP.get(guiType);
+    }
+
+    public static AE2ExtendedGUIs guiByItem(Item item) {
+        return FORWARD_LOOKUP.get(item);
     }
 }

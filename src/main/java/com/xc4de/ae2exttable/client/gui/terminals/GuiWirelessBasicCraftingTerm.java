@@ -8,6 +8,7 @@ import com.xc4de.ae2exttable.client.container.wireless.ContainerBasicWirelessTer
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import com.xc4de.ae2exttable.client.gui.GuiCraftingTerm;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiWirelessBasicCraftingTerm extends GuiCraftingTerm {

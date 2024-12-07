@@ -53,7 +53,7 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
 
     private static String memoryText = "";
     protected final ItemRepo repo;
-    private final int offsetX = 9; // XOffset for Item Rendering, wont need to change for me.
+    private final int offsetX = 9; // XOffset for Item Rendering, won't need to change for me.
     private final int lowerTextureOffset = 0;
     private final IConfigManager configSrc;
     private final boolean viewCell;

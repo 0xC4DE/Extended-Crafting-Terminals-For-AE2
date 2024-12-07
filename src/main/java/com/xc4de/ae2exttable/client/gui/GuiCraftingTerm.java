@@ -3,6 +3,7 @@ package com.xc4de.ae2exttable.client.gui;
 import appeng.api.config.ActionItems;
 import appeng.api.config.Settings;
 import appeng.api.storage.ITerminalHost;
+import appeng.client.gui.implementations.GuiWirelessCraftingTerminal;
 import appeng.client.gui.widgets.GuiImgButton;
 import appeng.container.implementations.ContainerMEMonitorable;
 import appeng.container.slot.SlotCraftingMatrix;
@@ -11,6 +12,7 @@ import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
 import com.blakebr0.cucumber.util.Utils;
 import com.xc4de.ae2exttable.Tags;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -68,6 +70,13 @@ public class GuiCraftingTerm extends GuiMEMonitorableTwo {
         Tags.MODID + "." + this.getGuiType().toString().toLowerCase() + ".crafting");
 
     this.fontRenderer.drawString(displayName, 8, this.ySize - 96 + 1 - this.getReservedSpace(), 4210752);
+  }
+
+  // Also Guis might need custom offsets for upgrade slots
+  public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
+    this.bindTexture("guis/wirelessupgrades.png");
+    Gui.drawModalRectWithCustomSizedTexture(offsetX + 198, offsetY + 127, 0, 0, 32, 32, 32, 32);
+    super.drawBG(offsetX, offsetY, mouseX, mouseY);
   }
 
 }

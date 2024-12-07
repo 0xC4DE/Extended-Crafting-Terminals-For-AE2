@@ -4,25 +4,14 @@ import appeng.api.storage.ITerminalHost;
 import com.xc4de.ae2exttable.client.container.ContainerMEMonitorableTwo;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraftforge.items.IItemHandler;
 
 public class ContainerAdvancedCraftingTerminal extends ContainerMEMonitorableTwo {
     public ContainerAdvancedCraftingTerminal(final InventoryPlayer ip, final ITerminalHost monitorable) {
-        super(ip, monitorable, false, 5, 5, ExtendedCraftingGUIConstants.ADVANCED_CRAFTING_TERMINAL);
+        super(ip, monitorable, 5, 5, ExtendedCraftingGUIConstants.ADVANCED_CRAFTING_TERMINAL);
     }
 
     @Override
     protected void loadFromNBT() {
 
-    }
-
-    @Override
-    public int getInventorySlot() {
-        return 0;
-    }
-
-    @Override
-    public boolean isBaubleSlot() {
-        return false;
     }
 }
