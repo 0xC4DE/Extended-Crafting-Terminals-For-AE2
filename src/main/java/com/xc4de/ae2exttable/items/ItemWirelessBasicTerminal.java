@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 
 public class ItemWirelessBasicTerminal extends ToolWirelessTerminal implements
     ITerminalGui {
-  public static AE2ExtendedGUIs GUI = AE2ExtendedGUIs.WIRELESS_BASIC_TERMINAL;
+  public static AE2ExtendedGUIs GUI = AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL;
 
   public ItemWirelessBasicTerminal() {
     super();
@@ -41,7 +41,7 @@ public class ItemWirelessBasicTerminal extends ToolWirelessTerminal implements
     PartGuiHandler.openWirelessTerminalGui(player.getHeldItem(hand),
         hand == EnumHand.MAIN_HAND ? player.inventory.currentItem : 40,
         false,
-        w, player, AE2ExtendedGUIs.WIRELESS_BASIC_TERMINAL);
+        w, player, AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL);
     return ActionResult.newResult(EnumActionResult.SUCCESS,
         player.getHeldItem(hand));
   }

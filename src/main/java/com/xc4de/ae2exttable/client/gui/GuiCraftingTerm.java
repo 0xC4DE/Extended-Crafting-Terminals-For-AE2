@@ -10,6 +10,7 @@ import appeng.container.slot.SlotCraftingMatrix;
 import appeng.core.sync.network.NetworkHandler;
 import appeng.core.sync.packets.PacketInventoryAction;
 import appeng.helpers.InventoryAction;
+import appeng.helpers.WirelessTerminalGuiObject;
 import com.blakebr0.cucumber.util.Utils;
 import com.xc4de.ae2exttable.Tags;
 import net.minecraft.client.gui.Gui;
@@ -21,6 +22,8 @@ import net.minecraft.inventory.Slot;
 public class GuiCraftingTerm extends GuiMEMonitorableTwo {
 
   private GuiImgButton clearBtn;
+  private ContainerMEMonitorable container;
+  private ITerminalHost te;
 
   public GuiCraftingTerm(
       InventoryPlayer inventoryPlayer,
@@ -74,8 +77,10 @@ public class GuiCraftingTerm extends GuiMEMonitorableTwo {
 
   // Also Guis might need custom offsets for upgrade slots
   public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-    this.bindTexture("guis/wirelessupgrades.png");
-    Gui.drawModalRectWithCustomSizedTexture(offsetX + 198, offsetY + 127, 0, 0, 32, 32, 32, 32);
+    if (AE2ExtendedGUIs. this.getGuiType()) {
+      this.bindTexture("guis/wirelessupgrades.png");
+      Gui.drawModalRectWithCustomSizedTexture(offsetX + 198, offsetY + 127, 0, 0, 32, 32, 32, 32);
+    }
     super.drawBG(offsetX, offsetY, mouseX, mouseY);
   }
 

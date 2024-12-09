@@ -6,6 +6,7 @@ import appeng.client.gui.implementations.GuiCraftAmount;
 import appeng.client.gui.implementations.GuiCraftConfirm;
 import appeng.client.gui.widgets.GuiTabButton;
 import appeng.container.AEBaseContainer;
+import appeng.helpers.WirelessTerminalGuiObject;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.interfaces.ITerminalGui;
 import com.xc4de.ae2exttable.items.ItemRegistry;
@@ -47,10 +48,20 @@ public class GuiCraftAmountMixin extends AEBaseGui {
     private void onInitGui(CallbackInfo ci) {
         Object target = ((AEBaseContainer) this.inventorySlots).getTarget();
         if (target instanceof ITerminalGui t) {
-            this.extendedOriginalGui = t.getGuiType();
-            ItemStack myIcon = new ItemStack(ItemRegistry.partByGuiType(this.extendedOriginalGui));
-            this.buttonList.add((this.originalGuiBtn = new GuiTabButton(this.guiLeft + 154, this.guiTop, myIcon, myIcon.getDisplayName(), this.itemRender)));
+            setOriginalGui(t);
         }
+        if (target instanceof WirelessTerminalGuiObject term) {
+            if (term.getItemStack().getItem() instanceof ITerminalGui t) {
+                setOriginalGui(t);
+            }
+        }
+    }
+
+    private void setOriginalGui(ITerminalGui t) {
+        this.buttonList.remove(null);
+        this.extendedOriginalGui = t.getGuiType();
+        ItemStack myIcon = new ItemStack(ItemRegistry.partByGuiType(this.extendedOriginalGui));
+        this.buttonList.add((this.originalGuiBtn = new GuiTabButton(this.guiLeft + 154, this.guiTop, myIcon, myIcon.getDisplayName(), this.itemRender)));
     }
 
     // Inject that handles switching back to the original of my gui

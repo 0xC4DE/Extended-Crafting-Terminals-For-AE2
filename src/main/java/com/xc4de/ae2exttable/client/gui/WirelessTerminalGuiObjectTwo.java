@@ -31,7 +31,7 @@ public class WirelessTerminalGuiObjectTwo extends WirelessTerminalGuiObject impl
         if (gui != null) {
             this.gui = gui;
         } else {
-            this.gui = AE2ExtendedGUIs.WIRELESS_BASIC_TERMINAL;
+            this.gui = AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL;
         }
         this.craftingGrid = new ExtInternalInventory("crafting", this.gui.getGridSize(), 64);
         this.loadFromNBT();

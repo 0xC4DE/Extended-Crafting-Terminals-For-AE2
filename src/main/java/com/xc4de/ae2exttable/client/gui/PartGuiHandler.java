@@ -16,7 +16,6 @@ import appeng.api.util.AEPartLocation;
 import appeng.container.AEBaseContainer;
 import appeng.container.ContainerOpenContext;
 import appeng.core.localization.PlayerMessages;
-import appeng.helpers.WirelessTerminalGuiObject;
 import appeng.util.Platform;
 import baubles.api.BaublesApi;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
@@ -95,7 +94,7 @@ public class PartGuiHandler implements IGuiHandler {
   }
 
   public static int calculateOrdinal(AE2ExtendedGUIs gui, AEPartLocation side) {
-    if (gui.ordinal() > 4) {
+    if (guiIsWirelessTerminal(gui)) {
       return (gui.ordinal() << 4);
     }
     if (side == null) {
@@ -144,7 +143,7 @@ public class PartGuiHandler implements IGuiHandler {
     AE2ExtendedGUIs guiID = PartGuiHandler.getGUIFromOrdinal(ID);
     AEPartLocation side = PartGuiHandler.getSideFromOrdinal(ID);
     final boolean usingItemOnTile = ((ID >> 3) & 1) == 1;
-    if (guiID.ordinal() > 4) { // idk is item
+    if (guiIsWirelessTerminal(guiID)) { // idk is item
       ItemStack it = ItemStack.EMPTY;
       if (usingItemOnTile) {
         it = player.inventory.getCurrentItem();
@@ -195,7 +194,7 @@ public class PartGuiHandler implements IGuiHandler {
       case ULTIMATE_CRAFTING_TERMINAL:
         return new ContainerUltimateCraftingTerminal(player.inventory,
             (PartUltimateCraftingTerminal) part);
-      case WIRELESS_BASIC_TERMINAL:
+      case WIRELESS_BASIC_CRAFTING_TERMINAL:
         final IWirelessTermHandler handler = AEApi.instance().registries().wireless().getWirelessTerminalHandler(myItem);
         final WirelessTerminalGuiObjectTwo wireless = new WirelessTerminalGuiObjectTwo(handler, myItem, player, world, x, y, z);
         return new ContainerBasicWirelessTerminal(player.inventory, wireless);
@@ -236,7 +235,7 @@ public class PartGuiHandler implements IGuiHandler {
             new ContainerUltimateCraftingTerminal(player.inventory,
                 (PartUltimateCraftingTerminal) part));
 
-      case WIRELESS_BASIC_TERMINAL:
+      case WIRELESS_BASIC_CRAFTING_TERMINAL:
         // TODO: Fix for baubles, I guess
         IWirelessTermHandler handler =
             AEApi.instance().registries().wireless().getWirelessTerminalHandler(
@@ -252,5 +251,9 @@ public class PartGuiHandler implements IGuiHandler {
       default:
         return null;
     }
+  }
+
+  public static boolean guiIsWirelessTerminal(AE2ExtendedGUIs gui) {
+    return gui.ordinal() > 4;
   }
 }

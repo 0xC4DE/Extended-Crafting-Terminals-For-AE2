@@ -5,6 +5,7 @@ import appeng.client.gui.AEBaseGui;
 import appeng.client.gui.implementations.GuiCraftConfirm;
 import appeng.core.localization.GuiText;
 import appeng.core.sync.GuiBridge;
+import appeng.helpers.WirelessTerminalGuiObject;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.interfaces.ITerminalGui;
 import com.xc4de.ae2exttable.items.ItemRegistry;
@@ -46,14 +47,17 @@ public class GuiCraftConfirmMixin extends AEBaseGui {
             at= @At(value = "INVOKE", target = "Lappeng/container/implementations/ContainerCraftConfirm;setGui(Lappeng/client/gui/implementations/GuiCraftConfirm;)V", shift = At.Shift.AFTER))
     private void onInit(final InventoryPlayer inventoryPlayer, final ITerminalHost te, CallbackInfo ci) {
         if (te instanceof ITerminalGui t) {
-            AE2ExtendedGUIs guiType = t.getGuiType();
-            this.extendedOriginalGui = guiType;
-            ci.cancel();
+            this.extendedOriginalGui = t.getGuiType();
+        }
+        if (te instanceof WirelessTerminalGuiObject term) {
+           if (term.getItemStack().getItem() instanceof ITerminalGui t) {
+               this.extendedOriginalGui = t.getGuiType();
+           }
         }
     };
 
     // Fixes an error with the Cancel button being null, because of my mixin. idk.
-    @Inject(method="initGui", at=@At(value= "RETURN"))
+    @Inject(method="initGui", at=@At(value="RETURN"))
     private void onInitGui(CallbackInfo ci) {
         if (this.extendedOriginalGui != null) {
             this.buttonList.remove(null);
@@ -65,13 +69,11 @@ public class GuiCraftConfirmMixin extends AEBaseGui {
     // Should actually just switch back to my gui after invoking the start methods
     @Inject(method="actionPerformed", at = @At(value="INVOKE", target="Lorg/lwjgl/input/Mouse;isButtonDown(I)Z", shift = At.Shift.AFTER), cancellable = true)
     protected void actionPerformed(GuiButton btn, CallbackInfo ci) {
-        if (btn == this.start) {
-            if (this.extendedOriginalGui != null) {
+        if (this.extendedOriginalGui != null) {
+            if (btn == this.start) {
                 //ci.cancel();
             }
-        }
-        if (btn == this.cancel) {
-            if (this.extendedOriginalGui != null) {
+            if (btn == this.cancel) {
                 ExtendedTerminalNetworkHandler.instance().sendToServer(new PacketSwitchGui(this.extendedOriginalGui));
                 ci.cancel();
             }
