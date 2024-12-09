@@ -3,6 +3,7 @@ package com.xc4de.ae2exttable.part;
 import appeng.helpers.Reflected;
 import appeng.parts.reporting.AbstractPartTerminal;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
+import com.xc4de.ae2exttable.interfaces.ICraftingClass;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -13,7 +14,8 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 
 import java.util.List;
 
-public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
+public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal implements
+    ICraftingClass {
 
     public AE2ExtendedGUIs guiType;
     protected ExtInternalInventory craftingGrid;
@@ -25,9 +27,10 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
     }
 
     @Reflected
-    public PartSharedCraftingTerminal(final ItemStack is, final int gridSize) {
+    public PartSharedCraftingTerminal(final ItemStack is, final AE2ExtendedGUIs gui) {
         super(is);
-        this.craftingGrid = new ExtInternalInventory("crafting", gridSize, 64);
+        this.craftingGrid = new ExtInternalInventory("crafting", gui.getGridSize(), 64);
+        this.guiType = gui;
     }
 
     @Override
@@ -69,5 +72,14 @@ public abstract class PartSharedCraftingTerminal extends AbstractPartTerminal {
 
     // Overwrite me!
     public abstract AE2ExtendedGUIs getGuiType();
+
+    @Override
+    public int getWidth() {
+        return this.guiType.getGridX();
+    }
+
+    public int getHeight() {
+        return this.guiType.getGridY();
+    }
 
 }

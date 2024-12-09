@@ -36,7 +36,7 @@ public class PartBasicCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
     public PartBasicCraftingTerminal(final ItemStack is) {
-        super(is, AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL.getGridSize());
+        super(is, AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL);
     }
 
     public boolean onPartActivate(EntityPlayer player, EnumHand hand, Vec3d pos) {

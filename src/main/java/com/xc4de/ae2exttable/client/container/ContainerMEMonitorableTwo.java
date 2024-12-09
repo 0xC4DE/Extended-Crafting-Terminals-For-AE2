@@ -7,6 +7,7 @@ package com.xc4de.ae2exttable.client.container;
 
 import appeng.api.implementations.guiobjects.IGuiItemObject;
 import appeng.api.implementations.tiles.IViewCellStorage;
+import appeng.api.networking.IGridNode;
 import appeng.api.storage.ITerminalHost;
 import appeng.api.storage.data.IAEItemStack;
 import appeng.container.ContainerNull;
@@ -20,18 +21,22 @@ import appeng.tile.inventory.AppEngInternalInventory;
 import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
 import appeng.util.inv.WrapperInvItemHandler;
+import com.blakebr0.extendedcrafting.config.ModConfig;
 import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import com.xc4de.ae2exttable.client.gui.GuiMEMonitorableTwo;
 import com.xc4de.ae2exttable.client.gui.WirelessTerminalGuiObjectTwo;
 import com.xc4de.ae2exttable.part.PartSharedCraftingTerminal;
 import java.util.List;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.world.World;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerInvWrapper;
 
@@ -133,25 +138,22 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable
     this.onCraftMatrixChanged(new WrapperInvItemHandler(crafting));
   }
 
-  // XXX: Doesn't let you pull out results
-  // FIXME: Doesn't let you pull out results
-  // TODO: Fix not letting you pull out results
-  // This is literally the whole mod
   public void onCraftMatrixChanged(IInventory inventory) {
     final ContainerNull cn = new ContainerNull();
     final InventoryCrafting ic =
         new InventoryCrafting(cn, this.slotWidth, this.slotHeight);
+
     for (int x = 0; x < this.slotWidth * this.slotHeight; x++) {
       ic.setInventorySlotContents(x, this.craftingSlots[x].getStack());
     }
 
-    // This is the Blakebr0 Extended Tables recipe handler :)
-    ItemStack result = TableRecipeManager.getInstance()
-        .findMatchingRecipe(ic, this.getInventoryPlayer().player.world);
-    if (result == null) {
+    IRecipe recipe = this.getRecipeMatchingGrid(ic);
+    this.currentRecipe = recipe;
+
+    if (recipe == null) {
       this.outputSlot.putStack(new ItemStack(Blocks.AIR));
     } else {
-      this.outputSlot.putStack(result);
+      this.outputSlot.putStack(recipe.getCraftingResult(ic));
     }
   }
 
@@ -196,5 +198,40 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable
 
   public IRecipe getCurrentRecipe() {
     return this.currentRecipe;
+  }
+
+  public IRecipe getRecipeMatchingGrid(InventoryCrafting ic) {
+    World world = this.getPlayerInv().player.getEntityWorld();
+
+    // This is the Blakebr0 Extended Tables recipe handler :)
+    // I will not be using that directly :))
+    List recipes = TableRecipeManager.getInstance().getRecipes();
+    for(int i = 0; i < recipes.size(); ++i) {
+      IRecipe recipe = (IRecipe) recipes.get(i);
+      if (recipe.matches(ic, world)) {
+        return recipe;
+      }
+    }
+
+    // Vanilla recipes work for 3x3, might fuck around and figure out how to make it possible for
+    // Bigger tables, would require some custom mapping to find middle 3x3 of tables
+    // This actually wouldn't be hard.
+    if (ModConfig.confTableUseRecipes && ic.getWidth() == 3 && ic.getHeight() == 3) {
+      for(IRecipe recipe : ForgeRegistries.RECIPES.getValuesCollection()) {
+        if (recipe.matches(ic, world)) {
+          return recipe;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  public int getWidth() {
+    return this.slotWidth;
+  }
+
+  public int getHeight() {
+    return this.slotHeight;
   }
 }

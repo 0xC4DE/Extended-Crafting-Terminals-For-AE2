@@ -9,16 +9,30 @@ public enum AE2ExtendedGUIs {
     WIRELESS_BASIC_TERMINAL(3,3);
 
     private final int gridSize;
+    private final int gridX;
+    private final int gridY;
 
     AE2ExtendedGUIs() {
         this.gridSize = 0;
+        this.gridY = 0;
+        this.gridX = 0;
     }
 
     AE2ExtendedGUIs(int gridX, int gridY) {
         this.gridSize = gridX*gridY;
+        this.gridX = gridX;
+        this.gridY = gridY;
     }
 
     public int getGridSize() {
         return gridSize;
+    }
+
+    public int getGridX() {
+        return gridX;
+    }
+
+    public int getGridY() {
+        return gridY;
     }
 }

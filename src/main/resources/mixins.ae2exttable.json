@@ -5,10 +5,12 @@
   "minVersion": "0.8",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "AppEngCraftingSlotMixin",
     "ContainerCraftConfirmMixin",
     "GuiCraftAmountMixin",
     "GuiCraftConfirmMixin",
     "GuiCraftingStatusMixin",
+    "SlotCraftingTermMixin"
   ],
   "client": [
   ],

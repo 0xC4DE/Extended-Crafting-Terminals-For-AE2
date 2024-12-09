@@ -1,16 +1,12 @@
 package com.xc4de.ae2exttable.client.gui;
 
 import appeng.api.features.IWirelessTermHandler;
-import appeng.api.storage.IStorageMonitorable;
 import appeng.helpers.WirelessTerminalGuiObject;
-import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.InvOperation;
-import com.xc4de.ae2exttable.interfaces.IWirelessTermGui;
+import com.xc4de.ae2exttable.interfaces.ICraftingClass;
 import com.xc4de.ae2exttable.items.ItemRegistry;
 import com.xc4de.ae2exttable.part.ExtInternalInventory;
-import net.minecraft.client.gui.inventory.GuiCrafting;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
@@ -21,9 +17,10 @@ import net.minecraftforge.items.wrapper.InvWrapper;
 /**
  * This somewhat shadows PartSharedCraftingTerminal in a way
  */
-public class WirelessTerminalGuiObjectTwo extends WirelessTerminalGuiObject {
+public class WirelessTerminalGuiObjectTwo extends WirelessTerminalGuiObject implements
+    ICraftingClass {
 
-    public AE2ExtendedGUIs guiType;
+    public AE2ExtendedGUIs gui;
     protected ExtInternalInventory craftingGrid;
     protected ItemStack effectiveItem;
 
@@ -32,11 +29,11 @@ public class WirelessTerminalGuiObjectTwo extends WirelessTerminalGuiObject {
         this.effectiveItem = is;
         AE2ExtendedGUIs gui = ItemRegistry.guiByItem(is.getItem());
         if (gui != null) {
-            this.guiType = gui;
+            this.gui = gui;
         } else {
-            this.guiType = AE2ExtendedGUIs.WIRELESS_BASIC_TERMINAL;
+            this.gui = AE2ExtendedGUIs.WIRELESS_BASIC_TERMINAL;
         }
-        this.craftingGrid = new ExtInternalInventory("crafting", guiType.getGridSize(), 64);
+        this.craftingGrid = new ExtInternalInventory("crafting", this.gui.getGridSize(), 64);
         this.loadFromNBT();
     }
 
@@ -79,5 +76,14 @@ public class WirelessTerminalGuiObjectTwo extends WirelessTerminalGuiObject {
     @Override
     public void onChangeInventory(IItemHandler inv, int slot, InvOperation mc, ItemStack removedStack, ItemStack newStack) {
         this.saveChanges();
+    }
+
+    @Override
+    public int getWidth() {
+        return this.gui.getGridX();
+    }
+
+    public int getHeight() {
+        return this.gui.getGridY();
     }
 }

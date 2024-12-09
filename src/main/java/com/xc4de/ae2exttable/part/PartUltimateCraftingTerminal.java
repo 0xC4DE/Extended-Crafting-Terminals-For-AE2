@@ -33,7 +33,7 @@ public class PartUltimateCraftingTerminal extends PartSharedCraftingTerminal {
 
     @Reflected
     public PartUltimateCraftingTerminal(final ItemStack is) {
-        super(is, AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL.getGridSize());
+        super(is, AE2ExtendedGUIs.ULTIMATE_CRAFTING_TERMINAL);
 
     }
 
