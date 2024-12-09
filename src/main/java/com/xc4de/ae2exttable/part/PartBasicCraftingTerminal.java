@@ -10,6 +10,7 @@ import appeng.util.Platform;
 import com.xc4de.ae2exttable.Tags;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
+import com.xc4de.ae2exttable.interfaces.ITerminalGui;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -17,7 +18,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.NotNull;
 
-public class PartBasicCraftingTerminal extends PartSharedCraftingTerminal {
+public class PartBasicCraftingTerminal extends PartSharedCraftingTerminal implements
+    ITerminalGui {
 
     public AE2ExtendedGUIs guiType = AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL;
 

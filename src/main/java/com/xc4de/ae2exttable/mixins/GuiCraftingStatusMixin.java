@@ -2,8 +2,12 @@ package com.xc4de.ae2exttable.mixins;
 
 import appeng.api.storage.ITerminalHost;
 import appeng.client.gui.implementations.GuiCraftingStatus;
+import appeng.helpers.WirelessTerminalGuiObject;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
+import com.xc4de.ae2exttable.client.gui.WirelessTerminalGuiObjectTwo;
+import com.xc4de.ae2exttable.interfaces.ITerminalGui;
 import com.xc4de.ae2exttable.items.ItemRegistry;
+import com.xc4de.ae2exttable.items.ItemWirelessBasicTerminal;
 import com.xc4de.ae2exttable.network.ExtendedTerminalNetworkHandler;
 import com.xc4de.ae2exttable.network.packets.PacketSwitchGui;
 import com.xc4de.ae2exttable.part.PartSharedCraftingTerminal;
@@ -32,21 +36,18 @@ public class GuiCraftingStatusMixin {
     @Inject(method="<init>(Lnet/minecraft/entity/player/InventoryPlayer;Lappeng/api/storage/ITerminalHost;)V",
             at= @At(value = "INVOKE", target = "Lappeng/api/definitions/IDefinitions;parts()Lappeng/api/definitions/IParts;", shift = At.Shift.AFTER))
     private void onInit(final InventoryPlayer inventoryPlayer, final ITerminalHost te, CallbackInfo ci) {
-        // First grab the class of the terminal host
-        Class<? extends ITerminalHost> clazz = te.getClass();
-        // Figure out if the terminal host is one of my crafting terminals
-        if (PartSharedCraftingTerminal.class.isAssignableFrom(clazz)) {
-            try {
-                // This field exists on all PartSharedCraftingTerminal instances
-                Field field = clazz.getDeclaredField("guiType");
-
-                // Get guiType and assign it to original constructor
-                AE2ExtendedGUIs guiType = (AE2ExtendedGUIs) field.get(AE2ExtendedGUIs.class);
-                this.extendedOriginalGui = guiType;
-                this.myIcon = new ItemStack(ItemRegistry.partByGuiType(guiType));
-            } catch (NoSuchFieldException | IllegalAccessException e) {
-                throw new RuntimeException(e);
+        if (te instanceof WirelessTerminalGuiObject wt) {
+            ItemStack item = wt.getItemStack();
+            if (item.getItem() instanceof ItemWirelessBasicTerminal bt) {
+                this.extendedOriginalGui = bt.getGuiType();
+                this.myIcon = item;
+                return;
             }
+        }
+        if (te instanceof ITerminalGui term) {
+            AE2ExtendedGUIs guiType = term.getGuiType();
+            this.extendedOriginalGui = guiType;
+            this.myIcon = new ItemStack(ItemRegistry.partByGuiType(guiType));
         }
     }
 

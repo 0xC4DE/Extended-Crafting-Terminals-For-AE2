@@ -58,10 +58,9 @@ public class PacketSwitchGui extends ExtendedTerminalPacket {
               // TODO: BAUBLES, maybe need more? idk figure it out.
               IInventorySlotAware i = ((IInventorySlotAware) ah);
               int invSlot = i.getInventorySlot();
-              boolean isBauble = false; //i.getBaubleSlot();
-              PartGuiHandler.openGUI(this.gui, player,
-                  new BlockPos(invSlot, isBauble ? 1 : 0, Integer.MIN_VALUE),
-                  null);
+              boolean isBauble = i.isBaubleSlot();
+              PartGuiHandler.openWirelessTerminalGui(player.inventory.getStackInSlot(invSlot), invSlot,
+                  isBauble, player.world, player, this.gui);
             }
           }
         }

@@ -7,6 +7,7 @@ import appeng.client.gui.implementations.GuiCraftConfirm;
 import appeng.client.gui.widgets.GuiTabButton;
 import appeng.container.AEBaseContainer;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
+import com.xc4de.ae2exttable.interfaces.ITerminalGui;
 import com.xc4de.ae2exttable.items.ItemRegistry;
 import com.xc4de.ae2exttable.network.ExtendedTerminalNetworkHandler;
 import com.xc4de.ae2exttable.network.packets.PacketSwitchGui;
@@ -44,9 +45,8 @@ public class GuiCraftAmountMixin extends AEBaseGui {
 
     @Inject(method="initGui", at=@At(value="INVOKE", target="Lappeng/api/definitions/IDefinitions;parts()Lappeng/api/definitions/IParts;", shift=At.Shift.AFTER))
     private void onInitGui(CallbackInfo ci) {
-        // TODO: Can this be done on CraftConfirm and CraftStatus?
         Object target = ((AEBaseContainer) this.inventorySlots).getTarget();
-        if (target instanceof PartSharedCraftingTerminal t) {
+        if (target instanceof ITerminalGui t) {
             this.extendedOriginalGui = t.getGuiType();
             ItemStack myIcon = new ItemStack(ItemRegistry.partByGuiType(this.extendedOriginalGui));
             this.buttonList.add((this.originalGuiBtn = new GuiTabButton(this.guiLeft + 154, this.guiTop, myIcon, myIcon.getDisplayName(), this.itemRender)));
