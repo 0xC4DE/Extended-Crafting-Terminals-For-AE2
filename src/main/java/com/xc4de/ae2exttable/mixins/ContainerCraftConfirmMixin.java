@@ -1,20 +1,16 @@
 package com.xc4de.ae2exttable.mixins;
 
-import appeng.api.implementations.guiobjects.IGuiItemObject;
 import appeng.api.parts.IPart;
 import appeng.container.AEBaseContainer;
 import appeng.container.implementations.ContainerCraftConfirm;
 import com.xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com.xc4de.ae2exttable.client.gui.PartGuiHandler;
 import com.xc4de.ae2exttable.interfaces.ITerminalGui;
-import com.xc4de.ae2exttable.items.ItemWirelessBasicTerminal;
 import com.xc4de.ae2exttable.network.ExtendedTerminalNetworkHandler;
 import com.xc4de.ae2exttable.network.packets.PacketSwitchGui;
-import com.xc4de.ae2exttable.part.PartSharedCraftingTerminal;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.tileentity.TileEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;

@@ -77,7 +77,7 @@ public class GuiCraftingTerm extends GuiMEMonitorableTwo {
 
   // Also Guis might need custom offsets for upgrade slots
   public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
-    if (AE2ExtendedGUIs. this.getGuiType()) {
+    if (PartGuiHandler.guiIsWirelessTerminal(this.getGuiType())) {
       this.bindTexture("guis/wirelessupgrades.png");
       Gui.drawModalRectWithCustomSizedTexture(offsetX + 198, offsetY + 127, 0, 0, 32, 32, 32, 32);
     }

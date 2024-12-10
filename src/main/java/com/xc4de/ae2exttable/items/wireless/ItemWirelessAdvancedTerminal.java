@@ -1,4 +1,4 @@
-package com.xc4de.ae2exttable.items;
+package com.xc4de.ae2exttable.items.wireless;
 
 import appeng.api.AEApi;
 import appeng.items.tools.powered.ToolWirelessTerminal;
@@ -14,15 +14,15 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemWirelessBasicTerminal extends ToolWirelessTerminal implements
+public class ItemWirelessAdvancedTerminal extends ToolWirelessTerminal implements
     ITerminalGui {
-  public static AE2ExtendedGUIs GUI = AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL;
+  public static AE2ExtendedGUIs GUI = AE2ExtendedGUIs.WIRELESS_ADVANCED_CRAFTING_TERMINAL;
 
-  public ItemWirelessBasicTerminal() {
+  public ItemWirelessAdvancedTerminal() {
     super();
-    this.setRegistryName("wireless_basic_crafting_terminal");
+    this.setRegistryName("wireless_advanced_crafting_terminal");
     this.setTranslationKey(
-        Tags.MODID + "." + "wireless_basic_crafting_terminal");
+        Tags.MODID + "." + "wireless_advanced_crafting_terminal");
     this.setCreativeTab(AE2ExtendedCraftingTable.EXTENDED_TABLE_TAB);
 
     // This is registered so that "canHandle" and "getGuiHandler" are actually called
@@ -31,7 +31,7 @@ public class ItemWirelessBasicTerminal extends ToolWirelessTerminal implements
 
   @Override
   public boolean canHandle(ItemStack is) {
-    return is.getItem() instanceof ItemWirelessBasicTerminal;
+    return is.getItem() instanceof ItemWirelessAdvancedTerminal;
   }
 
   @Override
@@ -41,7 +41,7 @@ public class ItemWirelessBasicTerminal extends ToolWirelessTerminal implements
     PartGuiHandler.openWirelessTerminalGui(player.getHeldItem(hand),
         hand == EnumHand.MAIN_HAND ? player.inventory.currentItem : 40,
         false,
-        w, player, AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL);
+        w, player, AE2ExtendedGUIs.WIRELESS_ADVANCED_CRAFTING_TERMINAL);
     return ActionResult.newResult(EnumActionResult.SUCCESS,
         player.getHeldItem(hand));
   }

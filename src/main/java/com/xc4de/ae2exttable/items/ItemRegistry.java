@@ -7,6 +7,10 @@ import com.xc4de.ae2exttable.items.terminals.ItemAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.items.terminals.ItemBasicCraftingTerminal;
 import com.xc4de.ae2exttable.items.terminals.ItemEliteCraftingTerminal;
 import com.xc4de.ae2exttable.items.terminals.ItemUltimateCraftingTerminal;
+import com.xc4de.ae2exttable.items.wireless.ItemWirelessAdvancedTerminal;
+import com.xc4de.ae2exttable.items.wireless.ItemWirelessBasicTerminal;
+import com.xc4de.ae2exttable.items.wireless.ItemWirelessEliteTerminal;
+import com.xc4de.ae2exttable.items.wireless.ItemWirelessUltimateTerminal;
 import net.minecraft.item.Item;
 
 import java.util.HashMap;
@@ -24,6 +28,9 @@ public class ItemRegistry {
 
     // Wireless terms go here
     public static ItemWirelessBasicTerminal WIRELESS_BASIC_TERMINAL = new ItemWirelessBasicTerminal();
+    public static ItemWirelessAdvancedTerminal WIRELESS_ADVANCED_TERMINAL = new ItemWirelessAdvancedTerminal();
+    public static ItemWirelessEliteTerminal WIRELESS_ELITE_TERMINAL = new ItemWirelessEliteTerminal();
+    public static ItemWirelessUltimateTerminal WIRELESS_ULTIMATE_TERMINAL = new ItemWirelessUltimateTerminal();
 
     public static void init() {
         final ModRegistry registry = AE2ExtendedCraftingTable.REGISTRY;
@@ -41,6 +48,15 @@ public class ItemRegistry {
 
         registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
         FORWARD_LOOKUP.put(WIRELESS_BASIC_TERMINAL, AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL);
+
+        registry.register(WIRELESS_ADVANCED_TERMINAL, "wireless_advanced_crafting_terminal");
+        FORWARD_LOOKUP.put(WIRELESS_ADVANCED_TERMINAL, AE2ExtendedGUIs.WIRELESS_ADVANCED_CRAFTING_TERMINAL);
+
+        registry.register(WIRELESS_ELITE_TERMINAL, "wireless_elite_crafting_terminal");
+        FORWARD_LOOKUP.put(WIRELESS_ELITE_TERMINAL, AE2ExtendedGUIs.WIRELESS_ELITE_CRAFTING_TERMINAL);
+
+        registry.register(WIRELESS_ULTIMATE_TERMINAL, "wireless_ultimate_crafting_terminal");
+        FORWARD_LOOKUP.put(WIRELESS_ULTIMATE_TERMINAL, AE2ExtendedGUIs.WIRELESS_ULTIMATE_CRAFTING_TERMINAL);
 
         initModels();
     }

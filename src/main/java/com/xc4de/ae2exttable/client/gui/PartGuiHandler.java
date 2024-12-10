@@ -23,12 +23,18 @@ import com.xc4de.ae2exttable.client.container.terminals.ContainerAdvancedCraftin
 import com.xc4de.ae2exttable.client.container.terminals.ContainerBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerEliteCraftingTerminal;
 import com.xc4de.ae2exttable.client.container.terminals.ContainerUltimateCraftingTerminal;
+import com.xc4de.ae2exttable.client.container.wireless.ContainerAdvancedWirelessTerminal;
 import com.xc4de.ae2exttable.client.container.wireless.ContainerBasicWirelessTerminal;
+import com.xc4de.ae2exttable.client.container.wireless.ContainerEliteWirelessTerminal;
+import com.xc4de.ae2exttable.client.container.wireless.ContainerUltimateWirelessTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiBasicCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiEliteCraftingTerminal;
 import com.xc4de.ae2exttable.client.gui.terminals.GuiUltimateCraftingTerminal;
-import com.xc4de.ae2exttable.client.gui.terminals.GuiWirelessBasicCraftingTerm;
+import com.xc4de.ae2exttable.client.gui.wireless.GuiWirelessAdvancedCraftingTerm;
+import com.xc4de.ae2exttable.client.gui.wireless.GuiWirelessBasicCraftingTerm;
+import com.xc4de.ae2exttable.client.gui.wireless.GuiWirelessEliteCraftingTerm;
+import com.xc4de.ae2exttable.client.gui.wireless.GuiWirelessUltimateCraftingTerm;
 import com.xc4de.ae2exttable.part.PartAdvancedCraftingTerminal;
 import com.xc4de.ae2exttable.part.PartBasicCraftingTerminal;
 import com.xc4de.ae2exttable.part.PartEliteCraftingTerminal;
@@ -181,6 +187,18 @@ public class PartGuiHandler implements IGuiHandler {
                               final int z, final AEPartLocation side) {
     IPart part =
         PartGuiHandler.getPartFromWorld(world, new BlockPos(x, y, z), side);
+
+    WirelessTerminalGuiObjectTwo wireless = null;
+    if (guiIsWirelessTerminal(guiID)) {
+      final IWirelessTermHandler handler =
+          AEApi.instance().registries().wireless()
+              .getWirelessTerminalHandler(myItem);
+
+      wireless =
+          new WirelessTerminalGuiObjectTwo(handler, myItem, player, world, x,
+              y, z);
+    }
+
     switch (guiID) {
       case BASIC_CRAFTING_TERMINAL:
         return new ContainerBasicCraftingTerminal(player.inventory,
@@ -194,10 +212,16 @@ public class PartGuiHandler implements IGuiHandler {
       case ULTIMATE_CRAFTING_TERMINAL:
         return new ContainerUltimateCraftingTerminal(player.inventory,
             (PartUltimateCraftingTerminal) part);
+
+        // Start wireless stuffs here
       case WIRELESS_BASIC_CRAFTING_TERMINAL:
-        final IWirelessTermHandler handler = AEApi.instance().registries().wireless().getWirelessTerminalHandler(myItem);
-        final WirelessTerminalGuiObjectTwo wireless = new WirelessTerminalGuiObjectTwo(handler, myItem, player, world, x, y, z);
         return new ContainerBasicWirelessTerminal(player.inventory, wireless);
+      case WIRELESS_ADVANCED_CRAFTING_TERMINAL:
+        return new ContainerAdvancedWirelessTerminal(player.inventory, wireless);
+      case WIRELESS_ELITE_CRAFTING_TERMINAL:
+        return new ContainerEliteWirelessTerminal(player.inventory, wireless);
+      case WIRELESS_ULTIMATE_CRAFTING_TERMINAL:
+        return new ContainerUltimateWirelessTerminal(player.inventory, wireless);
       default:
         return null;
     }
@@ -211,6 +235,16 @@ public class PartGuiHandler implements IGuiHandler {
     AEPartLocation side = PartGuiHandler.getSideFromOrdinal(ID);
     IPart part =
         PartGuiHandler.getPartFromWorld(world, new BlockPos(x, y, z), side);
+
+    WirelessTerminalGuiObjectTwo gui = null;
+    if (guiIsWirelessTerminal(guiID)) {
+      IWirelessTermHandler handler =
+          AEApi.instance().registries().wireless().getWirelessTerminalHandler(
+              player.inventory.getCurrentItem());
+
+      gui = new WirelessTerminalGuiObjectTwo(
+          handler, player.inventory.getCurrentItem(), player, world, x, y, z);
+    }
 
     switch (guiID) {
       case BASIC_CRAFTING_TERMINAL:
@@ -237,17 +271,24 @@ public class PartGuiHandler implements IGuiHandler {
 
       case WIRELESS_BASIC_CRAFTING_TERMINAL:
         // TODO: Fix for baubles, I guess
-        IWirelessTermHandler handler =
-            AEApi.instance().registries().wireless().getWirelessTerminalHandler(
-                player.inventory.getCurrentItem());
+        return new GuiWirelessBasicCraftingTerm(player.inventory, gui,
+            new ContainerBasicWirelessTerminal(
+                player.inventory, gui));
 
-        WirelessTerminalGuiObjectTwo gui = new WirelessTerminalGuiObjectTwo(
-            handler, player.inventory.getCurrentItem(), player, world, x, y, z);
+      case WIRELESS_ADVANCED_CRAFTING_TERMINAL:
+        return new GuiWirelessAdvancedCraftingTerm(player.inventory, gui,
+            new ContainerAdvancedWirelessTerminal(
+                player.inventory, gui));
 
-        ContainerBasicWirelessTerminal container = new ContainerBasicWirelessTerminal(
-            player.inventory, gui);
+      case WIRELESS_ELITE_CRAFTING_TERMINAL:
+        return new GuiWirelessEliteCraftingTerm(player.inventory, gui,
+            new ContainerEliteWirelessTerminal(
+                player.inventory, gui));
 
-        return new GuiWirelessBasicCraftingTerm(player.inventory, gui, container);
+      case WIRELESS_ULTIMATE_CRAFTING_TERMINAL:
+        return new GuiWirelessUltimateCraftingTerm(player.inventory, gui,
+            new ContainerUltimateWirelessTerminal(
+                player.inventory, gui));
       default:
         return null;
     }

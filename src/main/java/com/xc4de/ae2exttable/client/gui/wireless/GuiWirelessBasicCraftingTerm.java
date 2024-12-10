@@ -1,4 +1,4 @@
-package com.xc4de.ae2exttable.client.gui.terminals;
+package com.xc4de.ae2exttable.client.gui.wireless;
 
 import appeng.helpers.WirelessTerminalGuiObject;
 import com.xc4de.ae2exttable.client.container.wireless.ContainerBasicWirelessTerminal;
