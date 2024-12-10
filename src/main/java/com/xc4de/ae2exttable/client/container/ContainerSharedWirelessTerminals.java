@@ -4,6 +4,7 @@ import appeng.api.config.Actionable;
 import appeng.api.config.PowerMultiplier;
 import appeng.api.implementations.IUpgradeableCellContainer;
 import appeng.api.storage.ITerminalHost;
+import appeng.container.implementations.ContainerMEPortableTerminal;
 import appeng.container.interfaces.IInventorySlotAware;
 import appeng.container.slot.SlotRestrictedInput;
 import appeng.core.AEConfig;
@@ -190,6 +191,7 @@ public class ContainerSharedWirelessTerminals extends ContainerMEMonitorableTwo
       super.detectAndSendChanges();
     }
   }
+
 
   @Override
   public @NotNull ItemStack slotClick(int slotId, int dragType, ClickType clickTypeIn,
