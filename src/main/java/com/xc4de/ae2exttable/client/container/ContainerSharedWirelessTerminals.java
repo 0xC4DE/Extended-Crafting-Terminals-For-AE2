@@ -11,9 +11,11 @@ import appeng.core.AEConfig;
 import appeng.core.localization.PlayerMessages;
 import appeng.helpers.WirelessTerminalGuiObject;
 import appeng.parts.automation.StackUpgradeInventory;
+import appeng.parts.automation.UpgradeInventory;
 import appeng.tile.inventory.AppEngInternalInventory;
 import appeng.util.Platform;
 import appeng.util.inv.IAEAppEngInventory;
+import appeng.util.inv.WrapperInvItemHandler;
 import baubles.api.BaublesApi;
 import com.xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import com.xc4de.ae2exttable.client.gui.WirelessTerminalGuiObjectTwo;
@@ -63,8 +65,12 @@ public class ContainerSharedWirelessTerminals extends ContainerMEMonitorableTwo
       this.lockPlayerInventorySlot(ip.currentItem);
     }
 
+    this.upgrades = new StackUpgradeInventory(guiItemObject.getItemStack(), this, 2);
     this.loadFromNBT();
+
     this.setupUpgrades();
+
+    this.onCraftMatrixChanged(new WrapperInvItemHandler(this.getInventoryByName("crafting")));
   }
 
   private double getPowerMultiplier() {
@@ -122,7 +128,6 @@ public class ContainerSharedWirelessTerminals extends ContainerMEMonitorableTwo
       NBTTagCompound tag = new NBTTagCompound();
       // For one reason or another upgrades is not guaranteed to exist at this point.
       this.upgrades.writeToNBT(tag, "upgrades");
-
       this.wt.saveChanges(tag);
     }
   }

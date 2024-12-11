@@ -1,6 +1,8 @@
 package com.xc4de.ae2exttable.items.wireless;
 
 import appeng.api.AEApi;
+import appeng.api.config.Upgrades;
+import appeng.api.definitions.IItemDefinition;
 import appeng.items.tools.powered.ToolWirelessTerminal;
 import com.xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com.xc4de.ae2exttable.Tags;

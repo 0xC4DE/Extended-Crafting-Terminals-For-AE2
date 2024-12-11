@@ -135,7 +135,11 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable
     this.bindPlayerInventory(ip, this.guiConst.inventoryOffset.x,
         this.guiConst.inventoryOffset.y);
 
-    this.onCraftMatrixChanged(new WrapperInvItemHandler(crafting));
+    // Wireless terminals init this later because upgrades
+    if (this.ct != null) {
+      this.onCraftMatrixChanged(
+          new WrapperInvItemHandler(this.getInventoryByName("crafting")));
+    }
   }
 
   public void onCraftMatrixChanged(IInventory inventory) {
