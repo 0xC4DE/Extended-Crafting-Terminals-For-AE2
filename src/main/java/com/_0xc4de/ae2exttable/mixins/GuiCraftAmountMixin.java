@@ -55,7 +55,7 @@ public class GuiCraftAmountMixin extends AEBaseGui {
     }
 
     // Inject that handles switching back to the original of my gui
-    @Inject(method="actionPerformed", at = @At(value="INVOKE", target="Lappeng/client/gui/AEBaseGui;actionPerformed(Lnet/minecraft/client/gui/GuiButton;)V", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method="actionPerformed", at = @At(value="INVOKE", target="Lappeng/client/gui/AEBaseGui;actionPerformed(Lnet/minecraft/client/gui/GuiButton;)V", shift = At.Shift.AFTER), cancellable = true, remap=true)
     protected void actionPerformedGuiSwitch(GuiButton btn, CallbackInfo ci) {
         if (btn == this.originalGuiBtn && this.extendedOriginalGui != null) {
             ExtendedTerminalNetworkHandler.instance().sendToServer(new PacketSwitchGui(this.extendedOriginalGui));
