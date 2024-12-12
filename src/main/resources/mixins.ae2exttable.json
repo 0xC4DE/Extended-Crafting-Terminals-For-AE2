@@ -1,5 +1,5 @@
 {
-  "package": "com.xc4de.ae2exttable.mixins",
+  "package": "com._0xc4de.ae2exttable.mixins",
   "refmap": "mixins.ae2exttable.refmap.json",
   "target": "@env(DEFAULT)",
   "minVersion": "0.8",
