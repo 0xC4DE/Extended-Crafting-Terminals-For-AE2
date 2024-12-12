@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import com._0xc4de.ae2exttable.proxy.CommonProxy;
 
 @Mod(modid = Tags.MODID, version = Tags.VERSION, name = Tags.MODNAME, acceptedMinecraftVersions = "[1.12.2]",
-        dependencies = "required-after:appliedenergistics2;")
+        dependencies = "required-after:appliedenergistics2;required:mixinbooter;required-after:extendedcrafting;")
 public class AE2ExtendedCraftingTable {
 
     public static final Logger LOGGER = LogManager.getLogger(Tags.MODID);

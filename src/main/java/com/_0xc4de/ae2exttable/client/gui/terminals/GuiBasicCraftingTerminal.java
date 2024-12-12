@@ -10,12 +10,9 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiBasicCraftingTerminal extends GuiCraftingTerm {
 
-    public final PartBasicCraftingTerminal te;
-
     public GuiBasicCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerBasicCraftingTerminal container) {
         super(inventoryPlayer, te, container, ExtendedCraftingGUIConstants.BASIC_CRAFTING_TERMINAL);
         setGuiType(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL);
-        this.te = (PartBasicCraftingTerminal) te;
     }
 
     @Override
