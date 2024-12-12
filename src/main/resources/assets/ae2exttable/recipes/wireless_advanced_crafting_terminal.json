@@ -1,0 +1,32 @@
+{
+  "conditions": [
+    {
+      "type": "minecraft:item_exists",
+      "item": "ae2exttable:advanced_crafting_terminal"
+    }
+  ],
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " B ",
+    " C "
+  ],
+  "key": {
+    "A":
+    {
+      "item": "appliedenergistics2:material",
+      "data": 41
+    },
+    "B":
+    {
+      "item": "ae2exttable:advanced_crafting_terminal"
+    },
+    "C": {
+      "item": "appliedenergistics2:dense_energy_cell"
+    }
+  },
+  "result": {
+    "item": "ae2exttable:wireless_advanced_crafting_terminal",
+    "count": 1
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "conditions": [
+    {
+      "type": "minecraft:item_exists",
+      "item": "ae2exttable:advanced_crafting_terminal"
+    }
+  ],
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "type": "appliedenergistics2:part",
+      "part": "material.engineering_processor"
+    },
+    {
+      "item": "extendedcrafting:material",
+      "data": 9
+    },
+    {
+      "item": "extendedcrafting:table_advanced",
+      "data": 0
+    },
+    {
+      "type": "appliedenergistics2:part",
+      "part": "part.crafting_terminal"
+    }
+  ],
+  "result": {
+    "item": "ae2exttable:advanced_crafting_terminal",
+    "count": 1
+  }
+}

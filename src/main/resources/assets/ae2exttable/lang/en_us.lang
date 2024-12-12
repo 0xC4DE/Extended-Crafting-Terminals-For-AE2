@@ -5,5 +5,34 @@ tile.ae2exttable.custom_extended_table.name=Extended Crafting Table But Cooler
 container.ae2exttable.custom_extended_table=Cooler Crafting
 tooltip.ae2exttable.custom_extended_table=Because the Extended Crafting Table wasn't cool enough
 
-item.ae2exttable.extended_crafting_terminal.name=Extending Crafting Terminal
+item.ae2exttable.basic_crafting_terminal.name=Basic Extended Crafting Terminal
+ae2exttable.basic_crafting_terminal=Terminal
+ae2exttable.basic_crafting_terminal.crafting=Basic Crafting
 
+item.ae2exttable.advanced_crafting_terminal.name=Advanced Extended Crafting Terminal
+ae2exttable.advanced_crafting_terminal=Terminal
+ae2exttable.advanced_crafting_terminal.crafting=Advanced Crafting
+
+item.ae2exttable.elite_crafting_terminal.name=Elite Extended Crafting Terminal
+ae2exttable.elite_crafting_terminal=Terminal
+ae2exttable.elite_crafting_terminal.crafting=Elite Crafting
+
+item.ae2exttable.ultimate_crafting_terminal.name=Ultimate Extended Crafting Terminal
+ae2exttable.ultimate_crafting_terminal=Terminal
+ae2exttable.ultimate_crafting_terminal.crafting=Ultimate Crafting
+
+item.ae2exttable.wireless_basic_crafting_terminal.name=Wireless Basic Crafting Terminal
+ae2exttable.wireless_basic_crafting_terminal=Wireless Term
+ae2exttable.wireless_basic_crafting_terminal.crafting=Basic Crafting
+
+item.ae2exttable.wireless_advanced_crafting_terminal.name=Wireless Advanced Crafting Terminal
+ae2exttable.wireless_advanced_crafting_terminal=Wireless Term
+ae2exttable.wireless_advanced_crafting_terminal.crafting=Advanced Crafting
+
+item.ae2exttable.wireless_elite_crafting_terminal.name=Wireless Elite Crafting Terminal
+ae2exttable.wireless_elite_crafting_terminal=Wireless Term
+ae2exttable.wireless_elite_crafting_terminal.crafting=Elite Crafting
+
+item.ae2exttable.wireless_ultimate_crafting_terminal.name=Wireless Ultimate Crafting Terminal
+ae2exttable.wireless_ultimate_crafting_terminal=Wireless Term
+ae2exttable.wireless_ultimate_crafting_terminal.crafting=Ultimate Crafting

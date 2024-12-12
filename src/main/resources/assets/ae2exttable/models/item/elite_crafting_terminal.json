@@ -1,0 +1,9 @@
+{
+  "parent": "appliedenergistics2:item/part/display",
+  "textures": {
+    "front": "appliedenergistics2:items/part/crafting_terminal",
+    "front_bright": "ae2exttable:part/elite_overlay_base",
+    "front_medium": "ae2exttable:part/elite_overlay_on",
+    "front_dark": "ae2exttable:part/basic_overlay_off"
+  }
+}
