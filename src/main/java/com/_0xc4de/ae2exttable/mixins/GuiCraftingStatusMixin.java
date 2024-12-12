@@ -6,7 +6,10 @@ import appeng.helpers.WirelessTerminalGuiObject;
 import com._0xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com._0xc4de.ae2exttable.interfaces.ITerminalGui;
 import com._0xc4de.ae2exttable.items.ItemRegistry;
+import com._0xc4de.ae2exttable.items.wireless.ItemWirelessAdvancedTerminal;
 import com._0xc4de.ae2exttable.items.wireless.ItemWirelessBasicTerminal;
+import com._0xc4de.ae2exttable.items.wireless.ItemWirelessEliteTerminal;
+import com._0xc4de.ae2exttable.items.wireless.ItemWirelessUltimateTerminal;
 import com._0xc4de.ae2exttable.network.ExtendedTerminalNetworkHandler;
 import com._0xc4de.ae2exttable.network.packets.PacketSwitchGui;
 import net.minecraft.client.gui.GuiButton;
@@ -34,7 +37,7 @@ public class GuiCraftingStatusMixin {
     private void onInit(final InventoryPlayer inventoryPlayer, final ITerminalHost te, CallbackInfo ci) {
         if (te instanceof WirelessTerminalGuiObject wt) {
             ItemStack item = wt.getItemStack();
-            if (item.getItem() instanceof ItemWirelessBasicTerminal bt) {
+            if (item.getItem() instanceof ITerminalGui bt) {
                 this.extendedOriginalGui = bt.getGuiType();
                 this.myIcon = item;
                 return;

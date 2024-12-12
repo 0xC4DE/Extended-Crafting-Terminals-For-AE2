@@ -10,8 +10,6 @@ import net.minecraft.entity.player.InventoryPlayer;
 
 public class GuiAdvancedCraftingTerminal extends GuiCraftingTerm {
 
-    private GuiImgButton clearBtn;
-
     public GuiAdvancedCraftingTerminal(InventoryPlayer inventoryPlayer, final ITerminalHost te, ContainerAdvancedCraftingTerminal container) {
         super(inventoryPlayer, te, container, ExtendedCraftingGUIConstants.ADVANCED_CRAFTING_TERMINAL);
         setGuiType(AE2ExtendedGUIs.ADVANCED_CRAFTING_TERMINAL);

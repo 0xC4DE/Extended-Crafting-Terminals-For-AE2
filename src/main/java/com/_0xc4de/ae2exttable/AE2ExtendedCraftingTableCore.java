@@ -13,7 +13,7 @@ import java.util.Map;
 
 @IFMLLoadingPlugin.MCVersion(ForgeVersion.mcVersion)
 @IFMLLoadingPlugin.Name("AE2ExtendedCraftingTable-Core")
-@Optional.Interface(iface = "zone.rong.mixinbooter.ILateMixinLoader", modid = "mixinbooter")
+//@Optional.Interface(iface = "zone.rong.mixinbooter.ILateMixinLoader", modid = "mixinbooter")
 public class AE2ExtendedCraftingTableCore implements IFMLLoadingPlugin, ILateMixinLoader {
 
     public static final String MIXIN_PATH_FORMAT = "mixins.ae2exttable.json";

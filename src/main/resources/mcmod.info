@@ -1,12 +1,12 @@
 [{
-    "modid": "${modid}",
-    "name": "${modname}",
-    "description": "An example mod for Minecraft 1.12.2 with Forge",
-    "version": "${version}",
+    "modid": "ae2exttable",
+    "name": "Extended Crafting Terminals for AE2",
+    "description": "Extended Crafting Tables implemented as Applied Energistics Crafting Terminals",
+    "version": "1.0.2",
     "mcversion": "${mcversion}",
-    "logoFile": "",
-    "url": "",
-    "authorList": [],
+    "logoFile": "assets/ae2exttable/meta/logo.png",
+    "url": "https://github.com/0xC4DE/Extended-Crafting-Terminals-For-AE2",
+    "authorList": [0xC4DE],
     "credits": "",
     "dependencies": []
 }]
