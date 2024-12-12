@@ -2,32 +2,29 @@
   "conditions": [
     {
       "type": "minecraft:item_exists",
-      "item": "ae2exttable:basic_crafting_terminal"
+      "item": "ae2exttable:advanced_crafting_terminal"
     }
   ],
-  "type": "forge:ore_shapeless",
-  "ingredients": [
-    {
-      "type": "appliedenergistics2:part",
-      "part": "material.engineering_processor"
-    },
-    {
-      "item": "extendedcrafting:material",
-      "data": 8
-    },
-    {
-      "item": "extendedcrafting:table_advanced",
-      "data": 0
-    },
-    {
-      "item": "extendedcrafting:table_advanced",
-      "data": 0
-    },
-    {
-      "type": "appliedenergistics2:part",
-      "part": "part.crafting_terminal"
-    }
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " A ",
+    " B ",
+    " C "
   ],
+  "key": {
+    "A":
+    {
+      "item": "appliedenergistics2:material",
+      "data": 41
+    },
+    "B":
+    {
+      "item": "ae2exttable:advanced_crafting_terminal"
+    },
+    "C": {
+      "item": "appliedenergistics2:dense_energy_cell"
+    }
+  },
   "result": {
     "item": "ae2exttable:wireless_advanced_crafting_terminal",
     "count": 1
