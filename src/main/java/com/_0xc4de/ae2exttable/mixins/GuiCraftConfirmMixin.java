@@ -52,7 +52,7 @@ public class GuiCraftConfirmMixin extends AEBaseGui {
     };
 
     // Fixes an error with the Cancel button being null, because of my mixin. idk.
-    @Inject(method="initGui", at=@At(value="RETURN"))
+    @Inject(method="initGui", at=@At(value="RETURN"), remap=true)
     private void onInitGui(CallbackInfo ci) {
         if (this.extendedOriginalGui != null) {
             this.buttonList.remove(null);
@@ -62,7 +62,7 @@ public class GuiCraftConfirmMixin extends AEBaseGui {
     }
 
     // Should actually just switch back to my gui after invoking the start methods
-    @Inject(method="actionPerformed", at = @At(value="INVOKE", target="Lorg/lwjgl/input/Mouse;isButtonDown(I)Z", shift = At.Shift.AFTER), cancellable = true)
+    @Inject(method="actionPerformed", at = @At(value="INVOKE", target="Lappeng/client/gui/AEBaseGui;actionPerformed(Lnet/minecraft/client/gui/GuiButton;)V", shift = At.Shift.AFTER), cancellable = true, remap=true)
     protected void actionPerformed(GuiButton btn, CallbackInfo ci) {
         if (this.extendedOriginalGui != null) {
             if (btn == this.start) {
