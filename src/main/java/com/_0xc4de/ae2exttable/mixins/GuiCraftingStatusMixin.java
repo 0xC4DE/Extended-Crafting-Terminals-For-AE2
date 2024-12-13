@@ -28,6 +28,7 @@ public class GuiCraftingStatusMixin {
     private ItemStack myIcon;
 
     //@Unique
+    @Unique
     private AE2ExtendedGUIs aE2ExtendedCraftingTable$extendedOriginalGui;
 
     @SuppressWarnings("InjectIntoConstructor")

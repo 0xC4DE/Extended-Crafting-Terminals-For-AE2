@@ -4,9 +4,9 @@ import appeng.api.storage.IStorageMonitorable;
 import appeng.container.ContainerNull;
 import appeng.container.slot.SlotCraftingTerm;
 import appeng.helpers.IContainerCraftingPacket;
-import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
 import com._0xc4de.ae2exttable.client.container.ContainerMEMonitorableTwo;
 import com._0xc4de.ae2exttable.interfaces.ICraftingClass;
+import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
 import java.util.List;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.crafting.IRecipe;
@@ -33,20 +33,21 @@ public class SlotCraftingTermMixin {
   private IContainerCraftingPacket container;
 
   // Go Go Gadget random incantation that works
-  @ModifyVariable(method = "craftItem", at= @At(ordinal=0, value = "STORE", target = "Lnet/minecraft/inventory/InventoryCrafting;<init>(Lnet/minecraft/inventory/Container;II)V"))
+  @ModifyVariable(method = "craftItem", at = @At(ordinal = 0, value = "STORE", target = "Lnet/minecraft/inventory/InventoryCrafting;<init>(Lnet/minecraft/inventory/Container;II)V"))
   private InventoryCrafting inventoryCraftingCraftItem(InventoryCrafting ic) {
     if (this.storage instanceof ICraftingClass strg) {
-      ic = new InventoryCrafting(new ContainerNull(), strg.getWidth(), strg.getHeight());
-      for(int x = 0; x < strg.getWidth()*strg.getHeight(); ++x) {
+      ic = new InventoryCrafting(new ContainerNull(), strg.getWidth(),
+          strg.getHeight());
+      for (int x = 0; x < strg.getWidth() * strg.getHeight(); ++x) {
         ic.setInventorySlotContents(x, this.pattern.getStackInSlot(x));
       }
     }
     return ic;
-  };
+  }
 
 
   // Random bullshit go
-  @ModifyVariable(method = "craftItem", at= @At(ordinal=0, value = "STORE", target = "Lappeng/container/slot/SlotCraftingTerm;findRecipe(Lnet/minecraft/inventory/InventoryCrafting;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/item/crafting/IRecipe;"))
+  @ModifyVariable(method = "craftItem", at = @At(ordinal = 0, value = "STORE", target = "Lappeng/container/slot/SlotCraftingTerm;findRecipe(Lnet/minecraft/inventory/InventoryCrafting;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/item/crafting/IRecipe;"))
   private IRecipe craftItem(IRecipe r) {
     if (this.storage instanceof ICraftingClass strg) {
 
