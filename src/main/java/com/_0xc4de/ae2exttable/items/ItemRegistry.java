@@ -49,21 +49,25 @@ public class ItemRegistry {
 
         registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
         FORWARD_LOOKUP.put(WIRELESS_BASIC_TERMINAL, AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL);
+        REVERSE_LOOKUP.put(AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL, WIRELESS_BASIC_TERMINAL);
         Upgrades.MAGNET.registerItem(
             WIRELESS_BASIC_TERMINAL.getDefaultInstance(), 1);
 
         registry.register(WIRELESS_ADVANCED_TERMINAL, "wireless_advanced_crafting_terminal");
         FORWARD_LOOKUP.put(WIRELESS_ADVANCED_TERMINAL, AE2ExtendedGUIs.WIRELESS_ADVANCED_CRAFTING_TERMINAL);
+        REVERSE_LOOKUP.put(AE2ExtendedGUIs.WIRELESS_ADVANCED_CRAFTING_TERMINAL, WIRELESS_ADVANCED_TERMINAL);
         Upgrades.MAGNET.registerItem(
             WIRELESS_ADVANCED_TERMINAL.getDefaultInstance(), 1);
 
         registry.register(WIRELESS_ELITE_TERMINAL, "wireless_elite_crafting_terminal");
         FORWARD_LOOKUP.put(WIRELESS_ELITE_TERMINAL, AE2ExtendedGUIs.WIRELESS_ELITE_CRAFTING_TERMINAL);
+        REVERSE_LOOKUP.put(AE2ExtendedGUIs.WIRELESS_ELITE_CRAFTING_TERMINAL, WIRELESS_ELITE_TERMINAL);
         Upgrades.MAGNET.registerItem(
             WIRELESS_ELITE_TERMINAL.getDefaultInstance(), 1);
 
         registry.register(WIRELESS_ULTIMATE_TERMINAL, "wireless_ultimate_crafting_terminal");
         FORWARD_LOOKUP.put(WIRELESS_ULTIMATE_TERMINAL, AE2ExtendedGUIs.WIRELESS_ULTIMATE_CRAFTING_TERMINAL);
+        REVERSE_LOOKUP.put(AE2ExtendedGUIs.WIRELESS_ULTIMATE_CRAFTING_TERMINAL, WIRELESS_ULTIMATE_TERMINAL);
         Upgrades.MAGNET.registerItem(
             WIRELESS_ULTIMATE_TERMINAL.getDefaultInstance(), 1);
 

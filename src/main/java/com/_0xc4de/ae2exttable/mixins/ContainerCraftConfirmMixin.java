@@ -36,13 +36,14 @@ public class ContainerCraftConfirmMixin extends AEBaseContainer {
                 ci.cancel();
             }
         }
-        if (this.obj.getItemStack().getItem() instanceof ITerminalGui t) {
-            extendedOriginalGui = t.getGuiType();
-            ExtendedTerminalNetworkHandler.instance()
-                .sendToServer(new PacketSwitchGui(extendedOriginalGui));
-            ci.cancel();
+        if (this.obj != null) {
+            if (this.obj.getItemStack().getItem() instanceof ITerminalGui t) {
+                extendedOriginalGui = t.getGuiType();
+                ExtendedTerminalNetworkHandler.instance()
+                    .sendToServer(new PacketSwitchGui(extendedOriginalGui));
+                ci.cancel();
+            }
         }
 
     }
-
 }
