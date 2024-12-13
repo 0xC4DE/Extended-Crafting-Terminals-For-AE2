@@ -3,7 +3,6 @@ package com._0xc4de.ae2exttable.mixins;
 import appeng.api.storage.ITerminalHost;
 import appeng.client.gui.implementations.GuiCraftingStatus;
 import appeng.helpers.WirelessTerminalGuiObject;
-import com._0xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com._0xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com._0xc4de.ae2exttable.interfaces.ITerminalGui;
 import com._0xc4de.ae2exttable.items.ItemRegistry;
@@ -26,8 +25,7 @@ public class GuiCraftingStatusMixin {
 
     @Shadow
     private ItemStack myIcon;
-
-    //@Unique
+    
     @Unique
     private AE2ExtendedGUIs aE2ExtendedCraftingTable$extendedOriginalGui;
 
