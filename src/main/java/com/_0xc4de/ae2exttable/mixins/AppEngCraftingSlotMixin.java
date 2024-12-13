@@ -18,7 +18,7 @@ public abstract class AppEngCraftingSlotMixin extends AppEngSlot {
   }
 
   // More sketchy BS to help appeng realize that there's not only 3x3 crafting terms :(
-  @ModifyVariable(method = "onTake", at = @At(ordinal = 0, value = "STORE", target = "Lnet/minecraft/inventory/InventoryCrafting;<init>(Lnet/minecraft/inventory/Container;II)V"))
+  @ModifyVariable(method = "onTake", at = @At(ordinal = 0, value = "STORE", target = "Lnet/minecraft/inventory/InventoryCrafting;<init>(Lnet/minecraft/inventory/Container;II)V"), remap=true)
   private InventoryCrafting inventoryCraftingOnTake(InventoryCrafting ic) {
     if (this.getContainer() instanceof ContainerMEMonitorableTwo container) {
       ic = new InventoryCrafting(new ContainerNull(), container.getWidth(),
