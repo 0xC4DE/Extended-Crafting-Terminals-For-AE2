@@ -2,6 +2,7 @@ package com._0xc4de.ae2exttable.mixins;
 
 import appeng.api.storage.ITerminalHost;
 import appeng.client.gui.implementations.GuiCraftingStatus;
+import appeng.client.gui.widgets.GuiTabButton;
 import appeng.helpers.WirelessTerminalGuiObject;
 import com._0xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com._0xc4de.ae2exttable.interfaces.ITerminalGui;
@@ -25,6 +26,9 @@ public class GuiCraftingStatusMixin {
 
     @Shadow
     private ItemStack myIcon;
+
+    @Shadow
+    private GuiTabButton originalGuiBtn;
     
     @Unique
     private AE2ExtendedGUIs aE2ExtendedCraftingTable$extendedOriginalGui;
@@ -51,7 +55,7 @@ public class GuiCraftingStatusMixin {
     @Inject(method = "actionPerformed", at = @At(value="INVOKE", target="Lappeng/client/gui/implementations/GuiCraftingCPU;actionPerformed(Lnet/minecraft/client/gui/GuiButton;)V", shift=At.Shift.AFTER), cancellable=true, remap=true)
     protected void actionPerformed(GuiButton btn, CallbackInfo ci) throws IOException {
         // Defined if the terminal host is one of my crafting terminals
-        if (this.aE2ExtendedCraftingTable$extendedOriginalGui != null) {
+        if (btn == this.originalGuiBtn && this.aE2ExtendedCraftingTable$extendedOriginalGui != null) {
             ExtendedTerminalNetworkHandler.instance().sendToServer(new PacketSwitchGui(this.aE2ExtendedCraftingTable$extendedOriginalGui));
             ci.cancel();
         }
