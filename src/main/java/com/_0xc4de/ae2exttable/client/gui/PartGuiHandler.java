@@ -149,6 +149,7 @@ public class PartGuiHandler implements IGuiHandler {
     AE2ExtendedGUIs guiID = PartGuiHandler.getGUIFromOrdinal(ID);
     AEPartLocation side = PartGuiHandler.getSideFromOrdinal(ID);
     final boolean usingItemOnTile = ((ID >> 3) & 1) == 1;
+
     if (guiIsWirelessTerminal(guiID)) { // idk is item
       ItemStack it = ItemStack.EMPTY;
       if (usingItemOnTile) {
@@ -164,16 +165,20 @@ public class PartGuiHandler implements IGuiHandler {
           this.getGuiObject(guiID, it, player, world, x, y, z, side);
       return this.updateGui(item, world, x, y, z, side, it);
     }
-    final TileEntity TE = world.getTileEntity(new BlockPos(x, y, z));
-    if (TE instanceof IPartHost) {
-      final IPart part = ((IPartHost) TE).getPart(side);
-      if (part == null) {
-        return null;
+    else {
+
+      final TileEntity TE = world.getTileEntity(new BlockPos(x, y, z));
+
+      if (TE instanceof IPartHost) {
+        final IPart part = ((IPartHost) TE).getPart(side);
+        if (part == null) {
+          return null;
+        }
+        Object gui =
+                this.getGuiObject(guiID, ItemStack.EMPTY, player, world, x, y, z,
+                        side);
+        return this.updateGui(gui, world, x, y, z, side, part);
       }
-      Object gui =
-          this.getGuiObject(guiID, ItemStack.EMPTY, player, world, x, y, z,
-              side);
-      return this.updateGui(gui, world, x, y, z, side, part);
     }
 
     Object gui =
@@ -185,47 +190,46 @@ public class PartGuiHandler implements IGuiHandler {
                               final ItemStack myItem, final EntityPlayer player,
                               final World world, final int x, final int y,
                               final int z, final AEPartLocation side) {
-    IPart part =
-        PartGuiHandler.getPartFromWorld(world, new BlockPos(x, y, z), side);
 
-    WirelessTerminalGuiObjectTwo wireless = null;
-    if (guiIsWirelessTerminal(guiID)) {
-      final IWirelessTermHandler handler =
-          AEApi.instance().registries().wireless()
-              .getWirelessTerminalHandler(myItem);
+    if (myItem.isEmpty()) {
+      IPart part =
+              PartGuiHandler.getPartFromWorld(world, new BlockPos(x, y, z), side);
 
-      wireless =
-          new WirelessTerminalGuiObjectTwo(handler, myItem, player, world, x,
-              y, z);
+        return switch (guiID) {
+            case BASIC_CRAFTING_TERMINAL -> new ContainerBasicCraftingTerminal(player.inventory,
+                    (PartBasicCraftingTerminal) part);
+            case ADVANCED_CRAFTING_TERMINAL -> new ContainerAdvancedCraftingTerminal(player.inventory,
+                    (PartAdvancedCraftingTerminal) part);
+            case ELITE_CRAFTING_TERMINAL -> new ContainerEliteCraftingTerminal(player.inventory,
+                    (PartEliteCraftingTerminal) part);
+            case ULTIMATE_CRAFTING_TERMINAL -> new ContainerUltimateCraftingTerminal(player.inventory,
+                    (PartUltimateCraftingTerminal) part);
+            default -> null;
+        };
+    } else {
+      WirelessTerminalGuiObjectTwo wireless = null;
+      if (guiIsWirelessTerminal(guiID)) {
+        final IWirelessTermHandler handler =
+                AEApi.instance().registries().wireless()
+                        .getWirelessTerminalHandler(myItem);
+
+        wireless =
+                new WirelessTerminalGuiObjectTwo(handler, myItem, player, world, x,
+                        y, z);
+      }
+
+        return switch (guiID) {
+            // Start wireless stuffs here
+            case WIRELESS_BASIC_CRAFTING_TERMINAL -> new ContainerBasicWirelessTerminal(player.inventory, wireless);
+            case WIRELESS_ADVANCED_CRAFTING_TERMINAL ->
+                    new ContainerAdvancedWirelessTerminal(player.inventory, wireless);
+            case WIRELESS_ELITE_CRAFTING_TERMINAL -> new ContainerEliteWirelessTerminal(player.inventory, wireless);
+            case WIRELESS_ULTIMATE_CRAFTING_TERMINAL ->
+                    new ContainerUltimateWirelessTerminal(player.inventory, wireless);
+            default -> null;
+        };
+      }
     }
-
-    switch (guiID) {
-      case BASIC_CRAFTING_TERMINAL:
-        return new ContainerBasicCraftingTerminal(player.inventory,
-            (PartBasicCraftingTerminal) part);
-      case ADVANCED_CRAFTING_TERMINAL:
-        return new ContainerAdvancedCraftingTerminal(player.inventory,
-            (PartAdvancedCraftingTerminal) part);
-      case ELITE_CRAFTING_TERMINAL:
-        return new ContainerEliteCraftingTerminal(player.inventory,
-            (PartEliteCraftingTerminal) part);
-      case ULTIMATE_CRAFTING_TERMINAL:
-        return new ContainerUltimateCraftingTerminal(player.inventory,
-            (PartUltimateCraftingTerminal) part);
-
-        // Start wireless stuffs here
-      case WIRELESS_BASIC_CRAFTING_TERMINAL:
-        return new ContainerBasicWirelessTerminal(player.inventory, wireless);
-      case WIRELESS_ADVANCED_CRAFTING_TERMINAL:
-        return new ContainerAdvancedWirelessTerminal(player.inventory, wireless);
-      case WIRELESS_ELITE_CRAFTING_TERMINAL:
-        return new ContainerEliteWirelessTerminal(player.inventory, wireless);
-      case WIRELESS_ULTIMATE_CRAFTING_TERMINAL:
-        return new ContainerUltimateWirelessTerminal(player.inventory, wireless);
-      default:
-        return null;
-    }
-  }
 
   @Override
   public @Nullable Object getClientGuiElement(int ID, EntityPlayer player,
