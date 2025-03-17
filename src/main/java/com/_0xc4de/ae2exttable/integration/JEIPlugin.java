@@ -40,5 +40,7 @@ public class JEIPlugin implements IModPlugin {
 
             transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerUltimateCraftingTerminal.class), UltimateTableCategory.UID);//, 1, 9, 10, 36);
             transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerUltimateWirelessTerminal.class), UltimateTableCategory.UID);//, 1, 9, 10, 36);
+            transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerUltimateCraftingTerminal.class), EliteTableCategory.UID);//, 1, 9, 10, 36);
+            transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerUltimateWirelessTerminal.class), EliteTableCategory.UID);//, 1, 9, 10, 36);
     }
 }

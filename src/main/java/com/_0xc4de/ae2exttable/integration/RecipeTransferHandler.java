@@ -19,6 +19,10 @@ import appeng.core.sync.packets.PacketJEIRecipe;
 import appeng.core.sync.packets.PacketValueConfig;
 import appeng.util.Platform;
 import com._0xc4de.ae2exttable.client.container.ContainerMEMonitorableTwo;
+import com._0xc4de.ae2exttable.client.container.terminals.ContainerAdvancedCraftingTerminal;
+import com._0xc4de.ae2exttable.client.container.terminals.ContainerBasicCraftingTerminal;
+import com._0xc4de.ae2exttable.client.container.terminals.ContainerEliteCraftingTerminal;
+import com._0xc4de.ae2exttable.client.container.terminals.ContainerUltimateCraftingTerminal;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.AdvancedTableCategory;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.BasicTableCategory;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.EliteTableCategory;
@@ -78,27 +82,18 @@ class RecipeTransferHandler<T extends Container> implements IRecipeTransferHandl
             return null;
         }
 
-        if (container instanceof ContainerPatternEncoder) {
-            try {
-                if (!((ContainerPatternEncoder) container).isCraftingMode()) {
-                    if (recipeType.equals(VanillaRecipeCategoryUid.CRAFTING)) {
-                        NetworkHandler.instance().sendToServer(new PacketValueConfig("PatternTerminal.CraftMode", "1"));
-                    }
-                } else if (!recipeType.equals(VanillaRecipeCategoryUid.CRAFTING)) {
-
-                    NetworkHandler.instance().sendToServer(new PacketValueConfig("PatternTerminal.CraftMode", "0"));
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         Map<Integer, ? extends IGuiIngredient<ItemStack>> ingredients = recipeLayout.getItemStacks().getGuiIngredients();
 
         final NBTTagCompound recipe = new NBTTagCompound();
         final NBTTagList outputs = new NBTTagList();
 
+        // pre-fill each slot with air, just to pad.
+        for (final Slot slot : container.inventorySlots) {
+            NBTTagCompound tag = stackToNBT(ItemStack.EMPTY);
+            NBTTagList tags = new NBTTagList();
+            tags.appendTag(tag);
+            recipe.setTag("#" + slot.slotNumber, tags);
+        }
 
         int slotIndex = 0;
         for (Map.Entry<Integer, ? extends IGuiIngredient<ItemStack>> ingredientEntry : ingredients.entrySet()) {
@@ -112,10 +107,16 @@ class RecipeTransferHandler<T extends Container> implements IRecipeTransferHandl
                 continue;
             }
 
+            // For every slot in current container
             for (final Slot slot : container.inventorySlots) {
+
+                // If the slot happens to be a crafting input slot
                 if (slot instanceof SlotCraftingMatrix || slot instanceof SlotFakeCraftingMatrix) {
+
+                    // If the slot index matches the current slotIndex
                     if (slot.getSlotIndex() == slotIndex) {
-                        final NBTTagList tags = new NBTTagList();
+                        // This means we're in the right place
+                        final NBTTagList new_tags = new NBTTagList();
                         final List<ItemStack> list = new ArrayList<>();
                         final ItemStack displayed = ingredient.getDisplayedIngredient();
 
@@ -124,24 +125,15 @@ class RecipeTransferHandler<T extends Container> implements IRecipeTransferHandl
                             list.add(displayed);
                         }
 
-                        // prefer pure crystals.
-                        for (ItemStack stack : ingredient.getAllIngredients()) {
-                            if (stack == null) {
-                                continue;
-                            }
-                            if (Platform.isRecipePrioritized(stack)) {
-                                list.add(0, stack);
-                            } else {
-                                list.add(stack);
-                            }
-                        }
-
                         for (final ItemStack is : list) {
-                            final NBTTagCompound tag = stackToNBT(is);
-                            tags.appendTag(tag);
+                            final NBTTagCompound _tag = stackToNBT(is);
+                            new_tags.appendTag(_tag);
                         }
 
-                        recipe.setTag("#" + slot.getSlotIndex(), tags);
+                        // Item belongs in this slot's index
+                        int idx = getIndex(container, recipeType, slotIndex);
+                        recipe.removeTag("#" + idx);
+                        recipe.setTag("#" + idx, new_tags);
                         break;
                     }
                 }
@@ -159,5 +151,57 @@ class RecipeTransferHandler<T extends Container> implements IRecipeTransferHandl
         }
 
         return null;
+    }
+
+
+    /*
+     Modifying slot index symbolically lets me control the recipe transfer depending on what container is being accessed
+
+     Correct mappings are as follows:
+     Ultimate: Ultimate, Elite, Advanced, Basic
+     Elite: Elite, Advanced, Basic
+     Advanced: Advanced, Basic
+     Basic: Basic, Vanilla Recipes
+
+     For some reason the bigger tables cannot accept vanilla recipes.
+
+     This means if I have an ordered mapping of each container, in increasing order (Basic:0, Advanced:1, ...) then each
+     respective Recipe Layout can be calculated from current backwards, basically List[:index] inclusive, using known
+     Layouts of each, the "slotIndex" can be adjusted to treat higher level slots as
+     */
+    private int getIndex(@Nonnull T container, String recipeType, int currentIndex) {
+        // I know this pattern is bad, I just don't know how to do it better
+        int ultimateSize = 9;
+        int eliteSize = 7;
+        int advancedSize = 5;
+        int basicSize = 3;
+        if (container instanceof ContainerUltimateCraftingTerminal) {
+
+            if (recipeType.equals(EliteTableCategory.UID)) {
+                int size = ((ultimateSize-eliteSize)/2);
+                // These matrixes are always square, so rowSize=colSize => size
+                return ((currentIndex/eliteSize + size) * ultimateSize) + ((currentIndex % eliteSize) + size);
+            };
+            if (recipeType.equals(AdvancedTableCategory.UID)) {
+                int size = ((ultimateSize-eliteSize)/2);
+                return (size + currentIndex) * 5 + (size + currentIndex);
+            };
+            if (recipeType.equals(BasicTableCategory.UID)) {
+
+            };
+        } else if (container instanceof ContainerEliteCraftingTerminal) {
+            if (recipeType.equals(AdvancedTableCategory.UID)) {
+
+            };
+            if (recipeType.equals(BasicTableCategory.UID)) {
+
+            };
+        } else if (container instanceof ContainerAdvancedCraftingTerminal) {
+            if (recipeType.equals(BasicTableCategory.UID)) {
+
+            };
+        }
+
+        return currentIndex;
     }
 }
