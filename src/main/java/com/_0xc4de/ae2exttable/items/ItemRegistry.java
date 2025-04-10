@@ -21,6 +21,7 @@ import java.util.Map;
 public class ItemRegistry {
     private static final Map<Item, AE2ExtendedGUIs> FORWARD_LOOKUP = new HashMap<>();
     private static final Map<AE2ExtendedGUIs, Item> REVERSE_LOOKUP = new HashMap<>();
+    private static final Map<AE2ExtendedGUIs, Item> WIRELESS_REVERSE_LOOKUP = new HashMap<>();
 
     // Wired terms go here
     public static ItemBasicCraftingTerminal BASIC_TERMINAL = new ItemBasicCraftingTerminal("basic_crafting_terminal");
@@ -51,6 +52,7 @@ public class ItemRegistry {
         registry.register(WIRELESS_BASIC_TERMINAL, "wireless_basic_crafting_terminal");
         FORWARD_LOOKUP.put(WIRELESS_BASIC_TERMINAL, AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL);
         REVERSE_LOOKUP.put(AE2ExtendedGUIs.WIRELESS_BASIC_CRAFTING_TERMINAL, WIRELESS_BASIC_TERMINAL);
+        WIRELESS_REVERSE_LOOKUP.put(AE2ExtendedGUIs.BASIC_CRAFTING_TERMINAL, BASIC_TERMINAL);
 
         registry.register(WIRELESS_ADVANCED_TERMINAL, "wireless_advanced_crafting_terminal");
         FORWARD_LOOKUP.put(WIRELESS_ADVANCED_TERMINAL, AE2ExtendedGUIs.WIRELESS_ADVANCED_CRAFTING_TERMINAL);
@@ -90,7 +92,13 @@ public class ItemRegistry {
         return REVERSE_LOOKUP.get(guiType);
     }
 
+    // ONLY returns the ITEM for the GUI type, ONLY does wireless terminals
+    public static Item wirelessByGuiType(AE2ExtendedGUIs guiType) {
+        return WIRELESS_REVERSE_LOOKUP.get(guiType);
+    }
+
     public static AE2ExtendedGUIs guiByItem(Item item) {
         return FORWARD_LOOKUP.get(item);
     }
+
 }
