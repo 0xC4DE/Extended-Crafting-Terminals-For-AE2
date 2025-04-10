@@ -1,4 +1,10 @@
 itemGroup.ae2exttable=AE2 Extended Crafting Tables
+key.ae2exttable.category=AE2 Extended Crafting Tables
+
+key.open_basic_extended_wireless_crafting_terminal=Open Basic Wireless Crafting Terminal
+key.open_advanced_extended_wireless_crafting_terminal=Open Advanced Wireless Crafting Terminal
+key.open_elite_extended_wireless_crafting_terminal=Open Elite Wireless Crafting Terminal
+key.open_ultimate_extended_wireless_crafting_terminal=Open Ultimate Wireless Crafting Terminal
 
 container.ae2exttable.custom_extended_table.name=Extended Crafting Table But Cooler
 tile.ae2exttable.custom_extended_table.name=Extended Crafting Table But Cooler
@@ -36,3 +42,4 @@ ae2exttable.wireless_elite_crafting_terminal.crafting=Elite Crafting
 item.ae2exttable.wireless_ultimate_crafting_terminal.name=Wireless Ultimate Crafting Terminal
 ae2exttable.wireless_ultimate_crafting_terminal=Wireless Term
 ae2exttable.wireless_ultimate_crafting_terminal.crafting=Ultimate Crafting
+
