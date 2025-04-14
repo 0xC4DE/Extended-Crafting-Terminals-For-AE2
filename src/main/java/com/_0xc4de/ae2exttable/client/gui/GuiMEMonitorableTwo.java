@@ -29,6 +29,10 @@ import appeng.core.sync.packets.PacketValueConfig;
 import appeng.integration.Integrations;
 import appeng.util.IConfigManagerHost;
 import appeng.util.Platform;
+import com._0xc4de.ae2exttable.client.container.ContainerMEMonitorableTwo;
+import com._0xc4de.ae2exttable.client.container.ContainerSharedWirelessTerminals;
+import com._0xc4de.ae2exttable.client.container.terminals.ContainerUltimateCraftingTerminal;
+import com._0xc4de.ae2exttable.client.container.wireless.ContainerUltimateWirelessTerminal;
 import com.blakebr0.cucumber.helper.RenderHelper;
 import com.blakebr0.cucumber.util.Utils;
 import com._0xc4de.ae2exttable.Tags;
@@ -287,6 +291,11 @@ public class GuiMEMonitorableTwo extends AEBaseMEGui implements ISortSource, ICo
         // Render the internal crafting grid slots NOT slice of GUI
         craftingGridOffsetX = Integer.MAX_VALUE;
         craftingGridOffsetY = Integer.MAX_VALUE;
+
+        if (this.inventorySlots instanceof ContainerUltimateWirelessTerminal || this.inventorySlots instanceof ContainerUltimateCraftingTerminal) {
+            AppEngSlot s = ((ContainerMEMonitorableTwo)this.inventorySlots).outputSlot;
+            s.yPos = s.getY() + (this.rows - this.getMinRows()) * 18;
+        }
 
         for (final Object s : this.inventorySlots.inventorySlots) {
             if (s instanceof AppEngSlot) {
