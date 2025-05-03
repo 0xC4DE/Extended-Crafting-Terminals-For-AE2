@@ -44,7 +44,7 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable
   private IRecipe currentRecipe;
   protected final int slotWidth;
   protected final int slotHeight;
-  private final SlotCraftingTerm outputSlot;
+  public final SlotCraftingTerm outputSlot;
   final ExtendedCraftingGUIConstants guiConst;
   private PartSharedCraftingTerminal ct;
   protected WirelessTerminalGuiObjectTwo wt;

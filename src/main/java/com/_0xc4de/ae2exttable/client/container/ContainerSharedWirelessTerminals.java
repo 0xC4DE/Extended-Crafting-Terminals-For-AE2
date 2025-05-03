@@ -64,9 +64,7 @@ public class ContainerSharedWirelessTerminals extends ContainerMEMonitorableTwo
 
     this.upgrades = new StackUpgradeInventory(guiItemObject.getItemStack(), this, 2);
     this.loadFromNBT();
-
     this.setupUpgrades();
-
     this.onCraftMatrixChanged(new WrapperInvItemHandler(this.getInventoryByName("crafting")));
   }
 

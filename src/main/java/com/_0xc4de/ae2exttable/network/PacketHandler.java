@@ -1,5 +1,6 @@
 package com._0xc4de.ae2exttable.network;
 
+import com._0xc4de.ae2exttable.network.packets.PacketOpenWirelessGui;
 import com._0xc4de.ae2exttable.network.packets.PacketSwitchGui;
 import io.netty.buffer.ByteBuf;
 
@@ -12,7 +13,8 @@ public class PacketHandler {
     private static final Map<Class<? extends ExtendedTerminalPacket>, PacketTypes> REVERSE_LOOKUP = new HashMap<>();
    public enum PacketTypes {
        DEFAULT,
-       PACKET_SWITCH_GUI(PacketSwitchGui.class);
+       PACKET_SWITCH_GUI(PacketSwitchGui.class),
+       PACKET_OPEN_WIRELESS_GUI(PacketOpenWirelessGui.class);
 
        private final Constructor<? extends ExtendedTerminalPacket> packetConstructor;
 

@@ -77,7 +77,7 @@ public class GuiCraftingTerm extends GuiMEMonitorableTwo {
   public void drawBG(int offsetX, int offsetY, int mouseX, int mouseY) {
     if (PartGuiHandler.guiIsWirelessTerminal(this.getGuiType())) {
       this.bindTexture("guis/wirelessupgrades.png");
-      // Maybe this should be a GUIConstant? I dont really care, it works
+      // Maybe this should be a GUIConstant? I don't really care, it works
       int upgradeSlotOffset = 127 - 24;
       if (this.getGuiConst() == ExtendedCraftingGUIConstants.ULTIMATE_CRAFTING_TERMINAL) {
         upgradeSlotOffset = -34;
