@@ -20,35 +20,30 @@ import mezz.jei.api.IModPlugin;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 @mezz.jei.api.JEIPlugin
 public class JEIPlugin implements IModPlugin {
     @Override
     public void register(IModRegistry registry) {
         IRecipeTransferRegistry transfer = registry.getRecipeTransferRegistry();
-        try {
-            Constructor constructor = new RecipeTransferHandlerWrapper().constructor;
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(ContainerBasicCraftingTerminal.class), VanillaRecipeCategoryUid.CRAFTING);
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(ContainerBasicCraftingTerminal.class), BasicTableCategory.UID);//, 1, 9, 10, 36);
 
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(
-                ContainerBasicWirelessTerminal.class), VanillaRecipeCategoryUid.CRAFTING);
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(ContainerBasicWirelessTerminal.class), BasicTableCategory.UID);//, 1, 9, 10, 36);
+        // Basic term gets vanilla too
+        transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerBasicCraftingTerminal.class), VanillaRecipeCategoryUid.CRAFTING);
+        transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerBasicWirelessTerminal.class), VanillaRecipeCategoryUid.CRAFTING);
 
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(ContainerAdvancedCraftingTerminal.class), AdvancedTableCategory.UID);//, 1, 9, 10, 36);
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(
-                ContainerAdvancedWirelessTerminal.class), AdvancedTableCategory.UID);//, 1, 9, 10, 36);
+        String[] UIDs = new String[]{UltimateTableCategory.UID, EliteTableCategory.UID, AdvancedTableCategory.UID, BasicTableCategory.UID};
+        Class<?>[] termMappings = new Class[]{ContainerUltimateCraftingTerminal.class, ContainerEliteCraftingTerminal.class, ContainerAdvancedCraftingTerminal.class};
+        Class<?>[] wirelessTermMappings = new Class[]{ContainerUltimateWirelessTerminal.class, ContainerEliteWirelessTerminal.class, ContainerAdvancedWirelessTerminal.class,  ContainerBasicWirelessTerminal.class};
 
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(ContainerEliteCraftingTerminal.class), EliteTableCategory.UID);//, 1, 9, 10, 36);
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(
-                ContainerEliteWirelessTerminal.class), EliteTableCategory.UID);//, 1, 9, 10, 36);
+        for (int i=0; i < termMappings.length; i++){
+            Class<?> term = termMappings[i];
+            Class<?> wirelessTerm = wirelessTermMappings[i];
 
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(ContainerUltimateCraftingTerminal.class), UltimateTableCategory.UID);//, 1, 9, 10, 36);
-            transfer.addRecipeTransferHandler((IRecipeTransferHandler<?>) constructor.newInstance(
-                ContainerUltimateWirelessTerminal.class), UltimateTableCategory.UID);//, 1, 9, 10, 36);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException |
-                 IllegalAccessException e) {
-            throw new RuntimeException(e);
+            for (int j = i; j < UIDs.length; j++){
+                transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(term), UIDs[j]);
+                transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(wirelessTerm), UIDs[j]);
+            }
         }
     }
 }

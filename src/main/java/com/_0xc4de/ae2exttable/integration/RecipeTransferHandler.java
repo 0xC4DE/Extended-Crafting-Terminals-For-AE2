@@ -16,9 +16,6 @@ import appeng.core.AELog;
 import appeng.core.sync.network.NetworkHandler;
 import appeng.core.sync.packets.PacketJEIRecipe;
 import com._0xc4de.ae2exttable.client.container.ContainerMEMonitorableTwo;
-import com._0xc4de.ae2exttable.client.container.terminals.ContainerAdvancedCraftingTerminal;
-import com._0xc4de.ae2exttable.client.container.terminals.ContainerEliteCraftingTerminal;
-import com._0xc4de.ae2exttable.client.container.terminals.ContainerUltimateCraftingTerminal;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.AdvancedTableCategory;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.BasicTableCategory;
 import com.blakebr0.extendedcrafting.compat.jei.tablecrafting.EliteTableCategory;
@@ -49,8 +46,8 @@ class RecipeTransferHandler<T extends Container> implements IRecipeTransferHandl
 
     private final Class<T> containerClass;
 
-    RecipeTransferHandler(Class<T> containerClass) {
-        this.containerClass = containerClass;
+    RecipeTransferHandler(Class<?> containerClass) {
+        this.containerClass = (Class<T>) containerClass;
     }
 
     @Override
@@ -166,44 +163,32 @@ class RecipeTransferHandler<T extends Container> implements IRecipeTransferHandl
      Advanced: Advanced, Basic
      Basic: Basic, Vanilla Recipes
 
-     For some reason the bigger tables cannot accept vanilla recipes.
-
-     This means if I have an ordered mapping of each container, in increasing order (Basic:0, Advanced:1, ...) then each
-     respective Recipe Layout can be calculated from current backwards, basically List[:index] inclusive, using known
-     Layouts of each, the "slotIndex" can be adjusted to treat higher level slots as
+     Also, for some reason the bigger tables cannot accept vanilla recipes, partially my fault but it's in Blake's code too
      */
     private int getIndex(@Nonnull T container, String recipeType, int currentIndex) {
-        // I know this pattern is bad, I just don't know how to do it better
-        int ultimateSize = 9;
-        int eliteSize = 7;
-        int advancedSize = 5;
-        int basicSize = 3;
-        if (container instanceof ContainerUltimateCraftingTerminal) {
+        final int ultimateSize = 9;
+        final int eliteSize = 7;
+        final int advancedSize = 5;
+        final int basicSize = 3;
+        final int thisSize = ((ContainerMEMonitorableTwo)container).getWidth();
 
-            if (recipeType.equals(EliteTableCategory.UID)) {
-                int size = ((ultimateSize-eliteSize)/2);
-                // These matrices are always square, so rowSize=colSize => size
-                return ((currentIndex/eliteSize + size) * ultimateSize) + ((currentIndex % eliteSize) + size);
-            };
-            if (recipeType.equals(AdvancedTableCategory.UID)) {
-                int size = ((ultimateSize-eliteSize)/2);
-                return (size + currentIndex) * 5 + (size + currentIndex);
-            };
-            if (recipeType.equals(BasicTableCategory.UID)) {
-
-            };
-        } else if (container instanceof ContainerEliteCraftingTerminal) {
-            if (recipeType.equals(AdvancedTableCategory.UID)) {
-
-            };
-            if (recipeType.equals(BasicTableCategory.UID)) {
-
-            };
-        } else if (container instanceof ContainerAdvancedCraftingTerminal) {
-            if (recipeType.equals(BasicTableCategory.UID)) {
-
-            };
+        final boolean basicRecipe = recipeType.equals(BasicTableCategory.UID) | recipeType.equals(VanillaRecipeCategoryUid.CRAFTING);
+        if (recipeType.equals(EliteTableCategory.UID)) {
+            int size = ((thisSize-eliteSize)/2);
+            // These matrices are always square, so rowSize=colSize => size
+            return ((currentIndex/eliteSize + size) * thisSize) + ((currentIndex % eliteSize) + size);
         }
+        
+        if (recipeType.equals(AdvancedTableCategory.UID)) {
+            int size = ((thisSize-advancedSize)/2);
+            return ((currentIndex/advancedSize + size) * thisSize) + ((currentIndex % advancedSize) + size);
+        }
+
+        if (basicRecipe) {
+            int size = ((thisSize-basicSize)/2);
+            return ((currentIndex/basicSize + size) * thisSize) + ((currentIndex % basicSize) + size);
+        }
+
 
         return currentIndex;
     }

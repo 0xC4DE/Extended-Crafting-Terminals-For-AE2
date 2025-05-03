@@ -23,9 +23,11 @@ import mezz.jei.gui.TooltipRenderer;
 import mezz.jei.gui.recipes.RecipeLayout;
 import mezz.jei.gui.recipes.RecipeTransferButton;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.inventory.Container;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.wrapper.PlayerMainInvWrapper;
 
@@ -240,8 +242,30 @@ public class JEIMissingItem implements IRecipeTransferError {
                 if (errored) {
                     tooltipLines.add(I18n.translateToLocal("gui.tooltips.appliedenergistics2.MissingItem"));
                 }
+
+                // Stolen from NAE2 again thanks @NotMyWing
+                var inCount = recipeLayout.getItemStacks().getGuiIngredients().values().stream()
+                        .map(iGuiIngredient -> iGuiIngredient.isInput() && !iGuiIngredient.getAllIngredients().isEmpty() ? 1 : 0)
+                        .reduce(0, Integer::sum);
+
                 if (foundAnyCraftable) {
                     tooltipLines.add(I18n.translateToLocal("gui.tooltips.appliedenergistics2.CraftableItem"));
+                    if (Loader.isModLoaded("nae2")) {
+                        tooltipLines.add("");
+                        if (foundAnyCraftable) {
+                            if (this.craftableSlots.size() + this.foundSlots.size() == inCount) {
+                                tooltipLines.add(I18n.translateToLocal("nae2.jei.missing.craft.1"));
+                                tooltipLines.add(I18n.translateToLocal("nae2.jei.missing.craft.2"));
+                            } else {
+                                tooltipLines.add(I18n.translateToLocal("nae2.jei.missing.partialcraft.1"));
+                                tooltipLines.add(I18n.translateToLocal("nae2.jei.missing.partialcraft.2"));
+                            }
+                        } else {
+                            tooltipLines.add(I18n.translateToLocal("nae2.jei.missing.bypasscraft.1"));
+                            tooltipLines.add(I18n.translateToLocal("nae2.jei.missing.bypasscraft.2"));
+                        }
+                        b.enabled = GuiScreen.isCtrlKeyDown();
+                    }
                 }
                 TooltipRenderer.drawHoveringText(minecraft, tooltipLines, mouseX, mouseY);
             }

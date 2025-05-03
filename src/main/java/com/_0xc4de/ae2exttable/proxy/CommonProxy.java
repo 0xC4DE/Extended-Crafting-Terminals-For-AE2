@@ -6,6 +6,13 @@ import com._0xc4de.ae2exttable.client.ItemColors;
 import com._0xc4de.ae2exttable.client.gui.PartGuiHandler;
 import com._0xc4de.ae2exttable.items.ItemRegistry;
 import com._0xc4de.ae2exttable.network.ExtendedTerminalNetworkHandler;
+import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
+import com.blakebr0.extendedcrafting.item.ModItems;
+import net.minecraft.client.Minecraft;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -28,6 +35,10 @@ public class CommonProxy {
         //RecipeRegister.post();
         //NetworkRegistry.INSTANCE.registerGuiHandler(AE2ExtendedCraftingTable.instance, new GuiHandler());
         NetworkRegistry.INSTANCE.registerGuiHandler(AE2ExtendedCraftingTable.instance, new PartGuiHandler());
+
+        // TEST RECIPE
+        //TableRecipeManager.getInstance().addShaped(new ItemStack(Blocks.DIRT),
+        //        "DDD", "ADA", "DDD", 'D', new ItemStack(Items.DIAMOND), 'A', new ItemStack(Items.AIR));
 
         if (FMLCommonHandler.instance().getSide().isClient())  {
             ItemColors.registerItemColors();

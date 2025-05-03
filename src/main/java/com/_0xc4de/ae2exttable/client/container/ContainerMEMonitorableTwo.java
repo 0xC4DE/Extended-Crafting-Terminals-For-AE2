@@ -214,9 +214,9 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable
           }
       }
 
-    // Vanilla recipes work for 3x3, might fuck around and figure out how to make it possible for
-    // Bigger tables, would require some custom mapping to find middle 3x3 of tables
-    // This actually wouldn't be hard.
+    // Vanilla recipes work for 3x3, these aren't 3x3 (except for basic),
+    // so need to make a "fake" intermediary table that hold specifically the 3x3 inner-most grid depending on table size.
+    // TODO: This
     if (ModConfig.confTableUseRecipes && ic.getWidth() == 3 && ic.getHeight() == 3) {
       for(IRecipe recipe : ForgeRegistries.RECIPES.getValuesCollection()) {
         if (recipe.matches(ic, world)) {
