@@ -207,13 +207,12 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable
 
     // This is the Blakebr0 Extended Tables recipe handler :)
     // I will not be using that directly :))
-    List recipes = TableRecipeManager.getInstance().getRecipes();
-    for(int i = 0; i < recipes.size(); ++i) {
-      IRecipe recipe = (IRecipe) recipes.get(i);
-      if (recipe.matches(ic, world)) {
-        return recipe;
+    final var recipes = TableRecipeManager.getInstance().getRecipes();
+      for (Object recipe : recipes) {
+          if (((IRecipe)recipe).matches(ic, world)) {
+              return (IRecipe) recipe;
+          }
       }
-    }
 
     // Vanilla recipes work for 3x3, might fuck around and figure out how to make it possible for
     // Bigger tables, would require some custom mapping to find middle 3x3 of tables

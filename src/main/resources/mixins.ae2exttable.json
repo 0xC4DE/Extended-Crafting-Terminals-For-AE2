@@ -10,6 +10,7 @@
     "GuiCraftAmountMixin",
     "GuiCraftConfirmMixin",
     "GuiCraftingStatusMixin",
+    "MixinPacketJEIRecipe",
     "SlotCraftingTermMixin"
   ],
   "client": [
