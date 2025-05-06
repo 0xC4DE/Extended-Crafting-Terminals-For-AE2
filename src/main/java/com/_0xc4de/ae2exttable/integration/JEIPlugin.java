@@ -30,10 +30,9 @@ public class JEIPlugin implements IModPlugin {
 
         // Basic term gets vanilla too
         transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerBasicCraftingTerminal.class), VanillaRecipeCategoryUid.CRAFTING);
-        transfer.addRecipeTransferHandler(new RecipeTransferHandler<>(ContainerBasicWirelessTerminal.class), VanillaRecipeCategoryUid.CRAFTING);
 
         String[] UIDs = new String[]{UltimateTableCategory.UID, EliteTableCategory.UID, AdvancedTableCategory.UID, BasicTableCategory.UID};
-        Class<?>[] termMappings = new Class[]{ContainerUltimateCraftingTerminal.class, ContainerEliteCraftingTerminal.class, ContainerAdvancedCraftingTerminal.class};
+        Class<?>[] termMappings = new Class[]{ContainerUltimateCraftingTerminal.class, ContainerEliteCraftingTerminal.class, ContainerAdvancedCraftingTerminal.class, ContainerBasicCraftingTerminal.class};
         Class<?>[] wirelessTermMappings = new Class[]{ContainerUltimateWirelessTerminal.class, ContainerEliteWirelessTerminal.class, ContainerAdvancedWirelessTerminal.class,  ContainerBasicWirelessTerminal.class};
 
         for (int i=0; i < termMappings.length; i++){
