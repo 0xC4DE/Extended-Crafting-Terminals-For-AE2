@@ -5,6 +5,7 @@ import appeng.container.AEBaseContainer;
 import appeng.container.ContainerOpenContext;
 import appeng.container.interfaces.IInventorySlotAware;
 import appeng.core.sync.network.INetworkInfo;
+import appeng.me.GridAccessException;
 import appeng.util.Platform;
 import baubles.api.BaublesApi;
 import com._0xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
@@ -43,7 +44,7 @@ public class PacketOpenWirelessGui extends ExtendedTerminalPacket {
   @Override
   public void serverPacketData(final INetworkInfo manager,
                                final ExtendedTerminalPacket packet,
-                               final EntityPlayer player) {
+                               final EntityPlayer player) throws GridAccessException {
         NonNullList<ItemStack> inventory = player.inventory.mainInventory;
         ItemStack guiItem = new ItemStack(ItemRegistry.partByGuiType(this.gui));
         for (int i = 0; i < inventory.size(); i++) {
@@ -64,7 +65,7 @@ public class PacketOpenWirelessGui extends ExtendedTerminalPacket {
         }
     }
 
-    private void openGui(ItemStack itemStack, int slotIndex, EntityPlayer player, boolean isBauble) {
+    private void openGui(ItemStack itemStack, int slotIndex, EntityPlayer player, boolean isBauble) throws GridAccessException {
         PartGuiHandler.openWirelessTerminalGui(itemStack, slotIndex, isBauble, player.world, player, this.gui);
     }
 }

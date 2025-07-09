@@ -2,6 +2,7 @@ package com._0xc4de.ae2exttable.items.wireless;
 
 import appeng.api.AEApi;
 import appeng.items.tools.powered.ToolWirelessTerminal;
+import appeng.me.GridAccessException;
 import com._0xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import com._0xc4de.ae2exttable.Tags;
 import com._0xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
@@ -38,11 +39,15 @@ public class ItemWirelessEliteTerminal extends ToolWirelessTerminal implements
   public ActionResult<ItemStack> onItemRightClick(World w,
                                                   EntityPlayer player,
                                                   EnumHand hand) {
-    PartGuiHandler.openWirelessTerminalGui(player.getHeldItem(hand),
-        hand == EnumHand.MAIN_HAND ? player.inventory.currentItem : 40,
-        false,
-        w, player, AE2ExtendedGUIs.WIRELESS_ELITE_CRAFTING_TERMINAL);
-    return ActionResult.newResult(EnumActionResult.SUCCESS,
+      try {
+          PartGuiHandler.openWirelessTerminalGui(player.getHeldItem(hand),
+              hand == EnumHand.MAIN_HAND ? player.inventory.currentItem : 40,
+              false,
+              w, player, AE2ExtendedGUIs.WIRELESS_ELITE_CRAFTING_TERMINAL);
+      } catch (GridAccessException e) {
+          throw new RuntimeException(e);
+      }
+      return ActionResult.newResult(EnumActionResult.SUCCESS,
         player.getHeldItem(hand));
   }
 

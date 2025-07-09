@@ -18,7 +18,7 @@ import net.minecraftforge.items.wrapper.InvWrapper;
  * This somewhat shadows PartSharedCraftingTerminal in a way
  */
 public class WirelessTerminalGuiObjectTwo extends WirelessTerminalGuiObject implements
-    ICraftingClass {
+        ICraftingClass {
 
     public AE2ExtendedGUIs gui;
     protected ExtInternalInventory craftingGrid;

@@ -5,6 +5,7 @@ import appeng.container.AEBaseContainer;
 import appeng.container.ContainerOpenContext;
 import appeng.container.interfaces.IInventorySlotAware;
 import appeng.core.sync.network.INetworkInfo;
+import appeng.me.GridAccessException;
 import com._0xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com._0xc4de.ae2exttable.client.gui.PartGuiHandler;
 import com._0xc4de.ae2exttable.network.ExtendedTerminalPacket;
@@ -39,7 +40,7 @@ public class PacketSwitchGui extends ExtendedTerminalPacket {
   @Override
   public void serverPacketData(final INetworkInfo manager,
                                final ExtendedTerminalPacket packet,
-                               final EntityPlayer player) {
+                               final EntityPlayer player) throws GridAccessException {
     final Container c = player.openContainer;
     if (c instanceof AEBaseContainer bc) {
       final ContainerOpenContext context = bc.getOpenContext();

@@ -4,6 +4,7 @@ import appeng.api.parts.IPart;
 import appeng.container.AEBaseContainer;
 import appeng.container.implementations.ContainerCraftConfirm;
 import appeng.container.interfaces.IInventorySlotAware;
+import appeng.me.GridAccessException;
 import com._0xc4de.ae2exttable.client.gui.PartGuiHandler;
 import com._0xc4de.ae2exttable.interfaces.ITerminalGui;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,7 +23,7 @@ public class ContainerCraftConfirmMixin extends AEBaseContainer {
     }
 
     @Inject(method="startJob", at=@At(value="INVOKE", target="Lappeng/container/implementations/ContainerCraftConfirm;setAutoStart(Z)V", shift=At.Shift.AFTER), cancellable=true)
-    public void startJobMixin(CallbackInfo ci) {
+    public void startJobMixin(CallbackInfo ci) throws GridAccessException {
         TileEntity te = this.getOpenContext().getTile();
         if (te != null) {
             IPart terminal = PartGuiHandler.getPartFromWorld(te.getWorld(), te.getPos(), this.getOpenContext().getSide());

@@ -2,6 +2,7 @@ package com._0xc4de.ae2exttable.network;
 
 import appeng.core.sync.network.INetworkInfo;
 import appeng.core.sync.network.IPacketHandler;
+import appeng.me.GridAccessException;
 import com._0xc4de.ae2exttable.AE2ExtendedCraftingTable;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
@@ -27,14 +28,18 @@ public class ServerPacketHandler extends PacketHandler implements IPacketHandler
 
                final PacketCallState state = new PacketCallState() {
                      @Override
-                     public void call(final ExtendedTerminalPacket pack) {
+                     public void call(final ExtendedTerminalPacket pack) throws GridAccessException {
                          pack.serverPacketData(manager, pack, player);
                      }
                };
 
                realPacket.setCallParam(state);
                PacketThreadUtil.checkThreadAndEnqueue(realPacket, handler, Objects.requireNonNull(player.getServer()));
-               state.call(realPacket);
+                try {
+                    state.call(realPacket);
+                } catch (GridAccessException e) {
+                    throw new RuntimeException(e);
+                }
 
             } catch (final InstantiationException | IllegalAccessException | IllegalArgumentException |
                            InvocationTargetException e) {

@@ -4,6 +4,7 @@
 package com._0xc4de.ae2exttable.network;
 
 import appeng.core.sync.network.INetworkInfo;
+import appeng.me.GridAccessException;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.INetHandler;
@@ -21,7 +22,7 @@ public abstract class ExtendedTerminalPacket implements Packet {
     public ExtendedTerminalPacket() {
     }
 
-    public void serverPacketData(INetworkInfo manager, ExtendedTerminalPacket packet, EntityPlayer player) {
+    public void serverPacketData(INetworkInfo manager, ExtendedTerminalPacket packet, EntityPlayer player) throws GridAccessException {
         throw new UnsupportedOperationException("This packet ( " + this.getPacketID() + " ) does not implement a server side handler.");
     }
 
@@ -82,7 +83,11 @@ public abstract class ExtendedTerminalPacket implements Packet {
     }
 
     public void processPacket(INetHandler handler) {
-        this.caller.call(this);
+        try {
+            this.caller.call(this);
+        } catch (GridAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }
