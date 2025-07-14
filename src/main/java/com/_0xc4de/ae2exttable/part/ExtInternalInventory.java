@@ -13,6 +13,7 @@ import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
 import net.minecraftforge.common.util.INBTSerializable;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Manages an internal inventory
@@ -57,12 +58,12 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     }
 
     @Override
-    public ItemStack getStackInSlot(int index) {
+    public @NotNull ItemStack getStackInSlot(int index) {
         return this.slots.get(index);
     }
 
     @Override
-    public ItemStack decrStackSize(int index, int count) {
+    public @NotNull ItemStack decrStackSize(int index, int count) {
         ItemStack stack = this.getStackInSlot(index);
         if (stack.isEmpty())
             return stack;
@@ -72,11 +73,11 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     }
 
     @Override
-    public ItemStack removeStackFromSlot(int index) {
+    public @NotNull ItemStack removeStackFromSlot(int index) {
         ItemStack stack = this.getStackInSlot(index);
         this.setInventorySlotContents(index, ItemStack.EMPTY);
         this.markDirty();
-        return stack != null ? stack : ItemStack.EMPTY;
+        return stack;
     }
 
     @Override
@@ -98,22 +99,22 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     }
 
     @Override
-    public boolean isUsableByPlayer(EntityPlayer player) {
+    public boolean isUsableByPlayer(@NotNull EntityPlayer player) {
         return true;
     }
 
     @Override
-    public void openInventory(EntityPlayer player) {
+    public void openInventory(@NotNull EntityPlayer player) {
 
     }
 
     @Override
-    public void closeInventory(EntityPlayer player) {
+    public void closeInventory(@NotNull EntityPlayer player) {
 
     }
 
     @Override
-    public boolean isItemValidForSlot(int index, ItemStack stack) {
+    public boolean isItemValidForSlot(int index, @NotNull ItemStack stack) {
         return true;
     }
 
@@ -138,7 +139,7 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     }
 
     @Override
-    public String getName() {
+    public @NotNull String getName() {
         return this.customName;
     }
 
@@ -148,7 +149,7 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     }
 
     @Override
-    public ITextComponent getDisplayName() {
+    public @NotNull ITextComponent getDisplayName() {
         return new TextComponentString(this.getName());
     }
 
@@ -167,7 +168,7 @@ public class ExtInternalInventory implements IInventory, INBTSerializable<NBTTag
     }
 
     @Override
-    public Iterator<ItemStack> iterator() {
+    public @NotNull Iterator<ItemStack> iterator() {
         return Collections.unmodifiableCollection(this.slots).iterator();
     }
 }

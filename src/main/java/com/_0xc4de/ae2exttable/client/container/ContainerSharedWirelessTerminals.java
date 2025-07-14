@@ -13,7 +13,6 @@ import appeng.util.Platform;
 import appeng.util.inv.IAEAppEngInventory;
 import appeng.util.inv.WrapperInvItemHandler;
 import baubles.api.BaublesApi;
-import com._0xc4de.ae2exttable.client.gui.AE2ExtendedGUIs;
 import com._0xc4de.ae2exttable.client.gui.ExtendedCraftingGUIConstants;
 import com._0xc4de.ae2exttable.client.gui.WirelessTerminalGuiObjectTwo;
 import net.minecraft.entity.player.EntityPlayer;
@@ -52,8 +51,8 @@ public class ContainerSharedWirelessTerminals extends ContainerMEMonitorableTwo
 
     if (guiItemObject != null) {
       final int slotIndex =
-          ((IInventorySlotAware) guiItemObject).getInventorySlot();
-      if (!((IInventorySlotAware) guiItemObject).isBaubleSlot()) {
+          guiItemObject.getInventorySlot();
+      if (!guiItemObject.isBaubleSlot()) {
         this.lockPlayerInventorySlot(slotIndex);
       }
       this.slot = slotIndex;
