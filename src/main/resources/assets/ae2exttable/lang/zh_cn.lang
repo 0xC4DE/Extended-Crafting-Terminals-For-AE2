@@ -6,24 +6,24 @@ key.open_advanced_extended_wireless_crafting_terminal=打开无线高级合成�
 key.open_elite_extended_wireless_crafting_terminal=打开无线精英合成终端
 key.open_ultimate_extended_wireless_crafting_terminal=打开无线终极合成终端
 
-container.ae2exttable.custom_extended_table.name=更酷的扩展合成台
-tile.ae2exttable.custom_extended_table.name=更酷的扩展合成台
+container.ae2exttable.custom_extended_table.name=更酷的拓展合成台
+tile.ae2exttable.custom_extended_table.name=更酷的拓展合成台
 container.ae2exttable.custom_extended_table=更酷的合成
-tooltip.ae2exttable.custom_extended_table=毕竟原版扩展合成台还不够酷
+tooltip.ae2exttable.custom_extended_table=毕竟原版拓展合成台还不够酷
 
-item.ae2exttable.basic_crafting_terminal.name=基础扩展合成终端
+item.ae2exttable.basic_crafting_terminal.name=基础拓展合成终端
 ae2exttable.basic_crafting_terminal=终端
 ae2exttable.basic_crafting_terminal.crafting=基础合成
 
-item.ae2exttable.advanced_crafting_terminal.name=高级扩展合成终端
+item.ae2exttable.advanced_crafting_terminal.name=高级拓展合成终端
 ae2exttable.advanced_crafting_terminal=终端
 ae2exttable.advanced_crafting_terminal.crafting=高级合成
 
-item.ae2exttable.elite_crafting_terminal.name=精英扩展合成终端
+item.ae2exttable.elite_crafting_terminal.name=精英拓展合成终端
 ae2exttable.elite_crafting_terminal=终端
 ae2exttable.elite_crafting_terminal.crafting=精英合成
 
-item.ae2exttable.ultimate_crafting_terminal.name=终极扩展合成终端
+item.ae2exttable.ultimate_crafting_terminal.name=终极拓展合成终端
 ae2exttable.ultimate_crafting_terminal=终端
 ae2exttable.ultimate_crafting_terminal.crafting=终极合成
 
