@@ -13,7 +13,7 @@ public enum KeyBindings {
     elite(new KeyBinding("key.open_elite_extended_wireless_crafting_terminal", KeyConflictContext.UNIVERSAL, KeyModifier.NONE, Keyboard.KEY_NONE, KEY_CATEGORY)),
     ultimate(new KeyBinding("key.open_ultimate_extended_wireless_crafting_terminal", KeyConflictContext.UNIVERSAL, KeyModifier.NONE, Keyboard.KEY_NONE, KEY_CATEGORY));
 
-    private KeyBinding binding;
+    private final KeyBinding binding;
 
     KeyBindings(KeyBinding keyBinding) {
         this.binding = keyBinding;

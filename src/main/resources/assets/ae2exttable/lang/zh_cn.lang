@@ -1,4 +1,10 @@
 itemGroup.ae2exttable=AE2拓展合成台
+key.ae2exttable.category=AE2拓展工作台
+
+key.open_basic_extended_wireless_crafting_terminal=打开无线基础合成终端
+key.open_advanced_extended_wireless_crafting_terminal=打开无线高级合成终端
+key.open_elite_extended_wireless_crafting_terminal=打开无线精英合成终端
+key.open_ultimate_extended_wireless_crafting_terminal=打开无线终极合成终端
 
 container.ae2exttable.custom_extended_table.name=更酷的拓展合成台
 tile.ae2exttable.custom_extended_table.name=更酷的拓展合成台
