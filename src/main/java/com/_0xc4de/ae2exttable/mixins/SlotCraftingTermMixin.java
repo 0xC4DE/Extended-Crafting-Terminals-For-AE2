@@ -9,12 +9,17 @@ import com._0xc4de.ae2exttable.interfaces.ICraftingClass;
 import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
 import java.util.List;
 import net.minecraft.inventory.InventoryCrafting;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
 import net.minecraftforge.items.IItemHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
 @Mixin(value = SlotCraftingTerm.class, remap = false)
@@ -68,5 +73,18 @@ public class SlotCraftingTermMixin {
       }
     }
     return r;
+  }
+
+  // Ensure AE2 sees our extended slots as valid for returning remaining items,
+  // otherwise they will be voided and not returned to the player
+  @Inject(method = "getRemainingItems", at = @At("HEAD"), cancellable = true)
+  private void ae2exttable$getRemainingItems(InventoryCrafting inventory, World world,
+      CallbackInfoReturnable<NonNullList<ItemStack>> callback) {
+    if (this.container instanceof ContainerMEMonitorableTwo cont) {
+      IRecipe recipe = cont.getCurrentRecipe();
+      if (recipe != null) {
+        callback.setReturnValue(recipe.getRemainingItems(inventory));
+      }
+    }
   }
 }
