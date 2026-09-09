@@ -249,9 +249,9 @@ public abstract class ContainerMEMonitorableTwo extends ContainerMEMonitorable
      * To fix this, we add a centered matching constraint, reducing the
      * number of full recipe matches from hundreds of times to just a few.
      */
-    private boolean matchesTerminalRecipe(final IRecipe recipe,
-                                          final InventoryCrafting inventory,
-                                          final World world) {
+    public boolean matchesTerminalRecipe(final IRecipe recipe,
+                                         final InventoryCrafting inventory,
+                                         final World world) {
         if (!(recipe instanceof TableRecipeShaped)) {
             return recipe.matches(inventory, world);
         }

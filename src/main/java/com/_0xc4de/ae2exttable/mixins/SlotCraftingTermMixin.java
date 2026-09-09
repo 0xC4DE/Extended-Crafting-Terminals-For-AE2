@@ -6,8 +6,7 @@ import appeng.container.slot.SlotCraftingTerm;
 import appeng.helpers.IContainerCraftingPacket;
 import com._0xc4de.ae2exttable.client.container.ContainerMEMonitorableTwo;
 import com._0xc4de.ae2exttable.interfaces.ICraftingClass;
-import com.blakebr0.extendedcrafting.crafting.table.TableRecipeManager;
-import java.util.List;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -19,11 +18,12 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
 @Mixin(value = SlotCraftingTerm.class, remap = false)
-public class SlotCraftingTermMixin {
+public abstract class SlotCraftingTermMixin {
 
   @Shadow
   private IItemHandler craftInv;
@@ -36,6 +36,10 @@ public class SlotCraftingTermMixin {
 
   @Shadow
   private IContainerCraftingPacket container;
+
+  @Shadow
+  protected abstract IRecipe findRecipe(InventoryCrafting ic, World world,
+      EntityPlayer player);
 
   // Go Go Gadget random incantation that works
   @ModifyVariable(method = "craftItem", at = @At(ordinal = 0, value = "STORE", target = "Lnet/minecraft/inventory/InventoryCrafting;<init>(Lnet/minecraft/inventory/Container;II)V"))
@@ -51,38 +55,35 @@ public class SlotCraftingTermMixin {
   }
 
 
-  // Random bullshit go
-  @ModifyVariable(method = "craftItem", at = @At(ordinal = 0, value = "STORE", target = "Lappeng/container/slot/SlotCraftingTerm;findRecipe(Lnet/minecraft/inventory/InventoryCrafting;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/item/crafting/IRecipe;"))
-  private IRecipe craftItem(IRecipe r) {
-    if (this.storage instanceof ICraftingClass strg) {
-
-      // all recipes, as List<IRecipe>, either a TableRecipeShaped or TableRecipeShapeless
-      List recipes = TableRecipeManager.getInstance().getRecipes();
-
-      // Just confirm that it's one of the recipes in this list, make r = that recipe
-
-      for (Object recipe : recipes) {
-        IRecipe rec = (IRecipe) recipe;
-        // For casting purposes
-        if (this.container instanceof ContainerMEMonitorableTwo cont) {
-          IRecipe currentRec = cont.getCurrentRecipe();
-          if (rec == currentRec) {
-            return rec;
-          }
-        }
+  /**
+   * Avoid re-computing the recipe the slow way.
+   * See {@link ContainerMEMonitorableTwo#matchesTerminalRecipe} for rationale.
+   */
+  @Redirect(method = "craftItem", at = @At(value = "INVOKE", target = "Lappeng/container/slot/SlotCraftingTerm;findRecipe(Lnet/minecraft/inventory/InventoryCrafting;Lnet/minecraft/world/World;Lnet/minecraft/entity/player/EntityPlayer;)Lnet/minecraft/item/crafting/IRecipe;"))
+  private IRecipe ae2exttable$getMatchingRecipe(SlotCraftingTerm slot, InventoryCrafting inventory,
+      World world, EntityPlayer player) {
+    if (this.container instanceof ContainerMEMonitorableTwo cont) {
+      IRecipe recipe = cont.getCurrentRecipe();
+      if (recipe != null && cont.matchesTerminalRecipe(recipe, inventory, world)) {
+        return recipe;
       }
+
+      return null;
     }
-    return r;
+
+    return this.findRecipe(inventory, world, player);
   }
 
-  // Ensure AE2 sees our extended slots as valid for returning remaining items,
-  // otherwise they will be voided and not returned to the player
+  /**
+   * Ensure AE2 sees our extended slots as valid for returning remaining items,
+   * otherwise reusable/durability items will be voided when crafting.
+   */
   @Inject(method = "getRemainingItems", at = @At("HEAD"), cancellable = true)
   private void ae2exttable$getRemainingItems(InventoryCrafting inventory, World world,
       CallbackInfoReturnable<NonNullList<ItemStack>> callback) {
     if (this.container instanceof ContainerMEMonitorableTwo cont) {
       IRecipe recipe = cont.getCurrentRecipe();
-      if (recipe != null) {
+      if (recipe != null && cont.matchesTerminalRecipe(recipe, inventory, world)) {
         callback.setReturnValue(recipe.getRemainingItems(inventory));
       }
     }
